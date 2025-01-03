@@ -1,0 +1,47 @@
+## Introduction to Authentication with Replyke
+
+Authentication is a cornerstone of Replyke, enabling all its functionalities to work seamlessly together. By associating actions and data with users, authentication facilitates user interactions, ensures data consistency, and enforces authorization rules within your application.
+
+### What Replyke Offers
+
+Replyke provides a straightforward, built-in authentication system, allowing developers to easily implement email and password authentication. With user-friendly hooks for signing up, signing in, and logging out, developers can quickly get started without the need to build these features from scratch.
+
+If you already have an existing user management system or plan to use a different system in your project, Replyke is designed to integrate seamlessly. Developers can pass a JSON Web Token (JWT) containing user details, signed with a private key provided by Replyke. This ensures that Replyke can trust the user data and associate actions with the appropriate users.
+
+### Authorization and Security
+
+Replyke includes basic authorization to secure user actions. For example:
+
+- Only authenticated users can vote on entities or comments.
+- Comments and replies are restricted to logged-in users.
+
+For more advanced authorization needs, such as restricting access to specific pages or sections of your app, developers have full flexibility to implement custom rules on top of Replyke’s foundational capabilities.
+
+### Integration Requirements
+
+Regardless of whether you use Replyke’s built-in authentication or integrate an external system, your app must include the `AuthProvider` as an immediate child of the `ProjectProvider`. Here’s the basic setup:
+
+```jsx
+<ProjectProvider projectId={/* Your project ID */}>
+  <AuthProvider>
+    {/* Rest of your app */}
+  </AuthProvider>
+</ProjectProvider>
+
+```
+
+#### Additional Setup for React Native
+
+For React Native apps, a `TokenManager` is required and must be added as a child of the `AuthProvider`. If your app is managed with Expo, pass the `expoManaged` flag to the `TokenManager`. Here’s the structure:
+
+```jsx
+<ProjectProvider projectId={/* Your project ID */}>
+  <AuthProvider>
+    <TokenManager expoManaged />
+    {/* Rest of your app */}
+  </AuthProvider>
+</ProjectProvider>
+
+```
+
+This foundational setup ensures that authentication and user management work smoothly, providing the groundwork for secure and interactive user experiences in your application. The following sections will dive deeper into the technical aspects of authentication with Replyke.
