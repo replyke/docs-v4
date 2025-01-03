@@ -1,0 +1,70 @@
+import { Steps, Tabs } from "nextra/components";
+
+## Getting Started with Replyke
+
+Getting started with Replyke is simple and straightforward. Whether you’re working on a React or React Native project, the setup process is designed to get you up and running quickly.
+
+<Steps>
+### Install the package
+ 
+For React projects, install the Replyke package:
+
+<Tabs items={["npm", "pnpm", "yarn"]}>
+  <Tabs.Tab>
+  ```bash
+  npm install replyke
+  ```
+  </Tabs.Tab>
+    <Tabs.Tab>
+  ```bash
+  pnpm add replyke
+  ```
+  </Tabs.Tab>
+    <Tabs.Tab>
+  ```bash
+  yarn add replyke
+  ```
+  </Tabs.Tab>
+</Tabs>
+
+For React Native projects, install the React Native-specific package:
+
+<Tabs items={["npm", "pnpm", "yarn"]}>
+  <Tabs.Tab>
+  ```bash
+  npm install replyke-rn
+  ```
+  </Tabs.Tab>
+    <Tabs.Tab>
+  ```bash
+  pnpm add replyke-rn
+  ```
+  </Tabs.Tab>
+    <Tabs.Tab>
+  ```bash
+  yarn add replyke-rn
+  ```
+  </Tabs.Tab>
+</Tabs>
+
+> **Note:** All instructions throughout the documentation apply equally to React and React Native projects. The only distinction is the need for a token manager in React Native setups, which is covered in the Authentication section.
+
+### Create a Project on Replyke’s Dashboard
+
+To start working with Replyke, visit the Replyke Dashboard and create a new project. Once your project is set up, you’ll receive a `projectId`, which you’ll use to initialize Replyke in your app.
+
+### Wrap Your App with the ProjectProvider
+
+The `ProjectProvider` component from Replyke should wrap your entire app to provide access to Replyke’s features. Place it at the top level of your application, passing the `projectId` as a prop. Here’s an example:
+
+```javascript
+import { ProjectProvider } from "replyke"; // or 'replyke-rn' for React Native
+
+<ProjectProvider projectId={/* Your project ID */}>
+  {/* Rest of your app */}
+</ProjectProvider>;
+```
+
+With this setup, your app is now ready to leverage Replyke’s powerful features. For further details, explore the specific sections of this documentation tailored to your needs.
+
+</Steps>
