@@ -2,7 +2,6 @@ export default {
   index: "Introduction",
   "getting-started": "Getting Started",
   authentication: "Authentication",
-  "user-object": "User Object",
   entities: "Entities",
   about: {
     title: "About",

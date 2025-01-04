@@ -18,7 +18,8 @@ The `user` object includes the following properties:
 
 ```typescript
 export type User = {
-  id: string; // Unique identifier for the user
+  id: string; // Unique identifier for the user in Replyke
+  referenceId: string | null; // Unique identifier for the user in the external user system
   email: string | null; // User's email address
   name: string | null; // User's display name
   username: string | null; // User's unique username

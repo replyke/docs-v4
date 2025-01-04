@@ -1,0 +1,168 @@
+
+## Entity Object Overview
+
+### Interface Definition
+
+```typescript
+export interface Entity {
+  id: string;
+  referenceId: string;
+  shortId: string;
+  projectId: string;
+  user?: UserLean | null;
+  title: string | null;
+  content: string | null;
+  mentions: Mention[];
+  media: Record<string, any>[];
+  keywords: string[];
+  upvotes: string[];
+  downvotes: string[];
+  repliesCount: number;
+  views: number;
+  score: number;
+  scoreUpdatedAt: Date;
+  location: {
+    type: "Point";
+    coordinates: [number, number];
+  } | null;
+  metadata: Record<string, any>;
+  topComment?: TopComment | null;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
+}
+
+```
+
+### Properties
+
+#### Core Properties
+
+-   **id**: A unique identifier for the entity. This is required for distinguishing entities within the system.
+    
+-   **referenceId**: If the entity is integrated on top of existing data, this field references the original item’s ID in your system. It can also accept static values (e.g., "about-page" for static content).
+    
+-   **shortId**: An automatically generated, unique identifier that can be used for creating sharing links.
+    
+-   **projectId**: Identifies the project to which the entity belongs.
+    
+
+#### User and Content
+
+-   **user**: Contains basic user information for the creator of the entity. This field might be null, as not all entities are necessarily created by users (e.g., static entities like "home-page").
+    
+-   **title**: The title of the entity. Nullable.
+    
+-   **content**: The main content of the entity. Nullable.
+    
+-   **mentions**: An array of `Mention` objects, representing users mentioned within the content. Each `Mention` object includes a user’s ID and username.
+    
+
+#### Media and Tags
+
+-   **media**: An array of JSON objects holding information about media items attached to the entity. Developers can define any structure for these objects. For example, they might include fields like `url` (an external URL where the media is stored), `size`, or `format`, but these are only examples and not required.
+    
+-   **keywords**: An array of keywords or tags associated with the entity. Useful for filtering feeds or searches.
+    
+
+#### Votes and Interactions
+
+-   **upvotes**: An array of user IDs representing users who upvoted the entity.
+    
+-   **downvotes**: An array of user IDs representing users who downvoted the entity.
+    
+-   **repliesCount**: The total number of comments and replies associated with the entity.
+    
+
+#### Analytics and Scoring
+
+-   **views**: The total number of views the entity has received.
+    
+-   **score**: A "hotness" score for the entity, automatically generated based on user activity.
+    
+-   **scoreUpdatedAt**: The timestamp of the last score update.
+    
+
+#### Location and Metadata
+
+-   **location**: An optional property for storing the location of the entity as a GeoJSON point. For example, this could represent the location of a hotel listing. It includes:
+    
+    -   **type**: Always set to "Point".
+    -   **coordinates**: An array containing [longitude, latitude].
+-   **metadata**: A JSON object for storing additional data about the entity that is relevant to the project. Limited to 10KB in size.
+    
+
+#### Top Comment
+
+-   **topComment**: If the entity has at least one comment, this field will hold the data for the top comment. Otherwise, it remains null.
+
+#### Timestamps
+
+-   **createdAt**: The timestamp for when the entity was created.
+    
+-   **updatedAt**: The timestamp for the most recent update to the entity.
+    
+-   **deletedAt**: The timestamp for when the entity was deleted, if applicable. Otherwise, it is null.
+    
+
+### Example Use Cases
+
+1.  **Social Media Post:**
+    
+
+```typescript
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "content": "Check out this amazing sunset!",
+  "media": [
+    { "url": "https://example.com/media/sunset.jpg", "size": "2MB" }
+  ],
+  "keywords": ["sunset", "nature"],
+  "user": { "id": "550e8400-e29b-41d4-a716-446655440001", "name": "John Doe" }
+}
+```
+
+2.  **Marketplace Product:**
+    
+
+```typescript
+{
+  "id": "550e8400-e29b-41d4-a716-446655440002",
+  "title": "Wireless Earbuds",
+  "content": "Experience high-quality sound with our new earbuds.",
+  "media": [],
+  "keywords": ["electronics", "audio"]
+}
+```
+
+3.  **Static Usage (About Page):**
+    
+
+```typescript
+{
+  "id": "550e8400-e29b-41d4-a716-446655440003",
+  "referenceId": "about-page",
+  "title": "About Us",
+  "content": "Welcome to our platform. Here is what we do.",
+  "media": [],
+  "user": null
+}
+```
+
+4.  **Location-Based Usage (Hotel Listing):**
+    
+
+```typescript
+{
+  "id": "550e8400-e29b-41d4-a716-446655440004",
+  "title": "Cozy Beachside Hotel",
+  "content": "Enjoy your stay at our beautiful beachside hotel.",
+  "location": { "type": "Point", "coordinates": [34.0522, -118.2437] },
+  "metadata": { "rating": 4.5, "price": "199.99" },
+  "user": { "id": "550e8400-e29b-41d4-a716-446655440005", "name": "Hotel Owner" }
+}
+```
+
+### Flexibility for Integration
+
+The `Entity` object is designed to be flexible. Developers can wrap entities around existing data without altering the original dataset. This feature ensures Replyke can be integrated seamlessly into projects with pre-existing data structures, making it easier to adopt Replyke’s features without significant changes to the underlying system.
