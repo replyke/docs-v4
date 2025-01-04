@@ -60,8 +60,8 @@ export type UpdateUserParams = {
   bio?: string; // Update the user's bio
   birthdate?: Date | null; // Update the user's birthdate
   location?: {
-    type: "Point";
-    coordinates: [number, number];
+    latitude: number;
+    longitude: number;
   } | null; // Update the user's location
   metadata?: Record<string, any>; // Update custom metadata
 };

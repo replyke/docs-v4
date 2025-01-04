@@ -1,0 +1,107 @@
+
+### `useFeed` Hook
+
+The `useFeed` hook provides access to all the context and functionality exposed by the `FeedProvider`. It allows developers to interact with the feed's data, manage its state, and dynamically modify filters. Below is the interface for all available values and functions:
+
+```typescript
+export interface UseFeedDataValues {
+  entities: Entity[];
+  infusedEntities: (Entity & Record<string, any>)[];
+
+  loading: boolean;
+  hasMore: boolean;
+  resetting: boolean;
+
+  sortBy: FeedSortByOptions | null;
+  setSortBy: (sortBy: FeedSortByOptions) => void;
+
+  timeFrame: TimeFrame | null;
+  setTimeFrame: (timeFrame: TimeFrame | null) => void;
+  followedOnly: boolean;
+  setFollowedOnly: (state: boolean) => void;
+  userId: string | null;
+  setUserId: (userId: string | null) => void;
+
+  keywordsFilters: KeywordsFilters | null;
+  updateKeywordsFilters: (
+    type: "add" | "remove" | "reset",
+    key: "includes" | "doesNotInclude" | "both",
+    value?: string | string[]
+  ) => void;
+  metadataFilters: MetadataFilters | null;
+  setMetadataFilters: (metadata: MetadataFilters | null) => void;
+  titleFilters: TitleFilters | null;
+  setTitleFilters: (metadata: TitleFilters | null) => void;
+  contentFilters: ContentFilters | null;
+  setContentFilters: (metadata: ContentFilters | null) => void;
+  mediaFilters: MediaFilters | null;
+  setMediaFilters: (metadata: MediaFilters | null) => void;
+  locationFilters: LocationFilters | null;
+  setLocationFilters: (location: LocationFilters | null) => void;
+
+  loadMore: () => void;
+  resetEntities: () => Promise<void>;
+  createEntity: (props: {
+    referenceId?: string;
+    title?: string;
+    content?: string;
+    media?: any[];
+    keywords?: string[];
+    location?: {
+      latitude: number;
+      longitude: number;
+    };
+    metadata?: Record<string, any>;
+    insertPosition?: "first" | "last";
+  }) => Promise<void>;
+  deleteEntity: (props: { entityId: string }) => Promise<void>;
+}
+
+```
+
+#### Explanation of Hook Values and Functions
+
+**Entities and Data Management**
+
+1.  **`entities`**: Contains an array of all entities fetched for the feed.
+2.  **`infusedEntities`**: If an `infuseData` function is provided to the provider, this array contains entities with additional external data merged. The `entities` array remains "pure," holding only the data fetched by Replyke.
+3.  **`loading`**: A boolean flag indicating whether entities are currently being fetched. Useful for showing loading indicators in the UI.
+4.  **`hasMore`**: Indicates whether there are more entities to fetch. If `false`, the feed has reached its end and there is no more data to be fetched.
+5.  **`resetting`**: A flag indicating that the feed is currently being reset. When `resetting` is true, `loading` will also be true, but not vice versa.
+
+**Sorting**
+
+6.  **`sortBy`**: Holds the current sorting criteria for the feed.
+7.  **`setSortBy`**: Updates the sorting criteria dynamically.
+
+**Filter States and Functions**
+
+The following values represent the current state of feed filters, and corresponding functions allow dynamic updates. Each filter change will reset the feed.
+
+8.  **`timeFrame`**: The current state of the time frame filter.
+9.  **`setTimeFrame`**: Updates the time frame filter.
+10.  **`followedOnly`**: A boolean indicating whether the feed is limited to entities from followed accounts.
+11.  **`setFollowedOnly`**: Updates the `followedOnly` filter.
+12.  **`userId`**: The current user ID filter.
+13.  **`setUserId`**: Updates the user ID filter.
+14.  **`keywordsFilters`**: The current keywords filter state.
+15.  **`updateKeywordsFilters`**: Dynamically updates keywords filters by adding, removing, or resetting values.
+16.  **`titleFilters`**: The current state of title filters.
+17.  **`setTitleFilters`**: Updates the title filters.
+18.  **`contentFilters`**: The current state of content filters.
+19.  **`setContentFilters`**: Updates the content filters.
+20.  **`mediaFilters`**: The current state of media filters.
+21.  **`setMediaFilters`**: Updates the media filters.
+22.  **`locationFilters`**: The current state of location filters.
+23.  **`setLocationFilters`**: Updates the location filters.
+24.  **`metadataFilters`**: The current state of metadata filters.
+25.  **`setMetadataFilters`**: Updates the metadata filters.
+
+**Actions and Mutations**
+
+26.  **`loadMore`**: Fetches additional entities for the feed.
+27.  **`resetEntities`**: Resets the feed, refreshing data without altering filter states.
+28.  **`createEntity`**: Creates a new entity within the feed context. The newly created entity is automatically added to the feed.
+29.  **`deleteEntity`**: Deletes an entity within the feed context. The deleted entity is automatically removed from the feed.
+
+This hook gives you complete control over managing and customizing the feed's behavior, enabling a wide range of use cases. In the following chapters, we’ll explore practical examples of implementing the `FeedProvider` with `useFeed` using filters in our app.

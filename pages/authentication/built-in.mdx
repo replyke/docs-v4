@@ -24,8 +24,8 @@ signUpWithEmailAndPassword: (props: {
   avatar?: string;
   bio?: string;
   location?: {
-    type: "Point";
-    coordinates: [number, number]; // [longitude, latitude]
+    latitude: number;
+    longitude: number;
   };
   birthdate?: Date;
   metadata?: Record<string, any>;
