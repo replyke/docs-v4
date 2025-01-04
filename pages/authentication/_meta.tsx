@@ -1,4 +1,4 @@
 export default {
-  "built-in": "Built-in",
-  external: "External System",
+  "built-in": "Built-in User System",
+  external: "External User System",
 };

@@ -224,7 +224,7 @@ export default async (req: ExReq, res: ExRes) => {
     -   `sub`: User ID.
     -   `iss`: Project ID.
     -   `aud`: Always set to `replyke.com`.
-    -   `userData`: Optional user details.
+    -   `userData`: Optional user details. In this example we pass the email only, but we can pass all properties that are avaialable on the User object (e.g. name, username, location, metadata etc.)
 4.  **Token Signing**: The JWT is signed using `RS256` with a short expiration time (5 minutes).
 
 ## Customizing for Other Systems

@@ -2,8 +2,8 @@ export default {
   index: "Introduction",
   "getting-started": "Getting Started",
   authentication: "Authentication",
-  another: "Another Page",
-  advanced: "Advanced (A Folder)",
+  "user-object": "User Object",
+  entities: "Entities",
   about: {
     title: "About",
     type: "page",
