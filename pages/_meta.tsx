@@ -3,6 +3,7 @@ export default {
   "getting-started": "Getting Started",
   authentication: "Authentication",
   entities: "Entities",
+  feeds: "Feeds",
   about: {
     title: "About",
     type: "page",
