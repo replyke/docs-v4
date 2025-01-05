@@ -5,4 +5,9 @@ const withNextra = nextra({
   themeConfig: "./theme.config.tsx",
 });
 
-export default withNextra({ distDir: "out" });
+module.exports = {
+  ...withNextra(),
+  images: {
+    unoptimized: true,
+  },
+};
