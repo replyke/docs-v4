@@ -8,6 +8,7 @@ const withNextra = nextra({
 module.exports = {
   ...withNextra(),
   images: {
+    distDir: "out",
     unoptimized: true,
   },
 };
