@@ -5,6 +5,9 @@ export default {
   entities: "Entities",
   feeds: "Feeds",
   comments: "Comments",
+  lists: "Lists",
+  relationships: "Relationships",
+  "app-notifications": "App notifications",
   about: {
     title: "About",
     type: "page",

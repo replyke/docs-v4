@@ -1,0 +1,74 @@
+## Overview
+
+In modern applications, establishing relationships between users, such as the ability to follow or unfollow others, is a cornerstone of personalized and dynamic content. These relationships enable users to curate their experiences by choosing whose content they want to see, fostering community interaction and engagement. By integrating follow relationships, you can enhance your application's functionality, tailoring content feeds to reflect user interests.
+
+Replyke simplifies the implementation of follow relationships with three dedicated hooks. These hooks are designed for ease of use, requiring minimal setup while offering robust functionality.
+
+## How to Use Relationships
+
+Unlike many other functionalities, relationships in Replyke do not require any context provider. You can use the following hooks directly in your components:
+
+### 1. `useFollowUser`
+
+This hook returns a function that allows the currently logged-in user to follow another user.
+
+#### Usage
+
+```typescript
+const followUser = useFollowUser();
+
+const handleFollowUser = (userId: string) => {
+  followUser(userId);
+};
+
+handleFollowUser("BBBB");
+```
+
+#### Notes
+
+- The `followUser` function does not require the ID of the currently logged-in user; this is handled automatically.
+- The function will not execute if the passed user ID is the same as the logged-in user's ID.
+
+### 2. `useUnfollowUser`
+
+This hook provides a function to unfollow a user. The requirements and limitations are the same as for `useFollowUser`.
+
+#### Usage
+
+```typescript
+const unfollowUser = useUnfollowUser();
+
+const handleUnfollowUser = (userId: string) => {
+  unfollowUser(userId);
+};
+
+handleUnfollowUser("BBBB");
+```
+
+#### Notes
+
+- Similar to `useFollowUser`, the logged-in user’s ID is automatically handled.
+- The function will not execute if the passed user ID is the same as the logged-in user's ID.
+
+### 3. `useFetchFollow`
+
+This hook returns a function that checks whether the currently logged-in user is following a specific user.
+
+#### Usage
+
+```typescript
+const fetchFollow = useFetchFollow();
+
+const isFollowing = fetchFollow("BBBB");
+
+console.log(isFollowing); // true or false
+```
+
+#### Notes
+
+- Pass the user ID to the `fetchFollow` function to determine if the logged-in user follows that user.
+- The result is a boolean value: `true` if the user is followed, `false` otherwise.
+
+## Summary
+
+Replyke’s follow relationship hooks make it simple to integrate following functionality into your application. With `useFollowUser`, `useUnfollowUser`, and `useFetchFollow`, you can build personalized and dynamic content feeds, enhancing user engagement without unnecessary complexity.
