@@ -4,6 +4,7 @@ export default {
   authentication: "Authentication",
   entities: "Entities",
   feeds: "Feeds",
+  comments: "Comments",
   about: {
     title: "About",
     type: "page",

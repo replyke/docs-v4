@@ -134,3 +134,14 @@ By default, this property is set to `null`. The metadata filtering capabilities 
 ----------
 
 **`infuseData`**: This optional callback is essential for applications integrating Replyke with external data sets. The function receives a `referenceId` and fetches additional data for that entity from an external database. The fetched data is merged with Replyke’s entity data, providing a complete data object for the application. This feature will be covered in greater detail in the following chapters.
+
+
+
+### Note on Using Filters in the FeedProvider
+
+1.  **Filters for Static or Initial Filtering**: Passing filters directly into the `FeedProvider` is the correct approach both for cases where the feed should always be filtered in a specific way (e.g., on a user’s profile, where the feed is filtered by that user ID) and for cases where we want the feed to start with certain filters but allow dynamic changes later. This ensures the feed is initialized with the desired filtering logic.
+    
+2.  **Filters Passed to `FeedProvider` Are Static After Initialization**: When filters are passed as props to the `FeedProvider`, they are only used during the initialization of the feed. If the variables used for these filters change after the feed has been initialized, the feed will **not** reset or reapply the updated filters. To apply dynamic changes to the filters after initialization, use the `useFeed` hook to modify the feed context dynamically.
+    
+
+For detailed guidance on dynamically updating filters, continue to the next chapters.

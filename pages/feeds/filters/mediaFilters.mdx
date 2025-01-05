@@ -1,0 +1,100 @@
+
+### Media Filters
+
+The **Media Filters** in Replyke allow developers to filter entities based on the presence or absence of media content. This functionality provides a straightforward way to include or exclude entities that contain media, ensuring the feed aligns with your application’s needs.
+
+#### Overview of Media Filters
+
+The `mediaFilters` property can be passed into the `FeedProvider` as an object with the following structure:
+
+```typescript
+export interface MediaFilters {
+  hasMedia?: boolean;
+}
+
+```
+
+-   **`hasMedia`**: A boolean flag to include or exclude entities based on whether they contain media (`true`) or not (`false`).
+
+#### Dynamically Updating Media Filters
+
+Developers can dynamically update the media filters using the `setMediaFilters` function provided by the `useFeed` hook. This function expects a new `mediaFilters` object or `null` to clear the filters.
+
+```typescript
+const { setMediaFilters } = useFeed();
+
+// Set a filter to include entities with media
+setMediaFilters({ hasMedia: true });
+
+// Reset media filters
+setMediaFilters(null);
+
+```
+
+#### How Media Filters Work
+
+Media Filters are applied on the backend when querying entities. The `hasMedia` flag works as follows:
+
+1.  **`true`**: Includes only entities that have media (e.g., non-empty media arrays).
+2.  **`false`**: Includes only entities that do not have media (e.g., empty media arrays).
+3.  **`null`**: Clears the media filter, meaning no filtering is applied based on media presence.
+
+#### Example Use Cases
+
+##### 1. Passing Static Filters to the FeedProvider
+
+To set static filters for media presence at the initialization of the feed, pass them directly to the `FeedProvider`:
+
+```typescript
+<FeedProvider mediaFilters={{ hasMedia: true }}>
+  <MyFeedComponent />
+</FeedProvider>
+
+```
+
+This setup ensures that only entities with media are included in the feed.
+
+##### 2. Dynamically Updating Filters Based on User Interaction
+
+You can also dynamically adjust the media filters based on user actions, such as clicking a toggle button:
+
+```typescript
+const { setMediaFilters, infusedEntities, loadMore } = useFeed();
+
+const toggleMediaFilter = (hasMedia: boolean) => {
+  setMediaFilters({ hasMedia });
+};
+
+return (
+  <div>
+    <h1>Filtered by Media</h1>
+    <div>
+      <button onClick={() => toggleMediaFilter(true)}>Show Only With Media</button>
+      <button onClick={() => toggleMediaFilter(false)}>Show Only Without Media</button>
+      <button onClick={() => setMediaFilters(null)}>Clear Media Filter</button>
+    </div>
+    <ul>
+      {infusedEntities.map((entity) => (
+        <li key={entity.referenceId}>
+          <h2>{entity.title}</h2>
+          {entity.media.length > 0 ? <p>Media included</p> : <p>No media</p>}
+        </li>
+      ))}
+    </ul>
+    <button onClick={loadMore}>Load More</button>
+  </div>
+);
+
+```
+
+In this example, clicking the buttons dynamically updates the media filters to include or exclude entities based on media presence.
+
+### Important Notes
+
+-   Media Filters operate on the presence of media content in entities, typically represented by non-empty or empty media arrays.
+-   Filters are applied immediately, and the feed resets to reflect the updated conditions.
+-   Passing `null` to `setMediaFilters` clears all media-based filtering.
+
+### Conclusion
+
+Media Filters provide a simple yet powerful mechanism to fine-tune feed results based on the presence of media. Whether you want to include only entities with media, exclude them, or dynamically adjust filters based on user input, Media Filters help you achieve this with ease. Use them to create more tailored and engaging experiences in your application.

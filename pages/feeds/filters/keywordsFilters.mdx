@@ -1,0 +1,115 @@
+
+### Keywords Filters
+
+The **Keywords Filters** in Replyke allow developers to filter entities in a feed based on keywords. This filtering mechanism provides a way to include or exclude entities whose keywords match specific criteria. Let’s dive into how it works and how you can utilize it effectively.
+
+#### **Overview of Keywords Filters**
+
+The `keywordsFilters` property can be passed to the `FeedProvider` as an object with the following structure:
+
+```typescript
+export interface KeywordsFilters {
+  includes?: string[];
+  doesNotInclude?: string[];
+}
+
+```
+
+-   **`includes`**: Specifies keywords that must be present in an entity’s keywords array for it to be included in the feed.
+-   **`doesNotInclude`**: Specifies keywords that must not be present in an entity’s keywords array for it to be included in the feed.
+
+You can dynamically update these filters using the `updateKeywordsFilters` function provided by the `useFeed` hook.
+
+#### **Dynamically Updating Keywords Filters**
+
+The `updateKeywordsFilters` function allows developers to modify the state of the keywords filters. It provides three actions:
+
+1.  **`add`**: Adds new keywords to the specified list (`includes` or `doesNotInclude`).
+2.  **`remove`**: Removes specified keywords from the list.
+3.  **`reset`**: Resets the specified list to its initial state. You can reset both lists simultaneously.
+
+Here is an example of how to use `updateKeywordsFilters`:
+
+```typescript
+const { updateKeywordsFilters } = useFeed();
+
+// Adding a keyword to the includes list
+updateKeywordsFilters("add", "includes", "React");
+
+// Removing a keyword from the doesNotInclude list
+updateKeywordsFilters("remove", "doesNotInclude", "Vue");
+
+// Resetting both lists
+updateKeywordsFilters("reset", "both");
+
+```
+
+#### **How Keywords Filters Work**
+
+When the feed is queried, the keywords filters are applied as follows:
+
+1.  **Includes**: If the `includes` array contains keywords, only entities whose `keywords` property contains all these keywords will be included in the feed.
+2.  **Does Not Include**: If the `doesNotInclude` array contains keywords, entities whose `keywords` property contains any of these keywords will be excluded from the feed.
+3.  **Combined**: When both `includes` and `doesNotInclude` are specified, entities must satisfy both conditions—they must include all keywords from `includes` and exclude all keywords from `doesNotInclude`.
+
+#### **Example Use Cases**
+
+##### **1. Passing Static Filters to the FeedProvider**
+
+If you want to set static filters as a starting point for your feed, you can pass them directly into the `FeedProvider`:
+
+```typescript
+<FeedProvider
+  keywordsFilters={{ includes: ["JavaScript", "React"], doesNotInclude: ["Angular"] }}
+>
+  <MyFeedComponent />
+</FeedProvider>
+
+```
+
+This setup ensures that the feed is pre-configured to show only posts about "JavaScript" or "React" while excluding posts that mention "Angular."
+
+##### **2. Dynamically Updating Filters Based on User Interaction**
+
+To dynamically change the filters, such as when a user clicks a keyword button, use the `updateKeywordsFilters` function from the `useFeed` hook:
+
+```typescript
+const { updateKeywordsFilters, infusedEntities, loadMore } = useFeed();
+
+const handleKeywordClick = (keyword: string) => {
+  updateKeywordsFilters("add", "includes", keyword);
+};
+
+return (
+  <div>
+    <h1>Filtered Blog Posts</h1>
+    <div>
+      <button onClick={() => handleKeywordClick("JavaScript")}>JavaScript</button>
+      <button onClick={() => handleKeywordClick("React")}>React</button>
+      <button onClick={() => handleKeywordClick("Angular")}>Exclude Angular</button>
+    </div>
+    <ul>
+      {infusedEntities.map((post) => (
+        <li key={post.referenceId}>
+          <h2>{post.title}</h2>
+          <p>{post.content}</p>
+        </li>
+      ))}
+    </ul>
+    <button onClick={loadMore}>Load More</button>
+  </div>
+);
+
+```
+
+In this example, clicking a button dynamically updates the feed by adding a keyword to the `includes` filter.
+
+#### **Important Notes**
+
+-   The filter updates are applied immediately and reset the feed to ensure that the updated filter conditions are reflected in the data.
+-   Invalid or empty keyword values are ignored.
+-   Combining `includes` and `doesNotInclude` provides a powerful mechanism for fine-tuning the feed results.
+
+#### **Conclusion**
+
+The Keywords Filters offer a flexible way to include or exclude entities based on their associated keywords. By leveraging the `keywordsFilters` property and the `updateKeywordsFilters` function, you can dynamically tailor the feed to meet your application’s needs. Whether you’re building a blogging platform, an e-commerce site, or a custom app, this filter can help you surface the most relevant content for your users.
