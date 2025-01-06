@@ -14,13 +14,13 @@ Replyke generates the following notification types, each with its own set of ava
 
 | Notification Type | Available Data                                                                                                   |
 |------------------------|---------------------------------------------------------------------------------------------------------------------|
-| `entityComment`        | `entityTitle`, `entityContent`, `commentContent`, `initiatorName`, `initiatorUsername`, `initiatorAvatar`            |
-| `commentReply`         | `entityTitle`, `entityContent`, `commentContent`, `replyContent`, `initiatorName`, `initiatorUsername`, `initiatorAvatar` |
-| `entityMention`        | `entityTitle`, `entityContent`, `initiatorName`, `initiatorUsername`, `initiatorAvatar`                              |
-| `commentMention`       | `entityTitle`, `entityContent`, `commentContent`, `initiatorName`, `initiatorUsername`, `initiatorAvatar`            |
-| `entityUpvote`         | `entityTitle`, `entityContent`, `initiatorName`, `initiatorUsername`, `initiatorAvatar`                              |
-| `commentUpvote`        | `entityTitle`, `entityContent`, `commentContent`, `initiatorName`, `initiatorUsername`, `initiatorAvatar`            |
-| `newFollow`            | `initiatorName`, `initiatorUsername`, `initiatorAvatar`                                                             |
+| `entityComment`        | `entityId`, `entityShortId`, `entityTitle`, `entityContent`, `commentId`, `commentContent`, `initiatorId`, `initiatorName`, `initiatorUsername`, `initiatorAvatar`            |
+| `commentReply`         | `entityId`, `entityShortId`, `entityTitle`, `entityContent`, `commentId`, `commentContent`, `replyId`, `replyContent`, `initiatorId`, `initiatorName`, `initiatorUsername`, `initiatorAvatar` |
+| `entityMention`        | `entityId`, `entityShortId`, `entityTitle`, `entityContent`, `initiatorId`, `initiatorName`, `initiatorUsername`, `initiatorAvatar`                              |
+| `commentMention`       | `entityId`, `entityShortId`, `entityTitle`, `entityContent`, `commentId`, `commentContent`, `initiatorId`, `initiatorName`, `initiatorUsername`, `initiatorAvatar`            |
+| `entityUpvote`         | `entityId`, `entityShortId`, `entityTitle`, `entityContent`, `initiatorId`, `initiatorName`, `initiatorUsername`, `initiatorAvatar`                              |
+| `commentUpvote`        | `entityId`, `entityShortId`, `entityTitle`, `entityContent`, `commentId`, `commentContent`, `initiatorId`, `initiatorName`, `initiatorUsername`, `initiatorAvatar`            |
+| `newFollow`            | `initiatorId`, `initiatorName`, `initiatorUsername`, `initiatorAvatar`                                                             |
 
 ---
 

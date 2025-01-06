@@ -4,11 +4,11 @@ import { DocsThemeConfig } from 'nextra-theme-docs'
 const config: DocsThemeConfig = {
   logo: <span className='text-green-500'>Replyke Docs</span>,
   project: {
-    link: 'https://github.com/shuding/nextra-docs-template',
+    link: 'https://github.com/Tsabary/replyke-v4-docs',
   },
-  chat: {
-    link: 'https://discord.com',
-  },
+  // chat: {
+  //   link: 'https://discord.com',
+  // },
   docsRepositoryBase: 'https://github.com/shuding/nextra-docs-template',
   footer: {
     content: 'Replyke Documentation',

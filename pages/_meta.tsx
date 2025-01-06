@@ -8,6 +8,7 @@ export default {
   lists: "Lists",
   relationships: "Relationships",
   "app-notifications": "App notifications",
+  reports: "Reports",
   about: {
     title: "About",
     type: "page",
