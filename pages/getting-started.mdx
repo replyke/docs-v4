@@ -53,16 +53,16 @@ For React Native projects, install the React Native-specific package:
 
 To start working with Replyke, visit the Replyke Dashboard and create a new project. Once your project is set up, you’ll receive a `projectId`, which you’ll use to initialize Replyke in your app.
 
-### Wrap Your App with the ProjectProvider
+### Wrap Your App with the ReplykeProvider
 
-The `ProjectProvider` component from Replyke should wrap your entire app to provide access to Replyke’s features. Place it at the top level of your application, passing the `projectId` as a prop. Here’s an example:
+The `ReplykeProvider` component from Replyke should wrap your entire app to provide access to Replyke’s features. Place it at the top level of your application, passing the `projectId` as a prop. Here’s an example:
 
 ```javascript
-import { ProjectProvider } from "replyke"; // or 'replyke-rn' for React Native
+import { ReplykeProvider } from "replyke"; // or 'replyke-rn' for React Native
 
-<ProjectProvider projectId={/* Your project ID */}>
+<ReplykeProvider projectId={/* Your project ID */}>
   {/* Rest of your app */}
-</ProjectProvider>;
+</ReplykeProvider>;
 ```
 
 With this setup, your app is now ready to leverage Replyke’s powerful features. For further details, explore the specific sections of this documentation tailored to your needs.

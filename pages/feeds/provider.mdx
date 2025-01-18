@@ -29,6 +29,7 @@ interface FeedContextProps {
   locationFilters?: LocationFilters | null;
   metadataFilters?: MetadataFilters | null;
 
+  idle?: boolean;
   onReset?: () => void;
   infuseData?: (referenceId: string) => Promise<Record<string, any> | null>;
 }
@@ -126,6 +127,10 @@ Entities without a location property or outside the specified radius are exclude
 - `doesNotExist`: Keys that must not be present in the metadata.
 
 By default, this property is set to `null`. The metadata filtering capabilities will be explored further in subsequent chapters.
+
+----------
+
+**`idle?: boolean`**: The `idle` property allows developers to control when the `FeedProvider` initiates its automatic fetch of entities. By default, `FeedProvider` starts fetching data as soon as it is initialized, which is typically optimal for most use cases. However, there are scenarios where delaying the fetch might be necessary—for instance, when you need to fetch data from the user's storage, request their location, or complete other preliminary actions. Setting the `idle` property to `true` cancels the automatic fetch, putting the provider in a paused state. This ensures that the first fetch is only triggered manually, as explained in the following chapter. Using `idle` helps prevent potential UI glitches and reduces unnecessary resource usage during the initial setup phase.
 
 ----------
 

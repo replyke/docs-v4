@@ -78,7 +78,7 @@ Here's the React client-side implementation:
 
 ```typescript
 import { useEffect, useState } from "react";
-import { AuthProvider, ProjectProvider } from "replyke";
+import { AuthProvider, ReplykeProvider } from "replyke";
 import axios from "axios";
 import { useUser, useAuth } from "@clerk/clerk-react";
 
@@ -111,11 +111,11 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
   }, [userClerk, getToken]);
 
   return (
-    <ProjectProvider projectId="<YOUR_PROJECT_ID>">
+    <ReplykeProvider projectId="<YOUR_PROJECT_ID>">
       <AuthProvider signedToken={signedToken}>
         {children}
       </AuthProvider>
-    </ProjectProvider>
+    </ReplykeProvider>
   );
 }
 

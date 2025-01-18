@@ -39,6 +39,7 @@ export interface UseFeedDataValues {
   locationFilters: LocationFilters | null;
   setLocationFilters: (location: LocationFilters | null) => void;
 
+  kickstart: () => void;
   loadMore: () => void;
   resetEntities: () => Promise<void>;
   createEntity: (props: {
@@ -99,9 +100,10 @@ The following values represent the current state of feed filters, and correspond
 
 **Actions and Mutations**
 
-26.  **`loadMore`**: Fetches additional entities for the feed.
-27.  **`resetEntities`**: Resets the feed, refreshing data without altering filter states.
-28.  **`createEntity`**: Creates a new entity within the feed context. The newly created entity is automatically added to the feed.
-29.  **`deleteEntity`**: Deletes an entity within the feed context. The deleted entity is automatically removed from the feed.
+26. **`kickstart`**: A function that triggers the first fetch of entities manually when the idle property in the FeedProvider is set to true.
+27.  **`loadMore`**: Fetches additional entities for the feed.
+28.  **`resetEntities`**: Resets the feed, refreshing data without altering filter states.
+29.  **`createEntity`**: Creates a new entity within the feed context. The newly created entity is automatically added to the feed.
+30.  **`deleteEntity`**: Deletes an entity within the feed context. The deleted entity is automatically removed from the feed.
 
 This hook gives you complete control over managing and customizing the feed's behavior, enabling a wide range of use cases. In the following chapters, we’ll explore practical examples of implementing the `FeedProvider` with `useFeed` using filters in our app.

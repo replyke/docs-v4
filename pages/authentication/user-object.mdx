@@ -32,6 +32,7 @@ export type User = {
     coordinates: [number, number]; // [longitude, latitude]
   } | null; // Optional GeoJSON location
   metadata: Record<string, any>; // Custom metadata (max size: 10KB)
+  secureMetadata: Record<string, any>; // Custom metadata (max size: 10KB) - excluded from entities and comments
   suspension: {
     isSuspended: boolean; // Indicates if the user is suspended
     reason: string | null; // Reason for suspension (if any)
@@ -64,6 +65,7 @@ export type UpdateUserParams = {
     longitude: number;
   } | null; // Update the user's location
   metadata?: Record<string, any>; // Update custom metadata
+  secureMetadata: Record<string, any>; // Update custom secure metadata
 };
 ```
 

@@ -2,7 +2,7 @@
   "name": "replyke-docs",
   "type": "module",
   "version": "0.0.1",
-  "description": "Documentation for Rplyke v4",
+  "description": "Documentation for Replyke v4",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
