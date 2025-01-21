@@ -4,7 +4,6 @@
 
 The `useEntityVotes` hook provides functionality to manage voting on an entity, including upvoting, downvoting, and removing votes. This hook is designed to handle optimistic updates to the entity’s state, ensuring a smooth user experience by immediately reflecting changes in the UI while making server requests in the background. It also supports callbacks for handling cases where a user is not logged in or does not have a username.
 
-
 ## Usage Example
 
 ```tsx
@@ -34,27 +33,27 @@ function EntityVoteButtons({ entity, setEntity }: { entity: Entity; setEntity: R
 }
 ```
 
-
 ## Parameters & Returns
 
 ### Parameters
 
 The hook accepts an object with the following fields:
 
-| Parameter               | Type                                    | Required | Description                                                                 |
-|-------------------------|-----------------------------------------|----------|-----------------------------------------------------------------------------|
-| `loginRequiredCallback` | `() => void`                           | Yes      | Callback function triggered when a user is not logged in.                  |
-| `usernameRequiredCallback` | `() => void`                        | No       | Callback function triggered when a user does not have a username.          |
-| `entity`                | `Entity | undefined`                   | Yes      | The current entity object.                                                 |
-| `setEntity`             | `React.Dispatch<React.SetStateAction<Entity | undefined>>` | Yes | Function to update the entity state in your component.                     |
+| Parameter                | Type                                    | Required | Description                                                                |
+|--------------------------|-----------------------------------------|----------|----------------------------------------------------------------------------|
+| `loginRequiredCallback`  | `() => void`                           | Yes      | Callback function triggered when a user is not logged in.                 |
+| `usernameRequiredCallback` | `() => void`                         | No       | Callback function triggered when a user does not have a username.         |
+| `entity`                 | `Entity \| undefined`                   | Yes      | The current entity object.                                                |
+| `setEntity`              | `React.Dispatch<React.SetStateAction<Entity \| undefined>>` | Yes | Function to update the entity state in your component.                    |
 
 ### Returns
 
 The hook returns an object containing the following functions:
 
-| Function                 | Description                                                                 |
-|--------------------------|-----------------------------------------------------------------------------|
+| Function                 | Description                                                                |
+|--------------------------|----------------------------------------------------------------------------|
 | `upvoteEntity`           | Adds an upvote to the entity and updates the server.                       |
 | `removeEntityUpvote`     | Removes the user’s upvote from the entity and updates the server.           |
 | `downvoteEntity`         | Adds a downvote to the entity and updates the server.                      |
 | `removeEntityDownvote`   | Removes the user’s downvote from the entity and updates the server.         |
+
