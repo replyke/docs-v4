@@ -9,6 +9,7 @@ export default {
   relationships: "Relationships",
   "app-notifications": "App notifications",
   reports: "Reports",
+  hooks: "Hooks",
   // about: {
   //   title: "About",
   //   type: "page",

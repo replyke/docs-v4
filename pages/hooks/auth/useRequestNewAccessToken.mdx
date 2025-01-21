@@ -1,0 +1,46 @@
+# `useRequestNewAccessToken`
+
+## Overview
+The `useRequestNewAccessToken` hook allows users to obtain a new access token when their current one expires. This function requires a refresh token to be passed explicitly in React Native apps, while React apps handle the process automatically via cookies.
+
+## Usage Example
+
+```tsx
+import { useRequestNewAccessToken } from "replyke";
+
+function RefreshAccessToken() {
+  const requestNewAccessToken = useRequestNewAccessToken();
+
+  const handleRefresh = async () => {
+    try {
+      const result = await requestNewAccessToken({
+        refreshToken: "user-refresh-token", // Replace with the actual refresh token (React Native only)
+      });
+
+      console.log("New access token:", result.accessToken);
+    } catch (error) {
+      console.error("Failed to refresh access token:", error.message);
+    }
+  };
+
+  return <button onClick={handleRefresh}>Refresh Access Token</button>;
+}
+```
+
+## Parameters & Returns
+
+### Parameters
+The hook returns a function that accepts an object with the following fields:
+
+| Parameter       | Type      | Required | Description |
+| --------------- | --------- | -------- | ----------- |
+| `refreshToken`  | `string`  | Yes      | The refresh token for the user session. React Native apps must pass this token explicitly, as it is not managed automatically. React apps handle this via cookies and do not need to provide this token explicitly. |
+
+### Returns
+The function resolves with an object containing:
+
+| Property         | Type      | Description |
+|------------------|-----------|-------------|
+| `accessToken`    | `string`  | The new access token for the user session. It should be stored in memory. |
+| `user`           | `object`  | The authenticated user’s details. |
+

@@ -1,0 +1,40 @@
+# `useVerifyExternalUser`
+
+## Overview
+The `useVerifyExternalUser` hook allows you to verify an external user by passing a securely signed JWT containing the user’s details. This function ensures that the user is authenticated and authorized by your system.
+
+## Usage Example
+
+```tsx
+import { useVerifyExternalUser } from "replyke";
+
+function VerifyUser() {
+  const verifyExternalUser = useVerifyExternalUser();
+
+  const handleVerify = async () => {
+    try {
+      const result = await verifyExternalUser({
+        userJwt: "securely-signed-jwt", // Replace with the actual JWT
+      });
+
+      console.log("User verification successful:", result);
+    } catch (error) {
+      console.error("User verification failed:", error.message);
+    }
+  };
+
+  return <button onClick={handleVerify}>Verify User</button>;
+}
+```
+
+## Parameters & Returns
+
+### Parameters
+The hook returns a function that accepts an object with the following fields:
+
+| Parameter   | Type      | Required | Description |
+|-------------|-----------|----------|-------------|
+| `userJwt`   | `string`  | Yes      | A securely signed JWT containing the external user’s details. |
+
+### Returns
+The function resolves with an object containing the verification result. The exact structure of the returned data depends on your system's implementation.

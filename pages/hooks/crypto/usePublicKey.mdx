@@ -1,0 +1,35 @@
+# `usePublicKey`
+
+## Overview
+The `usePublicKey` hook is used to retrieve a public key from the server. This key is essential for encrypting sensitive data, such as user credentials, before sending it to the server. The hook fetches the key automatically on initialization and stores it for use throughout your application.
+
+## Usage Example
+
+```tsx
+import { usePublicKey } from "replyke";
+
+function ExampleComponent() {
+  const publicKey = usePublicKey();
+
+  useEffect(() => {
+    if (publicKey) {
+      console.log("Fetched Public Key:", publicKey);
+    }
+  }, [publicKey]);
+
+  return <div>Public Key: {publicKey || "Loading..."}</div>;
+}
+```
+
+## Parameters & Returns
+
+### Parameters
+The hook does not accept any parameters.
+
+### Returns
+The hook returns the following value:
+
+| Return Value | Type      | Description |
+|--------------|-----------|-------------|
+| `publicKey`  | `string`  | The Base64-encoded public key fetched from the server. If the key has not yet been fetched, the value will be `null`. |
+
