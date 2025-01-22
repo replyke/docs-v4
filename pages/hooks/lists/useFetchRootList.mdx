@@ -1,0 +1,41 @@
+# `useFetchRootList`
+
+## Overview
+
+The `useFetchRootList` hook is used to retrieve the root list for the current project. The root list is the top-level list that does not have a parent, serving as the foundation for organizing all other lists in the hierarchy.
+
+## Usage Example
+
+```tsx
+import { useFetchRootList } from "replyke";
+
+function RootListDisplay() {
+  const fetchRootList = useFetchRootList();
+
+  const handleFetchRootList = async () => {
+    try {
+      const rootList = await fetchRootList();
+      console.log("Fetched root list:", rootList);
+    } catch (error) {
+      console.error("Failed to fetch root list:", error.message);
+    }
+  };
+
+  return <button onClick={handleFetchRootList}>Fetch Root List</button>;
+}
+```
+
+
+## Parameters & Returns
+
+### Parameters
+
+The hook does not require any parameters.
+
+### Returns
+
+The function resolves with an object representing the root list:
+
+| Return Value | Type   | Description                                   |
+|--------------|--------|-----------------------------------------------|
+| `List`       | `List` | The details of the root list, including its ID and properties. |

@@ -1,0 +1,45 @@
+# `useIsEntitySaved`
+
+## Overview
+
+The `useIsEntitySaved` hook is used to determine whether a specific entity is saved in the user's lists. It provides a simple mechanism to check the saved status of an entity and cache the result to avoid redundant requests.
+
+## Usage Example
+
+```tsx
+import { useIsEntitySaved } from "replyke";
+
+function EntitySaveStatus({ entityId }: { entityId: string }) {
+  const { checkIfEntityIsSaved, entityIsSaved } = useIsEntitySaved();
+
+  useEffect(() => {
+    checkIfEntityIsSaved(entityId);
+  }, [entityId, checkIfEntityIsSaved]);
+
+  return (
+    <div>
+      {entityIsSaved === null ? "Checking..." : entityIsSaved ? "Entity is saved" : "Entity is not saved"}
+    </div>
+  );
+}
+```
+
+
+## Parameters & Returns
+
+### Parameters
+
+The hook provides a function that accepts the following parameter:
+
+| Parameter   | Type     | Required | Description                                  |
+|-------------|----------|----------|----------------------------------------------|
+| `entityId`  | `string` | Yes      | The ID of the entity to check.               |
+
+### Returns
+
+The hook returns the following:
+
+| Return Value          | Type                          | Description                                            |
+|-----------------------|-------------------------------|--------------------------------------------------------|
+| `checkIfEntityIsSaved` | `(entityId: string) => void` | A function to check if the specified entity is saved.  |
+| `entityIsSaved`        | `boolean \| null`            | The saved status of the entity (`true`, `false`, or `null` if not yet checked). |

@@ -1,0 +1,53 @@
+# `useUpdateList`
+
+## Overview
+
+The `useUpdateList` hook is used to update the details of a specific list within the current project. This includes updating properties like the list's name.
+
+
+## Usage Example
+
+```tsx
+import { useUpdateList } from "replyke";
+
+function UpdateListButton({ listId }: { listId: string }) {
+  const updateList = useUpdateList();
+
+  const handleUpdateList = async () => {
+    try {
+      const updatedList = await updateList({
+        listId,
+        update: {
+          name: "Updated List Name",
+        },
+      });
+
+      console.log("List updated successfully:", updatedList);
+    } catch (error) {
+      console.error("Failed to update list:", error.message);
+    }
+  };
+
+  return <button onClick={handleUpdateList}>Update List</button>;
+}
+```
+
+
+## Parameters & Returns
+
+### Parameters
+
+The hook returns a function that accepts an object with the following fields:
+
+| Parameter   | Type                     | Required | Description                            |
+|-------------|--------------------------|----------|----------------------------------------|
+| `listId`    | `string`                | Yes      | The ID of the list to be updated.       |
+| `update`    | `Partial<{ name: string }>` | Yes      | The properties to update for the list. |
+
+### Returns
+
+The function resolves with an object representing the updated list:
+
+| Return Value | Type   | Description                          |
+|--------------|--------|--------------------------------------|
+| `List`       | `List` | The details of the updated list.     |

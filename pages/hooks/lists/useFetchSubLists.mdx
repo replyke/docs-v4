@@ -1,0 +1,45 @@
+# `useFetchSubLists`
+
+## Overview
+
+The `useFetchSubLists` hook is used to retrieve the sublists of a specified parent list within the current project. This is useful for navigating hierarchical list structures and fetching child lists dynamically.
+
+
+## Usage Example
+
+```tsx
+import { useFetchSubLists } from "replyke";
+
+function SubListsDisplay({ currentList }: { currentList: List }) {
+  const fetchSubLists = useFetchSubLists();
+
+  const handleFetchSubLists = async () => {
+    try {
+      const subLists = await fetchSubLists({ currentList });
+      console.log("Fetched sublists:", subLists);
+    } catch (error) {
+      console.error("Failed to fetch sublists:", error.message);
+    }
+  };
+
+  return <button onClick={handleFetchSubLists}>Fetch Sub Lists</button>;
+}
+```
+
+## Parameters & Returns
+
+### Parameters
+
+The hook returns a function that accepts an object with the following field:
+
+| Parameter      | Type   | Required | Description                           |
+|----------------|--------|----------|---------------------------------------|
+| `currentList`  | `List` | Yes      | The parent list whose sublists are to be fetched. |
+
+### Returns
+
+The function resolves with an array of sublists:
+
+| Return Value  | Type     | Description                                |
+|---------------|----------|--------------------------------------------|
+| `List[]`      | `List[]` | An array of sublists associated with the specified parent list. |

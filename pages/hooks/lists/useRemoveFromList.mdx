@@ -1,0 +1,50 @@
+# `useRemoveFromList`
+
+## Overview
+
+The `useRemoveFromList` hook is used to remove an entity from a specified list within the current project. This allows users to dynamically manage the contents of their lists by removing entities as needed.
+
+
+## Usage Example
+
+```tsx
+import { useRemoveFromList } from "replyke";
+
+function RemoveFromListButton({ entityId, currentList }: { entityId: string; currentList: List }) {
+  const removeFromList = useRemoveFromList();
+
+  const handleRemoveFromList = async () => {
+    try {
+      const updatedList = await removeFromList({
+        entityId,
+        currentList,
+      });
+
+      console.log("Entity removed from list successfully:", updatedList);
+    } catch (error) {
+      console.error("Failed to remove entity from list:", error.message);
+    }
+  };
+
+  return <button onClick={handleRemoveFromList}>Remove from List</button>;
+}
+```
+
+## Parameters & Returns
+
+### Parameters
+
+The hook returns a function that accepts an object with the following fields:
+
+| Parameter      | Type     | Required | Description                                      |
+|----------------|----------|----------|--------------------------------------------------|
+| `entityId`     | `string` | Yes      | The ID of the entity to be removed from the list. |
+| `currentList`  | `List`   | Yes      | The list from which the entity will be removed.  |
+
+### Returns
+
+The function resolves with an object representing the updated list:
+
+| Return Value | Type   | Description                                   |
+|--------------|--------|-----------------------------------------------|
+| `List`       | `List` | The details of the updated list without the removed entity. |

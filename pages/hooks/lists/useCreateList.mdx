@@ -1,0 +1,50 @@
+# `useCreateList`
+
+## Overview
+
+The `useCreateList` hook is used to create a new list within the current project. The newly created list is associated with a parent list, enabling the creation of hierarchical list structures.
+
+## Usage Example
+
+```tsx
+import { useCreateList } from "replyke";
+
+function CreateListButton({ currentList }: { currentList: List }) {
+  const createList = useCreateList();
+
+  const handleCreateList = async () => {
+    try {
+      const newList = await createList({
+        listName: "My New List",
+        currentList,
+      });
+
+      console.log("List created successfully:", newList);
+    } catch (error) {
+      console.error("Failed to create list:", error.message);
+    }
+  };
+
+  return <button onClick={handleCreateList}>Create List</button>;
+}
+```
+
+
+## Parameters & Returns
+
+### Parameters
+
+The hook returns a function that accepts an object with the following fields:
+
+| Parameter      | Type     | Required | Description                                  |
+|----------------|----------|----------|----------------------------------------------|
+| `listName`     | `string` | Yes      | The name of the new list to be created.       |
+| `currentList`  | `List`   | Yes      | The parent list under which the new list is created. |
+
+### Returns
+
+The function resolves with an object representing the newly created list:
+
+| Return Value | Type   | Description                          |
+|--------------|--------|--------------------------------------|
+| `List`       | `List` | The details of the created list, including its ID and parent association. |
