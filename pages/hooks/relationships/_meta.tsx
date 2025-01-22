@@ -1,5 +1,5 @@
 export default {
-  useFetchFollow: "useFetchFollow",
   useFollowUser: "useFollowUser",
+  useFetchFollow: "useFetchFollow",
   useUnfollowUser: "useUnfollowUser",
 };

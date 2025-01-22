@@ -1,5 +1,5 @@
 export default {
-  useCountUnreadNotifications: "useCountUnreadNotifications",
   useFetchAppNotifications: "useFetchAppNotifications",
+  useCountUnreadNotifications: "useCountUnreadNotifications",
   useMarkNotificationAsRead: "useMarkNotificationAsRead",
 };
