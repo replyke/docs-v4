@@ -1,0 +1,133 @@
+# `useListsData`
+
+## Overview
+
+The `useListsData` hook provides a comprehensive and centralized solution for managing hierarchical lists. Unlike individual hooks such as `useCreateList`, `useAddToList`, or `useFetchRootList`, this hook combines all list-related functionalities into a unified interface. It enables creating, updating, deleting, and navigating through lists, as well as managing list entities. It is ideal for applications that need to handle complex list structures with parent-child relationships and caching mechanisms for efficient data access.
+
+## Usage Example
+
+```tsx
+import { useListsData } from "replyke";
+
+function ListsComponent() {
+  const {
+    currentList,
+    subLists,
+    loading,
+    openList,
+    goBack,
+    goToRoot,
+    isEntityInList,
+    createList,
+    updateList,
+    deleteList,
+    addToList,
+    removeFromList,
+  } = useListsData();
+
+  return (
+    <div>
+      <h1>Current List: {currentList?.name || "Root"}</h1>
+      <ul>
+        {subLists.map((list) => (
+          <li key={list.id}>
+            {list.name}
+            <button onClick={() => openList(list)}>Open</button>
+          </li>
+        ))}
+      </ul>
+
+      {loading && <p>Loading...</p>}
+
+      <button onClick={goBack}>Go Back</button>
+      <button onClick={goToRoot}>Go to Root</button>
+
+      <button
+        onClick={async () => {
+          await createList({ listName: "New List" });
+        }}
+      >
+        Create List
+      </button>
+
+      <button
+        onClick={async () => {
+          if (currentList) {
+            await deleteList({ list: currentList });
+          }
+        }}
+      >
+        Delete Current List
+      </button>
+    </div>
+  );
+}
+```
+
+
+
+## Parameters & Returns
+
+### Parameters
+
+This hook does not require any parameters.
+
+### Returns
+
+The hook returns an object with the following fields:
+
+| Return Value        | Type                                   | Description                                                                 |
+|---------------------|----------------------------------------|-----------------------------------------------------------------------------|
+| `currentList`       | `List \| null`                        | The currently active list.                                                  |
+| `subLists`          | `List[]`                              | The sublists of the current list.                                           |
+| `loading`           | `boolean`                             | Indicates whether data is being fetched.                                    |
+| `openList`          | `(list: List) => void`                | Opens a specified list and sets it as the current list.                     |
+| `goBack`            | `() => void`                          | Navigates back to the previous list in the hierarchy.                       |
+| `goToRoot`          | `() => void`                          | Navigates directly to the root list.                                        |
+| `isEntityInList`    | `(selectedEntityId: string) => boolean` | Checks if an entity exists in the current list.                             |
+| `createList`        | `(props: { listName: string }) => Promise<void>` | Creates a new sublist under the current list.                              |
+| `updateList`        | `(props: { listId: string; update: Partial<{ name: string }> }) => Promise<void>` | Updates the name or other properties of a list. |
+| `deleteList`        | `(props: { list: List }) => Promise<void>` | Deletes the specified list.                                               |
+| `addToList`         | `(props: { entityId: string }) => Promise<void>` | Adds an entity to the current list.                                        |
+| `removeFromList`    | `(props: { entityId: string }) => Promise<void>` | Removes an entity from the current list.                                   |
+
+---
+
+## Key Features
+
+1. **Hierarchical Navigation**: Easily navigate between parent and child lists with `openList`, `goBack`, and `goToRoot`.
+2. **Entity Management**: Add or remove entities from lists using `addToList` and `removeFromList`.
+3. **Cache Mechanism**: Caches sublist data for each list to avoid redundant API calls and improve performance.
+4. **CRUD Operations**: Perform create, update, and delete operations on lists.
+5. **Root List Handling**: Automatically fetches the root list upon initialization.
+
+---
+
+## Advanced Usage
+
+### Caching
+
+The hook uses an internal cache (`subListCache`) to store sublists for each list by their ID. This prevents unnecessary API calls when navigating back to a previously accessed list.
+
+### State Management
+
+- **`loading`**: Tracks whether any API operation is in progress.
+- **`currentList`**: Represents the currently selected list.
+- **`subLists`**: Contains the child lists of the current list.
+- **`listHistory`**: Maintains a stack of previously visited lists to enable the `goBack` functionality.
+
+---
+
+## Common Errors
+
+1. **No Root List**:
+   - Ensure the user is authenticated before invoking the hook.
+   - The root list is fetched automatically, but failures in this operation might result in `currentList` being `null`.
+
+2. **Cache Miss**:
+   - If a list's sublists are not cached, the hook will fetch them from the server.
+
+---
+
+The `useListsData` hook is a comprehensive tool for managing lists and their entities, enabling developers to build robust hierarchical data management interfaces with minimal effort. Let me know if you need further clarification or examples!
+

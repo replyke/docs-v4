@@ -1,0 +1,52 @@
+# `useCreateComment`
+
+## Overview
+
+The `useCreateComment` hook allows users to add a new comment to an entity or reply to an existing comment. It supports optional mentions within the comment content, enabling tagging other users.
+
+## Usage Example
+
+```tsx
+import { useCreateComment } from "replyke";
+
+function AddComment({ entityId }: { entityId: string }) {
+  const createComment = useCreateComment();
+
+  const handleAddComment = async () => {
+    try {
+      const newComment = await createComment({
+        entityId,
+        content: "This is a new comment!",
+        mentions: [{ userId: "123", username: "JohnDoe" }],
+      });
+
+      console.log("Comment added successfully:", newComment);
+    } catch (error) {
+      console.error("Failed to add comment:", error.message);
+    }
+  };
+
+  return <button onClick={handleAddComment}>Add Comment</button>;
+}
+```
+
+## Parameters & Returns
+
+### Parameters
+
+The hook returns a function that accepts an object with the following fields:
+
+| Parameter         | Type             | Required | Description                                         |
+| ----------------- | ---------------- | -------- | --------------------------------------------------- |
+| `entityId`        | `string`         | Yes      | The ID of the entity to which the comment is added. |
+| `parentCommentId` | `string \| null` | No       | The ID of the parent comment (for replies).         |
+| `content`         | `string`         | Yes      | The text content of the comment.                    |
+| `mentions`        | `Mention[]`      | No       | An array of mentions to include in the comment.     |
+
+### Returns
+
+The function resolves with the newly created comment object:
+
+| Return Value  | Type          | Description                               |
+| ------------- | ------------- | ----------------------------------------- |
+| `CommentType` | `CommentType` | The details of the newly created comment. |

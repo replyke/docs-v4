@@ -1,0 +1,129 @@
+# `useFeedData`
+
+## Overview
+
+The `useFeedData` hook provides a powerful and flexible solution for managing and presenting entity data in a feed. Unlike individual hooks like `useFetchEntities` or `useCreateEntity`, this hook combines functionalities such as fetching, creating, deleting, and managing entities while offering advanced filter customizations and state management. It is ideal for implementing dynamic feeds with tailored sorting and filtering options.
+
+---
+
+## Usage Example
+
+```tsx
+import { useFeedData } from "replyke";
+
+function Feed() {
+  const {
+    entities,
+    infusedEntities,
+    loading,
+    hasMore,
+    sortBy,
+    setSortBy,
+    loadMore,
+    resetEntities,
+    createEntity,
+    deleteEntity,
+  } = useFeedData({ limit: 10, sortBy: "hot" });
+
+  const handleCreateEntity = async () => {
+    try {
+      await createEntity({
+        title: "New Post",
+        content: "This is a new post content",
+      });
+    } catch (error) {
+      console.error("Failed to create entity:", error.message);
+    }
+  };
+
+  return (
+    <div>
+      <select
+        value={sortBy}
+        onChange={(e) => setSortBy(e.target.value as "hot" | "new")}
+      >
+        <option value="hot">Hot</option>
+        <option value="new">New</option>
+      </select>
+
+      <ul>
+        {entities.map((entity) => (
+          <li key={entity.id}>{entity.title}</li>
+        ))}
+      </ul>
+
+      {loading && <p>Loading...</p>}
+      {hasMore && !loading && (
+        <button onClick={loadMore}>Load More</button>
+      )}
+
+      <button onClick={handleCreateEntity}>Create New Entity</button>
+    </div>
+  );
+}
+```
+
+---
+
+## Parameters & Returns
+
+### Parameters
+
+The hook accepts an object with the following fields:
+
+| Parameter          | Type                       | Required | Description                                                                 |
+|--------------------|----------------------------|----------|-----------------------------------------------------------------------------|
+| `limit`            | `number`                  | No       | The number of entities to fetch per page. Default is `10`.                  |
+| `followedOnly`     | `boolean`                 | No       | If `true`, fetches entities from followed users only. Default is `false`.   |
+| `sortBy`           | `FeedSortByOptions`       | No       | The default sorting criteria for the feed (e.g., `hot`, `new`).             |
+| `timeFrame`        | `TimeFrame`               | No       | The time range for fetching entities.                                       |
+| `keywordsFilters`  | `KeywordsFilters`         | No       | Filters entities based on keywords.                                         |
+| `titleFilters`     | `TitleFilters`            | No       | Filters entities based on titles.                                           |
+| `contentFilters`   | `ContentFilters`          | No       | Filters entities based on content.                                          |
+| `mediaFilters`     | `MediaFilters`            | No       | Filters entities based on media properties.                                 |
+| `locationFilters`  | `LocationFilters`         | No       | Filters entities based on location.                                         |
+| `metadataFilters`  | `MetadataFilters`         | No       | Filters entities based on metadata.                                         |
+| `userId`           | `string \| null`          | No       | Filters entities created by a specific user.                                |
+| `idle`             | `boolean`                 | No       | If `true`, the hook starts in an idle state and fetches entities only when activated. |
+| `onReset`          | `() => void`              | No       | Callback executed when the feed is reset.                                   |
+| `infuseData`       | `(referenceId: string) => Promise<Record<string, any> \| null>` | No | A function to fetch and add additional data to each entity.                |
+
+### Returns
+
+The hook returns an object with the following fields:
+
+| Return Value        | Type                                   | Description                                                                 |
+|---------------------|----------------------------------------|-----------------------------------------------------------------------------|
+| `entities`          | `Entity[]`                            | The flat list of entities fetched so far.                                   |
+| `infusedEntities`   | `(Entity & Record<string, any>)[]`     | The list of entities infused with additional data (if `infuseData` is provided). |
+| `loading`           | `boolean`                             | Indicates whether entities are being loaded.                                |
+| `hasMore`           | `boolean`                             | Indicates whether there are more entities to fetch.                         |
+| `resetting`         | `boolean`                             | Indicates whether the feed is resetting.                                    |
+| `sortBy`            | `FeedSortByOptions \| null`           | The current sorting criteria for the feed.                                  |
+| `setSortBy`         | `(sortBy: FeedSortByOptions) => void` | A function to update the sorting criteria.                                  |
+| `timeFrame`         | `TimeFrame \| null`                   | The current time range filter for the feed.                                 |
+| `setTimeFrame`      | `(timeFrame: TimeFrame \| null) => void` | A function to update the time range filter.                                 |
+| `followedOnly`      | `boolean`                             | Indicates whether only followed users' entities are fetched.                |
+| `setFollowedOnly`   | `(state: boolean) => void`            | A function to toggle the `followedOnly` filter.                             |
+| `userId`            | `string \| null`                      | The current user ID filter.                                                 |
+| `setUserId`         | `(userId: string \| null) => void`    | A function to update the user ID filter.                                    |
+| `keywordsFilters`   | `KeywordsFilters \| null`             | The current keywords filter.                                                |
+| `updateKeywordsFilters` | `(type: "add" \| "remove" \| "reset" \| "replace", key: "includes" \| "doesNotInclude" \| "both", value?: string \| string[]) => void` | A function to modify the keywords filter. |
+| `titleFilters`      | `TitleFilters \| null`                | The current title filters.                                                  |
+| `setTitleFilters`   | `(newTitleFilters: TitleFilters \| null) => void` | A function to update the title filters.                                     |
+| `contentFilters`    | `ContentFilters \| null`              | The current content filters.                                                |
+| `setContentFilters` | `(newContentFilters: ContentFilters \| null) => void` | A function to update the content filters.                                   |
+| `mediaFilters`      | `MediaFilters \| null`                | The current media filters.                                                  |
+| `setMediaFilters`   | `(newMediaFilters: MediaFilters \| null) => void` | A function to update the media filters.                                     |
+| `locationFilters`   | `LocationFilters \| null`             | The current location filters.                                               |
+| `setLocationFilters`| `(location: LocationFilters \| null) => void` | A function to update the location filters.                                  |
+| `metadataFilters`   | `MetadataFilters \| null`             | The current metadata filters.                                               |
+| `setMetadataFilters`| `(newMetadataFilters: MetadataFilters \| null) => void` | A function to update the metadata filters.                                  |
+| `kickstart`         | `() => void`                          | A function to activate the feed if it starts in an idle state.              |
+| `loadMore`          | `() => void`                          | A function to fetch the next page of entities.                              |
+| `resetEntities`     | `() => Promise<void>`                 | A function to reset the feed and fetch the first page of entities.          |
+| `createEntity`      | `(props: { referenceId?: string; title?: string; content?: string; media?: any[]; keywords?: string[]; location?: { latitude: number; longitude: number }; metadata?: Record<string, any>; insertPosition?: "first" \| "last" }) => Promise<void>` | A function to create a new entity and optionally insert it into the feed. |
+| `deleteEntity`      | `(props: { entityId: string }) => Promise<void>` | A function to delete an entity from the feed.                              |
+
+---
+

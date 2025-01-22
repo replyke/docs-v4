@@ -7,4 +7,6 @@ export default {
   useIncrementEntityViews: "useIncrementEntityViews",
   useDeleteEntity: "useDeleteEntity",
   useInfusedData: "useInfusedData",
+  useEntityData: "useEntityData",
+  useFeedData: "useFeedData",
 };

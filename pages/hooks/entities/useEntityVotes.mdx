@@ -16,8 +16,6 @@ function EntityVoteButtons({ entity, setEntity }: { entity: Entity; setEntity: R
     downvoteEntity,
     removeEntityDownvote,
   } = useEntityVotes({
-    loginRequiredCallback: () => alert("Please log in to vote."),
-    usernameRequiredCallback: () => alert("Please set a username to vote."),
     entity,
     setEntity,
   });
@@ -41,8 +39,6 @@ The hook accepts an object with the following fields:
 
 | Parameter                | Type                                    | Required | Description                                                                |
 |--------------------------|-----------------------------------------|----------|----------------------------------------------------------------------------|
-| `loginRequiredCallback`  | `() => void`                           | Yes      | Callback function triggered when a user is not logged in.                 |
-| `usernameRequiredCallback` | `() => void`                         | No       | Callback function triggered when a user does not have a username.         |
 | `entity`                 | `Entity \| undefined`                   | Yes      | The current entity object.                                                |
 | `setEntity`              | `React.Dispatch<React.SetStateAction<Entity \| undefined>>` | Yes | Function to update the entity state in your component.                    |
 

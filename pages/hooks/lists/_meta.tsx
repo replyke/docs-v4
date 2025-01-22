@@ -7,4 +7,5 @@ export default {
   useAddToList: "useAddToList",
   useRemoveFromList: "useRemoveFromList",
   useDeleteList: "useDeleteList",
+  useListsData: "useListsData",
 };
