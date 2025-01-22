@@ -1,0 +1,71 @@
+# `useSubmitReport`
+
+## Overview
+
+The `useSubmitReport` hook allows users to report inappropriate or problematic content. It provides specialized functions to submit reports for comments or entities, with options to specify reasons and additional details.
+
+
+## Usage Example
+
+```tsx
+import { useSubmitReport } from "replyke";
+
+function ReportButton({ targetId, targetType }: { targetId: string; targetType: "Comment" | "Entity" }) {
+  const { submitCommentReport, submitEntityReport } = useSubmitReport();
+
+  const handleReport = async () => {
+    try {
+      if (targetType === "Comment") {
+        await submitCommentReport({
+          targetId,
+          reason: "spam",
+          details: "This comment contains spam links."
+        });
+      } else {
+        await submitEntityReport({
+          targetId,
+          reason: "harassment",
+          details: "This entity contains inappropriate content."
+        });
+      }
+
+      console.log("Report submitted successfully.");
+    } catch (error) {
+      console.error("Failed to submit report:", error.message);
+    }
+  };
+
+  return <button onClick={handleReport}>Report</button>;
+}
+```
+
+## Parameters & Returns
+
+### Parameters
+
+The hook provides two functions with the following parameters:
+
+#### `submitCommentReport`
+
+| Parameter    | Type            | Required | Description                                   |
+|--------------|-----------------|----------|-----------------------------------------------|
+| `targetId`   | `string`        | Yes      | The ID of the comment to report.              |
+| `reason`     | `ReportReasonKey` | Yes    | The reason for reporting the comment.         |
+| `details`    | `string`        | No       | Additional details about the report.          |
+
+#### `submitEntityReport`
+
+| Parameter    | Type            | Required | Description                                   |
+|--------------|-----------------|----------|-----------------------------------------------|
+| `targetId`   | `string`        | Yes      | The ID of the entity to report.               |
+| `reason`     | `ReportReasonKey` | Yes    | The reason for reporting the entity.          |
+| `details`    | `string`        | No       | Additional details about the report.          |
+
+### Returns
+
+The hook provides the following functions:
+
+| Function                | Description                                                   |
+|-------------------------|---------------------------------------------------------------|
+| `submitCommentReport`   | Submits a report for a comment.                               |
+| `submitEntityReport`    | Submits a report for an entity.                               |

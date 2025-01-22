@@ -1,0 +1,47 @@
+# `useFetchAppNotifications`
+
+## Overview
+
+The `useFetchAppNotifications` hook is used to retrieve a paginated list of app notifications for the currently authenticated user. Notifications include updates or actions relevant to the user within the project.
+
+
+## Usage Example
+
+```tsx
+import { useFetchAppNotifications } from "replyke";
+
+function NotificationsList() {
+  const fetchAppNotifications = useFetchAppNotifications();
+
+  const handleFetchNotifications = async () => {
+    try {
+      const notifications = await fetchAppNotifications({ page: 1, limit: 10 });
+      console.log("Fetched notifications:", notifications);
+    } catch (error) {
+      console.error("Failed to fetch notifications:", error.message);
+    }
+  };
+
+  return <button onClick={handleFetchNotifications}>Fetch Notifications</button>;
+}
+```
+
+
+## Parameters & Returns
+
+### Parameters
+
+The hook returns a function that accepts an object with the following fields:
+
+| Parameter | Type     | Required | Description                            |
+|-----------|----------|----------|----------------------------------------|
+| `page`    | `number` | Yes      | The page number to fetch.              |
+| `limit`   | `number` | Yes      | The number of notifications per page.  |
+
+### Returns
+
+The function resolves with an array of app notifications:
+
+| Return Value                | Type                                | Description                                  |
+|-----------------------------|-------------------------------------|----------------------------------------------|
+| `UnifiedAppNotification[]`  | `UnifiedAppNotification[]`          | A list of app notifications for the user.   |

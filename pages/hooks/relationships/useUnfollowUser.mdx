@@ -1,0 +1,41 @@
+# `useUnfollowUser`
+
+## Overview
+
+The `useUnfollowUser` hook allows a logged-in user to unfollow another user within the current project. This hook ensures that users can only unfollow valid targets and handles necessary validations.
+
+
+## Usage Example
+
+```tsx
+import { useUnfollowUser } from "replyke";
+
+function UnfollowUserButton({ targetUserId }: { targetUserId: string }) {
+  const unfollowUser = useUnfollowUser();
+
+  const handleUnfollowUser = async () => {
+    try {
+      await unfollowUser({ userId: targetUserId });
+      console.log("Successfully unfollowed the user.");
+    } catch (error) {
+      console.error("Failed to unfollow user:", error.message);
+    }
+  };
+
+  return <button onClick={handleUnfollowUser}>Unfollow User</button>;
+}
+```
+
+## Parameters & Returns
+
+### Parameters
+
+The hook returns a function that accepts an object with the following field:
+
+| Parameter | Type     | Required | Description                            |
+|-----------|----------|----------|----------------------------------------|
+| `userId`  | `string` | Yes      | The ID of the user to unfollow.        |
+
+### Returns
+
+The function does not return a value but ensures the unfollow action is executed successfully on the server.

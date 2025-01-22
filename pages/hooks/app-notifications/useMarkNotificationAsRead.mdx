@@ -1,0 +1,42 @@
+# `useMarkNotificationAsRead`
+
+## Overview
+
+The `useMarkNotificationAsRead` hook is used to mark a specific notification as read for the currently authenticated user. This is helpful for managing notification statuses in real-time.
+
+
+## Usage Example
+
+```tsx
+import { useMarkNotificationAsRead } from "replyke";
+
+function MarkNotificationButton({ notificationId }: { notificationId: string }) {
+  const markNotificationAsRead = useMarkNotificationAsRead();
+
+  const handleMarkAsRead = async () => {
+    try {
+      await markNotificationAsRead(notificationId);
+      console.log("Notification marked as read successfully.");
+    } catch (error) {
+      console.error("Failed to mark notification as read:", error.message);
+    }
+  };
+
+  return <button onClick={handleMarkAsRead}>Mark as Read</button>;
+}
+```
+
+
+## Parameters & Returns
+
+### Parameters
+
+The hook returns a function that accepts the following parameter:
+
+| Parameter         | Type     | Required | Description                              |
+|-------------------|----------|----------|------------------------------------------|
+| `notificationId`  | `string` | Yes      | The ID of the notification to mark as read. |
+
+### Returns
+
+The function does not return a value but ensures the specified notification is marked as read on the server upon successful execution.

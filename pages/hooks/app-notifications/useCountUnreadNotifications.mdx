@@ -1,0 +1,43 @@
+# `useCountUnreadNotifications`
+
+## Overview
+
+The `useCountUnreadNotifications` hook is used to retrieve the total count of unread notifications for the currently authenticated user. This is useful for displaying notification badges or summaries.
+
+## Usage Example
+
+```tsx
+import { useCountUnreadNotifications } from "replyke";
+
+function UnreadNotificationsBadge() {
+  const countUnreadNotifications = useCountUnreadNotifications();
+
+  const handleFetchUnreadCount = async () => {
+    try {
+      const unreadCount = await countUnreadNotifications();
+      console.log("Unread notifications count:", unreadCount);
+    } catch (error) {
+      console.error(
+        "Failed to fetch unread notifications count:",
+        error.message
+      );
+    }
+  };
+
+  return <button onClick={handleFetchUnreadCount}>Get Unread Count</button>;
+}
+```
+
+## Parameters & Returns
+
+### Parameters
+
+The hook does not require any parameters.
+
+### Returns
+
+The function resolves with the count of unread notifications:
+
+| Return Value | Type     | Description                              |
+| ------------ | -------- | ---------------------------------------- |
+| `number`     | `number` | The total count of unread notifications. |

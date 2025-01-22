@@ -1,0 +1,50 @@
+# `useFetchFollow`
+
+## Overview
+
+The `useFetchFollow` hook is used to determine whether a user is following another user within the current project. It verifies the relationship based on the logged-in user's ID and the target user's ID.
+
+
+## Usage Example
+
+```tsx
+import { useFetchFollow } from "replyke";
+
+function FollowStatus({ targetUserId }: { targetUserId: string }) {
+  const fetchFollow = useFetchFollow();
+
+  const handleCheckFollow = async () => {
+    try {
+      const isFollowing = await fetchFollow({ userId: targetUserId });
+      console.log(
+        isFollowing
+          ? "You are following this user."
+          : "You are not following this user."
+      );
+    } catch (error) {
+      console.error("Failed to fetch follow status:", error.message);
+    }
+  };
+
+  return <button onClick={handleCheckFollow}>Check Follow Status</button>;
+}
+```
+
+
+## Parameters & Returns
+
+### Parameters
+
+The hook returns a function that accepts an object with the following field:
+
+| Parameter | Type     | Required | Description                            |
+|-----------|----------|----------|----------------------------------------|
+| `userId`  | `string` | Yes      | The ID of the user to check follow status for. |
+
+### Returns
+
+The function resolves with a boolean value:
+
+| Return Value  | Type      | Description                                  |
+|---------------|-----------|----------------------------------------------|
+| `isFollowing` | `boolean` | `true` if the logged-in user is following the target user, otherwise `false`. |
