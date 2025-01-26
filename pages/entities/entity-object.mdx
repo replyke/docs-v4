@@ -40,11 +40,11 @@ export interface Entity {
 
 -   **id**: A unique identifier for the entity. This is required for distinguishing entities within the system.
     
+-   **projectId**: Identifies the project to which the entity belongs.
+
 -   **referenceId**: If the entity is integrated on top of existing data, this field references the original item’s ID in your system. It can also accept static values (e.g., "about-page" for static content).
     
 -   **shortId**: An automatically generated, unique identifier that can be used for creating sharing links.
-    
--   **projectId**: Identifies the project to which the entity belongs.
     
 
 #### User and Content
@@ -71,12 +71,12 @@ export interface Entity {
     
 -   **downvotes**: An array of user IDs representing users who downvoted the entity.
     
--   **repliesCount**: The total number of comments and replies associated with the entity.
+-   **repliesCount**: The total number of comments and replies associated with the entity (merged count).
     
 
 #### Analytics and Scoring
 
--   **views**: The total number of views the entity has received.
+-   **views**: The total number of views the entity has received. Needs to be dynamivally increased by the developer.
     
 -   **score**: A "hotness" score for the entity, automatically generated based on user activity.
     
@@ -159,7 +159,7 @@ export interface Entity {
   "content": "Enjoy your stay at our beautiful beachside hotel.",
   "location": { "type": "Point", "coordinates": [34.0522, -118.2437] },
   "metadata": { "rating": 4.5, "price": "199.99" },
-  "user": { "id": "550e8400-e29b-41d4-a716-446655440005", "name": "Hotel Owner" }
+  "user": { "id": "550e8400-e29b-41d4-a716-446655440005", "name": "Sunrise Hotels" }
 }
 ```
 

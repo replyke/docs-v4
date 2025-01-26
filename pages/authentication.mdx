@@ -23,11 +23,11 @@ To simplify the integration process, Replyke now provides authentication out of 
 
 ### Additional Setup for React Native
 
-For React Native apps, the `TokenManager` is still required and must be added as a child of the `ReplykeProvider`. If your app is managed with Expo, pass the `expoManaged` flag to the `TokenManager`. Here’s the updated structure:
+For React Native apps, Expo managed or CLI, the `TokenManager` is still required and must be added as a child of the `ReplykeProvider`. Here’s the updated structure:
 
 ```javascript
 <ReplykeProvider projectId={/* Your project ID */}>
-  <TokenManager expoManaged />
+  <TokenManager />
   {/* Rest of your app */}
 </ReplykeProvider>
 ```

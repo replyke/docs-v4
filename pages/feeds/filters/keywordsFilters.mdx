@@ -27,6 +27,10 @@ The `updateKeywordsFilters` function allows developers to modify the state of th
 1.  **`add`**: Adds new keywords to the specified list (`includes` or `doesNotInclude`).
 2.  **`remove`**: Removes specified keywords from the list.
 3.  **`reset`**: Resets the specified list to its initial state. You can reset both lists simultaneously.
+4. **`replace`**: Replaces the entire array of keywords with a new set. For example:
+
+> Important**: When calling `updateKeywordsFilters("add", "both", ...)` or `updateKeywordsFilters("replace", "both", ...)`, no action is taken, as adding/replacing across both lists simultaneously is not supported.  
+
 
 Here is an example of how to use `updateKeywordsFilters`:
 
@@ -42,6 +46,9 @@ updateKeywordsFilters("remove", "doesNotInclude", "Vue");
 // Resetting both lists
 updateKeywordsFilters("reset", "both");
 
+// Replacing the includes array with a new array
+updateKeywordsFilters("replace", "includes", ["Angular"]); 
+
 ```
 
 #### **How Keywords Filters Work**
@@ -54,7 +61,7 @@ When the feed is queried, the keywords filters are applied as follows:
 
 #### **Example Use Cases**
 
-##### **1. Passing Static Filters to the FeedProvider**
+##### **Passing Static Filters to the FeedProvider**
 
 If you want to set static filters as a starting point for your feed, you can pass them directly into the `FeedProvider`:
 
@@ -69,7 +76,7 @@ If you want to set static filters as a starting point for your feed, you can pas
 
 This setup ensures that the feed is pre-configured to show only posts about "JavaScript" or "React" while excluding posts that mention "Angular."
 
-##### **2. Dynamically Updating Filters Based on User Interaction**
+##### **Dynamically Updating Filters Based on User Interaction**
 
 To dynamically change the filters, such as when a user clicks a keyword button, use the `updateKeywordsFilters` function from the `useFeed` hook:
 

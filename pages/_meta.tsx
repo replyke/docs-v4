@@ -9,11 +9,8 @@ export default {
   relationships: "Relationships",
   "app-notifications": "App notifications",
   reports: "Reports",
+  security:"security",
   hooks: "Hooks",
-  // about: {
-  //   title: "About",
-  //   type: "page",
-  // },
   contact: {
     title: "Contact ↗",
     type: "page",

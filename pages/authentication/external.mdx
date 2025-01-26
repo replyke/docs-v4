@@ -37,13 +37,13 @@ By verifying the signature with the public key, Replyke can trust that the data 
 
 ### Obtaining User Data on the Server
 
--   When a logged-in user is detected, the app makes a request to the developer’s server (not Replyke) to obtain a signed JWT.
+-   When a logged-in user is detected, the app makes a request to the developer’s server (not to Replyke's server, but to your own) to obtain a signed JWT.
 -   The server retrieves the user’s data (e.g., from cookies or authentication headers) and signs the JWT with the private key.
 -   This approach ensures that user data is never directly sent from the client to the server, reducing the risk of tampering.
 
 ### Passing the JWT to the Client
 
--   The signed JWT is sent back to the client and passed as a prop to the `AuthProvider` in Replyke.
+-   The signed JWT is sent back to the client and passed as a prop to the `ReplkeProvider` which is wrapping your project.
 
 ### Verification and User Association in Replyke
 
@@ -111,10 +111,8 @@ function ContextProvider({ children }: { children: React.ReactNode }) {
   }, [userClerk, getToken]);
 
   return (
-    <ReplykeProvider projectId="<YOUR_PROJECT_ID>">
-      <AuthProvider signedToken={signedToken}>
-        {children}
-      </AuthProvider>
+    <ReplykeProvider projectId="<YOUR_PROJECT_ID>" signedToken={signedToken}>
+      {children}
     </ReplykeProvider>
   );
 }
