@@ -8,7 +8,7 @@ Replyke simplifies the implementation of follow relationships with three dedicat
 
 Unlike many other functionalities, relationships in Replyke do not require any context provider. You can use the following hooks directly in your components:
 
-### 1. `useFollowUser`
+### `useFollowUser`
 
 This hook returns a function that allows the currently logged-in user to follow another user.
 
@@ -29,7 +29,7 @@ handleFollowUser("BBBB");
 - The `followUser` function does not require the ID of the currently logged-in user; this is handled automatically.
 - The function will not execute if the passed user ID is the same as the logged-in user's ID.
 
-### 2. `useUnfollowUser`
+### `useUnfollowUser`
 
 This hook provides a function to unfollow a user. The requirements and limitations are the same as for `useFollowUser`.
 
@@ -50,7 +50,7 @@ handleUnfollowUser("BBBB");
 - Similar to `useFollowUser`, the logged-in user’s ID is automatically handled.
 - The function will not execute if the passed user ID is the same as the logged-in user's ID.
 
-### 3. `useFetchFollow`
+### `useFetchFollow`
 
 This hook returns a function that checks whether the currently logged-in user is following a specific user.
 

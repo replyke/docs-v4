@@ -8,8 +8,8 @@ export default {
   lists: "Lists",
   relationships: "Relationships",
   "app-notifications": "App notifications",
-  reports: "Reports",
-  security:"security",
+  reports: "Reports and Moderation",
+  security:"Security",
   hooks: "Hooks",
   contact: {
     title: "Contact ↗",
