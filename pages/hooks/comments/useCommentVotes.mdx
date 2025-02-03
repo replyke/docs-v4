@@ -8,7 +8,7 @@ The `useCommentVotes` hook provides functionality to manage upvotes and downvote
 ## Usage Example
 
 ```tsx
-import { useCommentVotes } from "replyke";
+import { useCommentVotes } from "@replyke/react-js";
 
 function CommentVotes({ comment, setComment }: { comment: CommentType; setComment: React.Dispatch<React.SetStateAction<CommentType>> }) {
   const { upvoteComment, removeCommentUpvote, downvoteComment, removeCommentDownvote } = useCommentVotes({ comment, setComment });

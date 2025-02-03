@@ -1,7 +1,51 @@
-### Comments: Bringing Social Interactions to Life
+## Comments: Bringing Social Interactions to Life
 
-Now that your content is live and ready to engage your users, it’s time to add a touch of interactivity that truly brings your platform to life. Comments are the heart of any social experience, enabling users to express their thoughts, share feedback, and spark conversations.
+Once your content is live and ready for engagement, adding a robust comment system transforms your platform into a dynamic, interactive space. Comments enable users to share their thoughts, provide feedback, and spark meaningful conversations. A well-implemented comment system fosters a sense of community and enhances user experience.
 
-Replyke offers a sleek, social-media-inspired comment section designed to fit seamlessly into your platform. Our comment system emphasizes simplicity, clarity, and user engagement. Features like nested replies, comment likes, and mentions make it easy for users to interact and stay connected in a vibrant and dynamic way.
+Replyke provides a comprehensive solution for integrating a social-media-style comment section into your application. Whether you want a fully-featured, plug-and-play component or the flexibility to build a custom solution using powerful hooks, Replyke gives you the tools you need.
 
-In the next section, we’ll dive into how effortlessly you can add this social-style comment system to your app, turning your platform into a space where conversations flourish.
+## Two Approaches to Comments
+
+### 1. Fully Functional Comment Component
+
+Building a comment system from scratch can be complex and time-consuming. While comments are an essential feature for many applications, they often don’t require complete customization. That’s why Replyke offers a battle-tested, pre-built comment section component that you can easily integrate into your app.
+
+#### Key Features of the Comment Component:
+
+-   **Mentions** – Users can mention others by their username, triggering notifications (if enabled). Mentions are clickable, allowing users to navigate directly to the mentioned user's profile.
+-   **Replies & Likes** – Supports nested replies and likes, with built-in notifications for interactions.
+-   **Highlighted Comments** – Pass a comment or reply ID to highlight a specific comment, useful when directing users from a notification.
+-   **GIF Support** – Add an API key in the dashboard to enable users to include GIFs in their comments.
+-   **Built-in Authorization** – Replyke includes baked-in authorization, ensuring only authorized users can delete their comments and preventing duplicate likes or interactions, regardless of whether you use the pre-built component or a custom solution. Developers opting for a custom setup can extend this with role-based logic.
+-   **Reporting & Moderation** – Includes a reporting system and an admin back office for managing reports, removing inappropriate comments, and banning users.
+-   **Customizability** – Developers can fine-tune the component using props to adjust behavior and appearance.
+
+Importantly, the offered component is built using the exact same hooks available to developers, ensuring that those who opt to build a custom solution have access to the same core functionality.
+
+The Replyke comment section is available for both **React.js** and **React Native (CLI & Expo)**:
+
+-   **React.js:** [@replyke/comments-social-react-js](https://www.npmjs.com/package/@replyke/comments-social-react-js)
+-   **React Native (CLI & Expo):** [@replyke/comments-social-react-native](https://www.npmjs.com/package/@replyke/comments-social-react-native)
+
+### Open Source and Community Contributions
+
+This component is part of an open-source initiative, and developers are encouraged to contribute. Over time, the goal is to expand beyond the current offering by building additional comment section styles that suit different application needs. Your contributions, whether in the form of feature suggestions, UI variations, or enhancements, help shape the future of Replyke’s commenting system.
+
+Get involved here: [GitHub Repository](https://github.com/replyke/ui-kit)
+
+### 2. Build Your Own Comment System with Hooks
+
+For developers who require complete control over their comment implementation, Replyke provides a set of powerful hooks. These hooks expose all necessary data and functionality, allowing you to build a fully customized comment system tailored to your needs.
+
+All available hooks can be found in the **Hooks/Comments** section of the documentation. This approach gives developers the freedom to:
+
+-   Design a unique UI/UX for the comment section.
+-   Implement custom behaviors for replies, likes, and mentions.
+-   Integrate their own authorization and moderation logic.
+-   Extend the comment system with additional features specific to their app.
+
+## What’s Next?
+
+In the upcoming chapters, we’ll cover how to integrate the Replyke comment component into your app effortlessly. If you prefer to build your own comment system, refer to the **Hooks/Comments** section for detailed guidance.
+
+Regardless of the approach you choose, Replyke ensures that your platform fosters rich, meaningful interactions while simplifying the complexities of comment system development.

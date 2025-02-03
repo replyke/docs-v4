@@ -24,7 +24,7 @@ export interface TitleFilters {
 
 Developers can dynamically update the title filters using the `setTitleFilters` function provided by the `useFeed` hook. This function expects a new `titleFilters` object or `null` to clear the filters.
 
-```typescript
+```tsx
 const { setTitleFilters } = useFeed();
 
 // Set a new title filter
@@ -51,7 +51,7 @@ Title Filters are applied on the backend when querying entities. They allow for:
 
 To set static filters for titles at the initialization of the feed, pass them directly to the `FeedProvider`:
 
-```typescript
+```tsx
 <FeedProvider
   titleFilters={{ hasTitle: true, includes: ["React", "JavaScript"], doesNotInclude: "Angular" }}
 >
@@ -66,7 +66,7 @@ This setup ensures that only entities with a title are included, and those title
 
 You can also dynamically adjust the title filters based on user actions, such as clicking a button:
 
-```typescript
+```tsx
 const { setTitleFilters, infusedEntities, loadMore } = useFeed();
 
 const handleFilterUpdate = (newIncludes: string[], newExcludes: string[]) => {

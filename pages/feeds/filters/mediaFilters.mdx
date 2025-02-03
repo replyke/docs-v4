@@ -20,7 +20,7 @@ export interface MediaFilters {
 
 Developers can dynamically update the media filters using the `setMediaFilters` function provided by the `useFeed` hook. This function expects a new `mediaFilters` object or `null` to clear the filters.
 
-```typescript
+```tsx
 const { setMediaFilters } = useFeed();
 
 // Set a filter to include entities with media
@@ -45,7 +45,7 @@ Media Filters are applied on the backend when querying entities. The `hasMedia` 
 
 To set static filters for media presence at the initialization of the feed, pass them directly to the `FeedProvider`:
 
-```typescript
+```tsx
 <FeedProvider mediaFilters={{ hasMedia: true }}>
   <MyFeedComponent />
 </FeedProvider>
@@ -58,7 +58,7 @@ This setup ensures that only entities with media are included in the feed.
 
 You can also dynamically adjust the media filters based on user actions, such as clicking a toggle button:
 
-```typescript
+```tsx
 const { setMediaFilters, infusedEntities, loadMore } = useFeed();
 
 const toggleMediaFilter = (hasMedia: boolean) => {

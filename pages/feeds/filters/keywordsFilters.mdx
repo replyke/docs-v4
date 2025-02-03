@@ -34,7 +34,7 @@ The `updateKeywordsFilters` function allows developers to modify the state of th
 
 Here is an example of how to use `updateKeywordsFilters`:
 
-```typescript
+```tsx
 const { updateKeywordsFilters } = useFeed();
 
 // Adding a keyword to the includes list
@@ -65,7 +65,7 @@ When the feed is queried, the keywords filters are applied as follows:
 
 If you want to set static filters as a starting point for your feed, you can pass them directly into the `FeedProvider`:
 
-```typescript
+```tsx
 <FeedProvider
   keywordsFilters={{ includes: ["JavaScript", "React"], doesNotInclude: ["Angular"] }}
 >
@@ -80,7 +80,7 @@ This setup ensures that the feed is pre-configured to show only posts about "Jav
 
 To dynamically change the filters, such as when a user clicks a keyword button, use the `updateKeywordsFilters` function from the `useFeed` hook:
 
-```typescript
+```tsx
 const { updateKeywordsFilters, infusedEntities, loadMore } = useFeed();
 
 const handleKeywordClick = (keyword: string) => {

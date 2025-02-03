@@ -8,7 +8,7 @@ The `useSubmitReport` hook allows users to report inappropriate or problematic c
 ## Usage Example
 
 ```tsx
-import { useSubmitReport } from "replyke";
+import { useSubmitReport } from "@replyke/react-js";
 
 function ReportButton({ targetId, targetType }: { targetId: string; targetType: "Comment" | "Entity" }) {
   const { submitCommentReport, submitEntityReport } = useSubmitReport();

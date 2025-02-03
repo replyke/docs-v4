@@ -8,7 +8,7 @@ The `useCommentSectionData` hook provides a comprehensive solution for managing 
 ## Usage Example
 
 ```tsx
-import { useCommentSectionData } from "replyke";
+import { useCommentSectionData } from "@replyke/react-js";
 
 function CommentSection({ entityId }: { entityId: string }) {
   const {
@@ -71,11 +71,15 @@ function CommentSection({ entityId }: { entityId: string }) {
 
 ### Parameters
 
-The hook accepts an object with the following fields:
+The hook accepts an object with the fields below. At least one of the first 4 fields must be provided (`entityId`/`referenceId`/`shortId`/`entity`):
 
 | Parameter              | Type                        | Required | Description                                                             |
 |------------------------|-----------------------------|----------|-------------------------------------------------------------------------|
-| `entityId`             | `string \| undefined \| null` | Yes      | The ID of the entity associated with the comments.                      |
+| `entityId`             | `string \| undefined \| null` | No      | The ID of the entity in Replyke's system.                      |
+| `referenceId`             | `string \| undefined \| null` | No      | The original item's ID if integrated with an external dataset, or a static value (e.g., "about-page").                      |
+| `shortId`             | `string \| undefined \| null` | No      | The unique short ID of the entity.                      |
+| `entity`             | `string \| undefined \| null` | No      | A complete `Entity` object.                      |
+| `createIfNotFound`             | `string \| undefined \| null` | No      | An optional flag which instructs Replyke to create an entity if one isn’t found.                      |
 | `limit`                | `number`                   | No       | The number of comments to fetch per page. Default is `15`.              |
 | `defaultSortBy`        | `CommentsSortByOptions`     | No       | The default sorting criteria for comments (e.g., `new`, `top`).         |
 | `callbacks`            | `SocialStyleCallbacks`      | No       | Optional callbacks for handling events like login requirements.         |

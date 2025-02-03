@@ -26,7 +26,7 @@ export interface MetadataFilters {
 
 Developers can dynamically update the metadata filters using the `setMetadataFilters` function provided by the `useFeed` hook. This function expects a new `metadataFilters` object or `null` to clear the filters.
 
-```typescript
+```tsx
 const { setMetadataFilters } = useFeed();
 
 // Set a filter to include entities with specific metadata
@@ -55,7 +55,7 @@ Metadata Filters allow for complex queries that include:
 
 To set static metadata filters at feed initialization, pass them directly to the `FeedProvider`:
 
-```typescript
+```tsx
 <FeedProvider
   metadataFilters={{
     includes: { category: "tech", featured: true },
@@ -80,7 +80,7 @@ This setup ensures that the feed includes:
 
 Developers can allow users to refine the feed dynamically using the `setMetadataFilters` function:
 
-```typescript
+```tsx
 const { setMetadataFilters, infusedEntities, loadMore } = useFeed();
 
 const applyFilters = () => {

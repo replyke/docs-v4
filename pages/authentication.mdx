@@ -19,17 +19,12 @@ For more advanced authorization needs, such as restricting access to specific pa
 
 ### Integration Requirements
 
-To simplify the integration process, Replyke now provides authentication out of the box via the `ReplykeProvider`. There is no longer a need to configure a separate `AuthProvider`. Wrapping your app in the `ReplykeProvider` automatically sets up the authentication context, ensuring seamless user management and authentication. Here’s the basic setup:
-
-### Additional Setup for React Native
-
-For React Native apps, Expo managed or CLI, the `TokenManager` is still required and must be added as a child of the `ReplykeProvider`. Here’s the updated structure:
+Replyke authentication is built directly into the ReplykeProvider, making integration seamless. Simply wrap your app in the ReplykeProvider, and authentication will be handled automatically:
 
 ```javascript
 <ReplykeProvider projectId={/* Your project ID */}>
-  <TokenManager />
   {/* Rest of your app */}
 </ReplykeProvider>
 ```
 
-This simplified setup ensures that authentication and user management work smoothly, providing the groundwork for secure and interactive user experiences in your application. The following sections will dive deeper into the technical aspects of authentication with Replyke.
+This setup ensures that authentication and user management work smoothly across all platforms, providing the groundwork for secure and interactive user experiences in your application. The following sections will dive deeper into the technical aspects of authentication with Replyke.

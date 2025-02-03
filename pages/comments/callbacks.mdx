@@ -6,27 +6,31 @@ Below is the interface for available callbacks:
 
 ```typescript
 export type SocialStyleCallbacks = {
-  loginRequiredCallback?: () => void; 
-  // Executed when an unauthenticated user tries to interact with the comments 
+  loginRequiredCallback?: () => void;
+  // Executed when an unauthenticated user tries to interact with the comments
   // (like/comment/reply). Defaults to a simple alert message.
 
-  usernameRequiredCallback?: () => void; 
-  // Executed when a user with no username tries to interact with the comments 
-  // (like/comment/reply). Useful for enforcing usernames (e.g., directing users to 
-  // set up a username). If not provided, the action will be submitted, and a 
+  usernameRequiredCallback?: () => void;
+  // Executed when a user with no username tries to interact with the comments
+  // (like/comment/reply). Useful for enforcing usernames (e.g., directing users to
+  // set up a username). If not provided, the action will be submitted, and a
   // generic username (e.g., user-85h344) will be used in the UI.
 
-  commentTooShortCallback?: () => void; 
-  // Executed if the user attempts to submit an empty or too-short comment/reply. 
+  commentTooShortCallback?: () => void;
+  // Executed if the user attempts to submit an empty or too-short comment/reply.
   // Defaults to a simple alert message.
 
-  currentUserClickCallback?: () => void; 
-  // Defines what happens when a user clicks their own avatar, name, or mention in the 
+  currentUserClickCallback?: () => void;
+  // Defines what happens when a user clicks their own avatar, name, or mention in the
   // comment section (e.g., redirecting them to their profile). Defaults to no action.
 
-  otherUserClickCallback?: (userId: string) => void; 
-  // Defines what happens when a user clicks another user’s avatar, name, or mention 
+  otherUserClickCallback?: (userId: string) => void;
+  // Defines what happens when a user clicks another user’s avatar, name, or mention
   // in the comment section (e.g., navigating to that user’s profile). Defaults to no action.
+
+  userCantBeMentionedCallback?: () => void;
+  // What should happen when a user tries to mention another user but that other user
+  // has no username set, which is a prequisite to being mentioned. Defaults to basic alert message.
 };
 ```
 
@@ -35,29 +39,39 @@ export type SocialStyleCallbacks = {
 ### Callback Descriptions
 
 1. **`loginRequiredCallback`**
+
    - **Purpose**: Handles scenarios where an unauthenticated user attempts to interact with the comment section.
    - **Default Behavior**: Shows a simple alert message.
    - **Suggested Use**: Direct the user to a login or signup page to enable interaction.
 
 2. **`usernameRequiredCallback`**
+
    - **Purpose**: Enforces username setup for users without a defined username.
    - **Default Behavior**: The interaction proceeds, and a generic username (e.g., `user-85h344`) is displayed.
    - **Suggested Use**: Prompt the user to set up a username, ideally during signup or through a dedicated flow.
 
 3. **`commentTooShortCallback`**
+
    - **Purpose**: Prevents submission of empty or too-short comments/replies.
    - **Default Behavior**: Alerts the user with a simple message.
    - **Suggested Use**: Display a friendly message explaining why the comment cannot be submitted.
 
 4. **`currentUserClickCallback`**
+
    - **Purpose**: Handles clicks on the current user’s avatar, name or mention in the comment section.
    - **Default Behavior**: No action.
    - **Suggested Use**: Redirect the user to their profile or account settings page.
 
 5. **`otherUserClickCallback`**
+
    - **Purpose**: Handles clicks on other users’ avatars, names, or mentions.
    - **Default Behavior**: No action.
    - **Suggested Use**: Navigate to the clicked user’s profile or show a modal with their information.
+
+6. **`userCantBeMentionedCallback`**
+   - **Purpose**: Handles cases where a user tries to mention another user who does not have a username set.
+   - **Default Behavior**: Shows a basic alert message.
+   - **Suggested Use**: You can notify the current user that mentioning of that user is not available. To avoid that, require all new users to set a unique username.
 
 ---
 
@@ -67,7 +81,7 @@ Here’s an example of how you can define and pass these callbacks to the commen
 
 ```tsx
 import React from "react";
-import { useSocialComments, useSocialStyle } from "replyke-rn";
+import { useSocialComments, useSocialStyle } from "@replyke/comments-social-react-native";
 import { showMessage } from "react-native-flash-message";
 
 const CommentSectionWithCallbacks = ({ entityId }: { entityId: string }) => {
@@ -100,6 +114,13 @@ const CommentSectionWithCallbacks = ({ entityId }: { entityId: string }) => {
     },
     otherUserClickCallback: (userId) => {
       console.log(`Navigating to profile of user with ID: ${userId}`);
+    },
+    userCantBeMentionedCallback: (user) => {
+      showMessage({
+        message: "User Can't Be Mentioned",
+        description: `${user.name} cannot be mentioned because they don't have a username set.",
+        type: "warning",
+      });
     },
   };
 

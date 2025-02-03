@@ -24,7 +24,7 @@ export interface ContentFilters {
 
 Developers can dynamically update the content filters using the `setContentFilters` function provided by the `useFeed` hook. This function expects a new `contentFilters` object or `null` to clear the filters.
 
-```typescript
+```tsx
 const { setContentFilters } = useFeed();
 
 // Set a new content filter
@@ -51,7 +51,7 @@ Content Filters are applied on the backend when querying entities. They allow fo
 
 To set static filters for content at the initialization of the feed, pass them directly to the `FeedProvider`:
 
-```typescript
+```tsx
 <FeedProvider
   contentFilters={{ hasContent: true, includes: ["JavaScript", "React"], doesNotInclude: "PHP" }}
 >
@@ -66,7 +66,7 @@ This setup ensures that only entities with content are included, and that conten
 
 You can also dynamically adjust the content filters based on user actions, such as clicking a button:
 
-```typescript
+```tsx
 const { setContentFilters, infusedEntities, loadMore } = useFeed();
 
 const handleFilterUpdate = (newIncludes: string[], newExcludes: string[]) => {

@@ -29,8 +29,6 @@ setLocationFilters: (location: LocationFilters | null) => void;
 To initialize the feed with location filters:
 
 ```tsx
-import { FeedProvider } from 'replyke';
-
 const locationFilters = {
   latitude: 37.7749,
   longitude: -122.4194,
@@ -46,8 +44,6 @@ const locationFilters = {
 To change the location filter dynamically, use the `useFeed` hook:
 
 ```tsx
-import { useFeed } from 'replyke';
-
 const MyComponent = () => {
   const { setLocationFilters } = useFeed();
 

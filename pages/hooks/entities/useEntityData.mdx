@@ -7,7 +7,7 @@ The `useEntityData` hook is a centralized utility for managing and interacting w
 ## Usage Example
 
 ```tsx
-import { useEntityData } from "replyke";
+import { useEntityData } from "@replyke/react-js";
 
 function EntityDetails({ entityId }: { entityId: string }) {
   const {
@@ -67,18 +67,19 @@ The hook accepts an object with the following fields:
 
 The hook returns an object with the following fields:
 
-| Return Value           | Type                                                          | Description                                             |
-| ---------------------- | ------------------------------------------------------------- | ------------------------------------------------------- | ------------------------------ |
-| `entity`               | `Entity                                                       | undefined`                                              | The fetched entity.            |
-| `userUpvotedEntity`    | `boolean`                                                     | Indicates if the current user has upvoted the entity.   |
-| `userDownvotedEntity`  | `boolean`                                                     | Indicates if the current user has downvoted the entity. |
-| `upvoteEntity`         | `() => void`                                                  | Function to upvote the entity.                          |
-| `removeEntityUpvote`   | `() => void`                                                  | Function to remove the user's upvote.                   |
-| `downvoteEntity`       | `() => void`                                                  | Function to downvote the entity.                        |
-| `removeEntityDownvote` | `() => void`                                                  | Function to remove the user's downvote.                 |
-| `updateEntity`         | `(props: Pick<UpdateEntityProps, "update">) => Promise<Entity | undefined>`                                             | Function to update the entity. |
-| `incrementEntityViews` | `() => Promise<void>`                                         | Function to increment the entity's view count.          |
-| `deleteEntity`         | `() => Promise<void>`                                         | Function to delete the entity.                          |
+| Return Value           | Type                                                         | Description                                             |
+| ---------------------- | ------------------------------------------------------------ | ------------------------------------------------------- |
+| `entity`               | `Entity \| undefined`                                       | The fetched entity.            |
+| `userUpvotedEntity`    | `boolean`                                                  | Indicates if the current user has upvoted the entity.   |
+| `userDownvotedEntity`  | `boolean`                                                  | Indicates if the current user has downvoted the entity. |
+| `upvoteEntity`         | `() => void`                                              | Function to upvote the entity.                          |
+| `removeEntityUpvote`   | `() => void`                                              | Function to remove the user's upvote.                   |
+| `downvoteEntity`       | `() => void`                                              | Function to downvote the entity.                        |
+| `removeEntityDownvote` | `() => void`                                              | Function to remove the user's downvote.                 |
+| `updateEntity`         | `(props: Pick<UpdateEntityProps, "update">) => Promise<Entity \| undefined>` | Function to update the entity. |
+| `incrementEntityViews` | `() => Promise<void>`                                     | Function to increment the entity's view count.          |
+| `deleteEntity`         | `() => Promise<void>`                                     | Function to delete the entity.                          |
+
 
 ---
 
