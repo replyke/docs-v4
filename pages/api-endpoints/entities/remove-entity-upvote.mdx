@@ -1,0 +1,112 @@
+
+# Remove Upvote from Entity
+
+## Endpoint
+
+**URL:** `/:projectId/entities/:entityId/remove-upvote`
+
+**Method:** `PATCH`
+
+**Authentication Required:** Yes (Bearer Token)
+
+----------
+
+## Description
+
+This endpoint allows a user to remove their upvote from an entity. If the user has not previously upvoted the entity, the request will return an error.
+
+----------
+
+## Request
+
+### Headers
+
+-   `Authorization: Bearer <accessToken>` (Required)
+
+### URL Parameters
+
+| Parameter    | Type     | Required | Description |
+|-------------|----------|----------|-------------|
+| `projectId` | `string` | Yes      | The project ID associated with the request. |
+| `entityId`  | `string` | Yes      | The ID of the entity from which to remove the upvote. |
+
+### Body Parameters
+
+_None_
+
+#### Example Request
+
+```sh
+PATCH /12345/entities/67890/remove-upvote
+Authorization: Bearer <accessToken>
+```
+
+----------
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "id": "<ENTITY_ID>",
+  "projectId": "<PROJECT_ID>",
+  "referenceId": "<REFERENCE_ID>",
+  "userId": "<USER_ID>",
+  "title": "Entity Title",
+  "content": "Entity content goes here.",
+  "keywords": ["example", "update"],
+  "mentions": [{ "id": "user-1111", "username": "john_doe" }],
+  "upvotes": ["other_user_id"],
+  "downvotes": [],
+  "sharesCount": 0,
+  "views": 0,
+  "score": 0,
+  "metadata": {},
+  "createdAt": "<TIMESTAMP>",
+  "updatedAt": "<TIMESTAMP>",
+  "deletedAt": null
+}
+```
+
+### Error Responses
+
+#### Missing Entity ID (400 Bad Request)
+
+```json
+{
+  "error": "Invalid entity ID"
+}
+```
+
+#### Entity Not Found (404 Not Found)
+
+```json
+{
+  "error": "Entity not found"
+}
+```
+
+#### User Has Not Upvoted (409 Conflict)
+
+```json
+{
+  "error": "Can't remove upvote, as user didn't upvote entity or entity not found"
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+----------
+
+## Notes
+
+-   If the user has not previously upvoted the entity, an error will be returned.
+-   `upvotes` and `downvotes` are arrays of user IDs representing users who have voted on the entity.
+-   Removing an upvote does not automatically add a downvote; it simply removes the user's upvote.

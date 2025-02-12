@@ -1,0 +1,96 @@
+
+# Delete Entity
+
+## Endpoint
+
+**URL:** `/:projectId/entities/:entityId`
+
+**Method:** `DELETE`
+
+**Authentication Required:** Yes
+
+----------
+
+## Description
+
+This endpoint allows an authorized user to delete an entity. The entity can be deleted by either its author or an admin of the project.
+
+----------
+
+## Request
+
+### URL Parameters
+
+
+| Parameter    | Type     | Required | Description |
+|-------------|----------|----------|-------------|
+| `projectId` | `string` | Yes      | The project ID associated with the request. |
+| `entityId`  | `string` | Yes      | The ID of the entity to be deleted. |
+
+### Headers
+| Header        | Type   | Required | Description |
+|--------------|--------|----------|-------------|
+| `Authorization` | `string` | Yes | Bearer token for authentication. |
+
+### Body Parameters
+
+_None_
+
+#### Example Request
+
+```sh
+DELETE /12345/entities/67890
+Authorization: Bearer <token>
+```
+
+----------
+
+## Response
+
+### Success Response (204 No Content)
+
+```sh
+(no content)
+```
+
+### Error Responses
+
+#### Missing Entity ID (400 Bad Request)
+
+```json
+{
+  "error": "Invalid entityId"
+}
+```
+
+#### Entity Not Found (404 Not Found)
+
+```json
+{
+  "error": "Entity not found"
+}
+```
+
+#### Unauthorized Access (403 Forbidden)
+
+```json
+{
+  "error": "Not authorized to delete this entity"
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Failed to delete the entity"
+}
+```
+
+----------
+
+## Notes
+
+-   Only the entity's author or an admin of the project can delete the entity.
+-   If the entity is successfully deleted, no content is returned.
+-   Deleting an entity also deducts the reputation points earned for creating it.

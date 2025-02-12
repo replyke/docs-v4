@@ -1,0 +1,130 @@
+
+# Update Entity
+
+## Endpoint
+
+**URL:** `/:projectId/entities/:entityId`
+
+**Method:** `PATCH`
+
+**Authentication Required:** Optional (If updating a user-owned entity, authentication is required)
+
+----------
+
+## Description
+
+This endpoint updates an existing entity. Only fields that are explicitly provided in the request body will be updated. If the entity belongs to a user, authentication is required to ensure the request is authorized.
+
+----------
+
+## Request
+
+### Headers
+
+-   `Authorization: Bearer <accessToken>` (Required if updating a user-owned entity)
+
+### URL Parameters
+
+
+| Parameter    | Type     | Required | Description |
+|-------------|----------|----------|-------------|
+| `projectId` | `string` | Yes      | The project ID associated with the request. |
+| `entityId`  | `string` | Yes      | The ID of the entity to update. |
+
+### Body Parameters
+| Parameter   | Type      | Required | Description |
+|------------|-----------|----------|-------------|
+| `title`     | `string`  | No       | The updated title of the entity. |
+| `content`   | `string`  | No       | The updated content of the entity. |
+| `media`     | `object[]` | No       | An array of media objects. Media format is free-form. |
+| `keywords`  | `string[]` | No       | An array of keywords associated with the entity. |
+| `metadata`  | `object`  | No       | JSON object containing additional metadata. |
+| `mentions`  | `array`   | No       | An array of mentions, each containing an `id` and `username`. |
+| `location`  | `object`  | No       | An object representing the location of the entity, formatted as: `{"type": "Point", "coordinates": [longitude, latitude]}`
+
+
+#### Example Request
+
+```json
+{
+  "title": "Updated Entity Title",
+  "content": "Updated content for the entity.",
+  "keywords": ["example", "update"],
+  "metadata": { "category": "news" },
+  "mentions": [{ "id": "user-1111", "username": "john_doe" }],
+  "location": { "type": "Point", "coordinates": [120.982, 14.604] }
+}
+```
+
+----------
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "id": "<ENTITY_ID>",
+  "projectId": "<PROJECT_ID>",
+  "referenceId": "<REFERENCE_ID>",
+  "userId": "<USER_ID>",
+  "title": "Updated Entity Title",
+  "content": "Updated content for the entity.",
+  "keywords": ["example", "update"],
+  "mentions": [{ "id": "user-1111", "username": "john_doe" }],
+  "location": { "type": "Point", "coordinates": [120.982, 14.604] },
+  "upvotes": [],
+  "downvotes": [],
+  "sharesCount": 0,
+  "views": 0,
+  "score": 0,
+  "metadata": { "category": "news" },
+  "createdAt": "<TIMESTAMP>",
+  "updatedAt": "<TIMESTAMP>",
+  "deletedAt": null
+}
+```
+
+### Error Responses
+
+#### Invalid Entity ID (400 Bad Request)
+
+```json
+{
+  "error": "Invalid entityID"
+}
+```
+
+#### Unauthorized (403 Forbidden)
+
+```json
+{
+  "error": "You do not have permission to update this entity."
+}
+```
+
+#### Entity Not Found (404 Not Found)
+
+```json
+{
+  "error": "Entity not found"
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Failed to update the entity"
+}
+```
+
+----------
+
+## Notes
+
+-   If the entity is user-owned, only the user who created it can update it.
+-   Only provided fields will be updated; unspecified fields remain unchanged.
+-   `media` is a free-form array and its structure depends on the project implementation.
+-   `mentions` should be passed as an array of objects containing `id` and `username` fields.
+-   `location` should be passed in GeoJSON format (`type: "Point"`).

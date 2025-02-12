@@ -1,0 +1,115 @@
+
+# Upvote Entity
+
+## Endpoint
+
+**URL:** `/:projectId/entities/:entityId/upvote`
+
+**Method:** `PATCH`
+
+**Authentication Required:** Yes (Bearer Token)
+
+----------
+
+## Description
+
+This endpoint allows a user to upvote an entity. If a user has previously downvoted the entity, the downvote will be removed. A user cannot upvote an entity more than once.
+
+----------
+
+## Request
+
+### Headers
+
+-   `Authorization: Bearer <accessToken>` (Required)
+
+### URL Parameters
+
+
+| Parameter    | Type     | Required | Description |
+|-------------|----------|----------|-------------|
+| `projectId` | `string` | Yes      | The project ID associated with the request. |
+| `entityId`  | `string` | Yes      | The ID of the entity to upvote. |
+
+### Body Parameters
+
+_None_
+
+#### Example Request
+
+```sh
+PATCH /12345/entities/67890/upvote
+Authorization: Bearer <accessToken>
+
+```
+
+----------
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "id": "<ENTITY_ID>",
+  "projectId": "<PROJECT_ID>",
+  "referenceId": "<REFERENCE_ID>",
+  "userId": "<USER_ID>",
+  "title": "Entity Title",
+  "content": "Entity content goes here.",
+  "keywords": ["example", "update"],
+  "mentions": [{ "id": "user-1111", "username": "john_doe" }],
+  "upvotes": ["<USER_ID>", "other_user_id"],
+  "downvotes": [],
+  "sharesCount": 0,
+  "views": 0,
+  "score": 1,
+  "metadata": {},
+  "createdAt": "<TIMESTAMP>",
+  "updatedAt": "<TIMESTAMP>",
+  "deletedAt": null
+}
+```
+
+### Error Responses
+
+#### Missing Entity ID (400 Bad Request)
+
+```json
+{
+  "error": "Missing entityId in request body"
+}
+```
+
+#### Entity Not Found (404 Not Found)
+
+```json
+{
+  "error": "Entity not found"
+}
+```
+
+#### User Already Upvoted (409 Conflict)
+
+```json
+{
+  "error": "User already upvoted entity"
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+----------
+
+## Notes
+
+-   If a user has previously downvoted an entity, the downvote is removed when they upvote.
+-   If the entity is user-owned, a notification is triggered to notify the owner of the upvote.
+-   `upvotes` and `downvotes` are arrays of user IDs representing users who have voted on the entity.
+-   Users cannot upvote the same entity multiple times.

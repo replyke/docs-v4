@@ -1,0 +1,112 @@
+# Downvote Entity
+
+## Endpoint
+
+**URL:** `/:projectId/entities/:entityId/downvote`
+
+**Method:** `PATCH`
+
+**Authentication Required:** Yes (Bearer Token)
+
+----------
+
+## Description
+
+This endpoint allows a user to downvote an entity. If a user has previously upvoted the entity, the upvote will be removed. A user cannot downvote an entity more than once.
+
+----------
+
+## Request
+
+### Headers
+
+-   `Authorization: Bearer <accessToken>` (Required)
+
+### URL Parameters
+
+
+| Parameter    | Type     | Required | Description |
+|-------------|----------|----------|-------------|
+| `projectId` | `string` | Yes      | The project ID associated with the request. |
+| `entityId`  | `string` | Yes      | The ID of the entity to downvote. |
+
+### Body Parameters
+
+_None_
+
+#### Example Request
+
+```sh
+PATCH /12345/entities/67890/downvote
+Authorization: Bearer <accessToken>
+```
+
+----------
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "id": "<ENTITY_ID>",
+  "projectId": "<PROJECT_ID>",
+  "referenceId": "<REFERENCE_ID>",
+  "userId": "<USER_ID>",
+  "title": "Entity Title",
+  "content": "Entity content goes here.",
+  "keywords": ["example", "update"],
+  "mentions": [{ "id": "user-1111", "username": "john_doe" }],
+  "upvotes": [],
+  "downvotes": ["<USER_ID>", "other_user_id"],
+  "sharesCount": 0,
+  "views": 0,
+  "score": -1,
+  "metadata": {},
+  "createdAt": "<TIMESTAMP>",
+  "updatedAt": "<TIMESTAMP>",
+  "deletedAt": null
+}
+```
+
+### Error Responses
+
+#### Missing Entity ID (400 Bad Request)
+
+```json
+{
+  "error": "Missing entityId in request body"
+}
+```
+
+#### Entity Not Found (404 Not Found)
+
+```json
+{
+  "error": "Entity not found"
+}
+```
+
+#### User Already Downvoted (409 Conflict)
+
+```json
+{
+  "error": "User already downvoted entity"
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+----------
+
+## Notes
+
+-   If a user has previously upvoted an entity, the upvote is removed when they downvote.
+-   `upvotes` and `downvotes` are arrays of user IDs representing users who have voted on the entity.
+-   Users cannot downvote the same entity multiple times.
