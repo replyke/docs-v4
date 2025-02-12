@@ -1,0 +1,146 @@
+# Create Comment
+
+## Endpoint
+
+**URL:** `/:projectId/comments/`
+
+**Method:** `POST`
+
+**Authentication Required:** Yes (Requires a valid access token in the `Authorization` header)
+
+----------
+
+## Description
+
+This endpoint allows users to create a new comment or reply to an entity. Comments can include text content, GIFs, and mentions. If a comment is a reply, it must include a `parentId` referencing the parent comment.
+
+----------
+
+## Request
+
+### Headers
+
+-   `Content-Type: application/json`
+-   `Authorization: Bearer <accessToken>` (Required, must contain a valid access token)
+
+### Body Parameters
+
+
+| Parameter  | Type     | Required    | Description                                                                              |
+| ---------- | -------- | ----------- | ---------------------------------------------------------------------------------------- |
+| `entityId` | `string` | Yes         | ID of the entity being commented on.                                                     |
+| `content`  | `string` | Conditional | The text content of the comment (required unless a GIF is provided).                     |
+| `gif`      | `object` | Conditional | A GIF object containing metadata (required if `content` is not provided).                |
+| `mentions` | `array`  | No          | Array of user mentions, each containing `id` and `username`. Defaults to an empty array. |
+| `parentId` | `string` | No          | ID of the parent comment if this is a reply.                                             |
+
+### GIF Object Structure
+
+| Parameter       | Type     | Required | Description                             |
+| --------------- | -------- | -------- | --------------------------------------- |
+| `id`            | `string` | Yes      | Unique identifier of the GIF.           |
+| `gifUrl`        | `string` | Yes      | URL of the GIF.                         |
+| `gifPreviewUrl` | `string` | Yes       | URL for the GIF preview (if available). |
+| `altText`       | `string` | Yes       | Alternative text for accessibility.     |
+| `url`           | `string` | Yes      | Direct URL to the GIF resource.         |
+| `aspectRatio`   | `string` | Yes       | The aspect ratio of the GIF.            |
+
+
+----------
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "id": "<COMMENT_ID>",
+  "projectId": "<PROJECT_ID>",
+  "userId": "<USER_ID>",
+  "entityId": "<ENTITY_ID>",
+  "parentId": "<PARENT_ID>",
+  "content": "<COMMENT_CONTENT>",
+  "gif": {
+    "id": "<GIF_ID>",
+    "gifUrl": "<GIF_URL>",
+    "gifPreviewUrl": "<GIF_PREVIEW_URL>",
+    "altText": "<ALT_TEXT>",
+    "url": "<URL>",
+    "aspectRatio": "<ASPECT_RATIO>"
+  },
+  "mentions": ["<MENTIONS_ARRAY>"],
+  "upvotes": [],
+  "downvotes": [],
+  "createdAt": "<TIMESTAMP>",
+  "updatedAt": "<TIMESTAMP>",
+  "deletedAt": null
+}
+
+```
+
+### Error Responses
+
+#### Missing `entityId` (400 Bad Request)
+
+```json
+{
+  "error": "Missing entity ID"
+}
+
+```
+
+**Reason:** The request must include an `entityId` to associate the comment with an entity.
+
+#### Missing Required Content (400 Bad Request)
+
+```json
+{
+  "error": "Missing required comment content"
+}
+
+```
+
+**Reason:** Either `content` or `gif` must be provided to create a comment.
+
+#### Entity Not Found (404 Not Found)
+
+```json
+{
+  "error": "Entity not found"
+}
+
+```
+
+**Reason:** The specified `entityId` does not correspond to any existing entity.
+
+#### Unauthorized Request (401 Unauthorized)
+
+```json
+{
+  "error": "Missing or invalid authorization token"
+}
+
+```
+
+**Reason:** The request did not include a valid access token in the `Authorization` header.
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+
+```
+
+**Reason:** An unexpected error occurred while processing the request.
+
+----------
+
+## Notes
+
+-   A comment must include either `content` or a `gif` but not be empty.
+-   If `parentId` is provided, the comment will be treated as a reply.
+-   The user's reputation will be automatically updated upon posting a comment.
+-   Notifications are automatically generated for mentioned users and parent comment authors.
+-   The `Authorization` header must be provided and contain a valid access token.

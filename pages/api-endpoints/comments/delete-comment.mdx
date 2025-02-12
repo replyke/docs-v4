@@ -1,0 +1,91 @@
+# Delete Comment
+
+## Endpoint
+
+**URL:** `/:projectId/comments/:commentId`
+
+**Method:** `DELETE`
+
+**Authentication Required:** Yes (Requires a valid access token in the `Authorization` header)
+
+----------
+
+## Description
+
+This endpoint allows a user to delete their own comment. If the comment has replies, they will be updated to reflect that the parent comment was deleted, but the replies themselves will not be removed.
+
+----------
+
+## Request
+
+### Headers
+
+-   `Authorization: Bearer <accessToken>` (Required, must contain a valid access token)
+
+### URL Parameters
+
+
+| Parameter   | Type     | Required | Description                        |
+|------------|----------|----------|------------------------------------|
+| `projectId` | `string` | Yes      | The project ID associated with the comment. |
+| `commentId` | `string` | Yes      | The ID of the comment to be deleted. |
+
+
+----------
+
+## Response
+
+### Success Response (204 No Content)
+
+The comment was successfully deleted. No response body is returned.
+
+### Error Responses
+
+#### Missing `commentId` (400 Bad Request)
+
+```json
+{
+  "error": "Missing comment ID"
+}
+```
+
+**Reason:** The request must include a `commentId` to specify which comment to delete.
+
+#### Comment Not Found (404 Not Found)
+
+```json
+{
+  "error": "Comment not found"
+}
+```
+
+**Reason:** The specified `commentId` does not exist or does not belong to the given `projectId`.
+
+#### Unauthorized Deletion (403 Forbidden)
+
+```json
+{
+  "error": "You do not have permission to delete this comment."
+}
+```
+
+**Reason:** The user making the request is not the owner of the comment.
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+**Reason:** An unexpected error occurred while processing the request.
+
+----------
+
+## Notes
+
+-   A comment can only be deleted by its owner.
+-   If a deleted comment has replies, they will remain visible but will indicate that the parent comment was deleted.
+-   The user's reputation will be updated accordingly upon deleting a comment.
+-   The `Authorization` header must be provided and contain a valid access token.

@@ -1,0 +1,100 @@
+
+# User Authentication via JWT
+
+## Endpoint
+
+**URL:** `/:projectId/auth/verify-external-user`
+
+**Method:** `POST`
+
+**Authentication Required:** No (Uses JWT validation)
+
+----------
+
+## Description
+
+This endpoint validates an externally issued JWT and returns authentication tokens for the user. The user must provide a properly signed JWT. If the user exists, their information is updated; otherwise, a new user is created.
+
+----------
+
+## Request
+
+### Headers
+
+-   `Content-Type: application/json`
+
+### Body Parameters
+
+| Parameter  | Type   | Required | Description |
+|------------|--------|----------|-------------|
+| `userJwt` | `string` | Yes | JWT signed by the external project's private key. |
+
+
+----------
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "success": true,
+  "accessToken": "<JWT_ACCESS_TOKEN>",
+  "refreshToken": "<JWT_REFRESH_TOKEN>",
+  "user": {
+    "id": "<USER_ID>",
+    "email": "<USER_EMAIL>",
+    "name": "<USER_NAME>",
+    "username": "<USER_USERNAME>",
+    "avatar": "<USER_AVATAR>",
+    "reputation": "<USER_REPUTATION>"
+  }
+}
+```
+
+**Cookies Set:**
+
+-   `replyke-refresh-jwt`: Refresh token stored as an `HttpOnly` cookie.
+
+### Error Responses
+
+#### Missing `userJwt` (400 Bad Request)
+
+```json
+{
+  "error": "Missing userJwt"
+}
+```
+
+**Reason:** The request must include a `userJwt` in the body.
+
+#### Missing JWT Keys (403 Forbidden)
+
+```json
+{
+  "error": "Missing JWT keys"
+}
+```
+
+**Reason:** The project has not set up its JWT signing keys in the dashboard. The user must generate and configure them.
+
+#### Invalid Token (403 Forbidden)
+
+```json
+{
+  "error": "Invalid token"
+}
+```
+
+**Reason:** The provided JWT could not be verified using the project's public key. This could be due to an expired or incorrectly signed token.
+
+----------
+
+## Notes
+
+-   The JWT must be signed using the project's private key and verified against its stored public key.
+-   Ensure the project has configured JWT keys in the dashboard.
+-   Refresh tokens are stored in an `HttpOnly` cookie for security purposes.
+-   Mobile apps do not support cookies, so the refresh token is returned in the response. It should be stored securely, using tools such as `expo-secure-store` or `react-native-keychain`.
+-   Access tokens should be attached to the `Authorization` header of all authenticated requests as `Bearer <accessToken>`.
+-   Access tokens are only valid for 30 minutes. After expiration, a new access token must be requested using the refresh token (refer to the separate endpoint in the documentation for this process).

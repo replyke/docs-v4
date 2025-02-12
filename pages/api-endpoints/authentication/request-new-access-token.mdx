@@ -1,0 +1,111 @@
+
+# Request New Access Token
+
+## Endpoint
+
+**URL:** `/:projectId/auth/request-new-access-token`
+
+**Method:** `POST`
+
+**Authentication Required:** Yes (Requires a valid refresh token)
+
+----------
+
+## Description
+
+This endpoint allows clients to request a new access token using a valid refresh token. The refresh token can be sent in the request body or as an `HttpOnly` cookie. If the token is valid, a new access token is issued.
+
+----------
+
+## Request
+
+### Headers
+
+-   `Content-Type: application/json`
+
+### Body Parameters
+
+Parameter
+
+Type
+
+Required
+
+Description
+
+`refreshToken`
+
+`string`
+
+No
+
+Refresh token (if not provided via cookie).
+
+----------
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "success": true,
+  "accessToken": "<JWT_ACCESS_TOKEN>",
+  "user": {
+    "id": "<USER_ID>",
+    "email": "<USER_EMAIL>",
+    "name": "<USER_NAME>",
+    "username": "<USER_USERNAME>",
+    "avatar": "<USER_AVATAR>",
+    "reputation": "<USER_REPUTATION>",
+    "bio": "<USER_BIO>",
+    "metadata": "<USER_METADATA>"
+  }
+}
+
+```
+
+### Error Responses
+
+#### Missing `refreshToken` (401 Unauthorized)
+
+```json
+{
+  "error": "Missing refresh token"
+}
+
+```
+
+**Reason:** No refresh token was found in the request body or cookies.
+
+#### Invalid or Expired Token (403 Forbidden)
+
+```json
+{
+  "error": "Invalid or expired refresh token"
+}
+
+```
+
+**Reason:** The provided refresh token could not be verified or does not match the stored token.
+
+#### User Not Found (403 Forbidden)
+
+```json
+{
+  "error": "User not found"
+}
+
+```
+
+**Reason:** The user associated with the refresh token does not exist.
+
+----------
+
+## Notes
+
+-   The refresh token can be provided as a request body parameter or automatically retrieved from the `replyke-refresh-jwt` cookie.
+-   The new access token must be attached to the `Authorization` header (`Bearer <accessToken>`) for subsequent authenticated requests.
+-   Access tokens are valid for 30 minutes. After expiration, a new one must be requested using this endpoint.
+-   Mobile apps should securely store the refresh token using `expo-secure-store` or `react-native-keychain` as cookies are not available.
+-   This endpoint does **not** issue a new refresh token, only a new access token.

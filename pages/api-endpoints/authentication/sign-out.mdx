@@ -1,0 +1,60 @@
+
+# API Endpoint Documentation: Sign Out
+
+## Endpoint
+
+**URL:** `/:projectId/auth/sign-out`
+
+**Method:** `POST`
+
+**Authentication Required:** Yes (Requires a valid refresh token)
+
+----------
+
+## Description
+
+This endpoint allows users to sign out by invalidating their refresh token. While Replyke does not have explicit sign-up or sign-in endpoints, the `verify-external-user` endpoint acts as both a sign-up and sign-in mechanism. Developers must call this endpoint when a user logs out from their app to ensure that the refresh token is invalidated; otherwise, the user may still be considered signed in within the Replyke system.
+
+----------
+
+## Request
+
+### Headers
+
+-   `Content-Type: application/json`
+
+### Body Parameters
+
+| Parameter      | Type   | Required | Description |
+|---------------|--------|----------|-------------|
+| `refreshToken` | `string` | No  | Refresh token (if not provided via cookie). |
+
+
+----------
+
+## Response
+
+### Success Response (204 No Content)
+
+This endpoint always returns a `204 No Content` response, regardless of whether a refresh token was found and invalidated. There is no response body.
+
+### Error Responses
+
+#### Internal Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Internal server error."
+}
+```
+
+**Reason:** An unexpected error occurred while processing the request.
+
+----------
+
+## Notes
+
+-   If a refresh token is provided via cookies, it is cleared when this endpoint is called.
+-   If a valid refresh token exists in the database, it is deleted to prevent further use.
+-   A `204 No Content` response is always returned, even if the token was not found, to prevent information leaks.
+-   Developers must call this endpoint when logging a user out to fully terminate their session in Replyke’s authentication system.

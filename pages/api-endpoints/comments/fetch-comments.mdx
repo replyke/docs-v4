@@ -1,0 +1,104 @@
+# Fetch Comments
+
+## Endpoint
+
+**URL:** `/:projectId/comments/`
+
+**Method:** `GET`
+
+**Authentication Required:** No
+
+----------
+
+## Description
+
+This endpoint allows users to fetch multiple comments based on various filters such as entity, user, or parent comment. The comments can be sorted by different criteria and paginated for efficient retrieval.
+
+At least one of `entityId`, `userId`, or `parentId` **must** be provided in the request.
+
+----------
+
+## Request
+
+### Query Parameters
+
+
+| Parameter       | Type     | Required | Description |
+|---------------|----------|----------|-------------|
+| `entityId`    | `string` | Conditional | Fetch comments for a specific entity. Required if `userId` and `parentId` are not provided. |
+| `userId`      | `string` | Conditional | Fetch comments made by a specific user. Required if `entityId` and `parentId` are not provided. |
+| `parentId`    | `string` | Conditional | Fetch replies to a specific parent comment. Required if `entityId` and `userId` are not provided. |
+| `sortBy`      | `string` | No | Sorting criteria (`new`, `old`, `top`, `controversial`). Defaults to `new`. |
+| `page`        | `number` | No | Page number for pagination (default: `1`). |
+| `limit`       | `number` | No | Number of comments per page (default: `10`). |
+| `includeEntity` | `boolean` | No | Whether to include entity details in the response (default: `false`). |
+
+
+----------
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+[
+  {
+    "id": "<COMMENT_ID>",
+    "projectId": "<PROJECT_ID>",
+    "userId": "<USER_ID>",
+    "entityId": "<ENTITY_ID>",
+    "parentId": "<PARENT_ID>",
+    "content": "<COMMENT_CONTENT>",
+    "gif": {
+      "id": "<GIF_ID>",
+      "gifUrl": "<GIF_URL>",
+      "gifPreviewUrl": "<GIF_PREVIEW_URL>",
+      "altText": "<ALT_TEXT>",
+      "url": "<URL>",
+      "aspectRatio": "<ASPECT_RATIO>"
+    },
+    "mentions": ["<UPDATED_MENTIONS_ARRAY>"],
+    "upvotes": ["<UPDATED_UPVOTES_ARRAY>"],
+    "downvotes": ["<UPDATED_DOWNVOTES_ARRAY>"]
+    "createdAt": "<TIMESTAMP>",
+    "updatedAt": "<TIMESTAMP>",
+    "deletedAt": null
+  }
+]
+```
+
+### Error Responses
+
+#### Invalid Request Data (400 Bad Request)
+
+```json
+{
+  "error": "Invalid request data"
+}
+```
+
+**Reason:** The request did not include at least one of `entityId`, `userId`, or `parentId`.
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+**Reason:** An unexpected error occurred while processing the request.
+
+----------
+
+## Notes
+
+-   The response includes an array of comments matching the specified filters.
+-   At least one of `entityId`, `userId`, or `parentId` must be provided; otherwise, the request will be rejected.
+-   Sorting options:
+    -   `new`: Sorts by newest first (default).
+    -   `old`: Sorts by oldest first.
+    -   `top`: Sorts by highest net upvotes (`upvotes - downvotes`).
+    -   `controversial`: Sorts by the most evenly split upvotes and downvotes.
+-   Pagination ensures efficient data retrieval, with `page` controlling the offset and `limit` controlling the number of comments returned.
+-   If `includeEntity=true`, the response will also include entity details associated with each comment.

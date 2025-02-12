@@ -1,0 +1,118 @@
+# Remove Comment Upvote
+
+## Endpoint
+
+**URL:** `/:projectId/comments/:commentId/remove-upvote`
+
+**Method:** `PATCH`
+
+**Authentication Required:** Yes (Requires a valid access token in the `Authorization` header)
+
+----------
+
+## Description
+
+This endpoint allows a user to remove their upvote from a comment. If the user has not previously upvoted the comment, they cannot remove an upvote.
+
+----------
+
+## Request
+
+### Headers
+
+-   `Authorization: Bearer <accessToken>` (Required, must contain a valid access token)
+
+### URL Parameters
+
+| Parameter   | Type     | Required | Description                        |
+|------------|----------|----------|------------------------------------|
+| `projectId` | `string` | Yes      | The project ID associated with the comment. |
+| `commentId` | `string` | Yes      | The ID of the comment to remove the upvote from. |
+
+----------
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "id": "<COMMENT_ID>",
+  "projectId": "<PROJECT_ID>",
+  "userId": "<USER_ID>",
+  "entityId": "<ENTITY_ID>",
+  "parentId": "<PARENT_ID>",
+  "content": "<COMMENT_CONTENT>",
+  "gif": {
+    "id": "<GIF_ID>",
+    "gifUrl": "<GIF_URL>",
+    "gifPreviewUrl": "<GIF_PREVIEW_URL>",
+    "altText": "<ALT_TEXT>",
+    "url": "<URL>",
+    "aspectRatio": "<ASPECT_RATIO>"
+  },
+  "mentions": ["<UPDATED_MENTIONS_ARRAY>"],
+  "upvotes": ["<UPDATED_UPVOTES_ARRAY>"],
+  "downvotes": ["<UPDATED_DOWNVOTES_ARRAY>"]
+}
+```
+
+### Error Responses
+
+#### Missing `commentId` (400 Bad Request)
+
+```json
+{
+  "error": "Missing required data"
+}
+```
+
+**Reason:** The request must include a `commentId` to specify which comment to modify.
+
+#### Comment Not Found (404 Not Found)
+
+```json
+{
+  "error": "Comment not found"
+}
+```
+
+**Reason:** The specified `commentId` does not exist or does not belong to the given `projectId`.
+
+#### No Upvote to Remove (409 Conflict)
+
+```json
+{
+  "error": "User hasn't upvoted this comment"
+}
+```
+
+**Reason:** The user has not upvoted this comment, so there is no upvote to remove.
+
+#### Unauthorized Request (401 Unauthorized)
+
+```json
+{
+  "error": "Missing or invalid authorization token"
+}
+```
+
+**Reason:** The request did not include a valid access token in the `Authorization` header.
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+**Reason:** An unexpected error occurred while processing the request.
+
+----------
+
+## Notes
+
+-   A user cannot remove an upvote if they have not previously upvoted the comment.
+-   The `Authorization` header must be provided and contain a valid access token.
+-   The response will contain the updated `upvotes` and `downvotes` arrays reflecting the latest state.

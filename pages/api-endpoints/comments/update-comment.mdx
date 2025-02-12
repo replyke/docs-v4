@@ -1,0 +1,127 @@
+# Update Comment
+
+## Endpoint
+
+**URL:** `/:projectId/comments/:commentId`
+
+**Method:** `PATCH`
+
+**Authentication Required:** Yes (Requires a valid access token in the `Authorization` header)
+
+----------
+
+## Description
+
+This endpoint allows the owner of a comment to update its content. Only the user who created the comment can modify it.
+
+----------
+
+## Request
+
+### Headers
+
+-   `Authorization: Bearer <accessToken>` (Required, must contain a valid access token)
+
+### URL Parameters
+
+
+| Parameter   | Type     | Required | Description |
+|------------|----------|----------|-------------|
+| `projectId` | `string` | Yes | The project ID associated with the comment. |
+| `commentId` | `string` | Yes | The ID of the comment to update. |
+
+### Request Body
+| Parameter   | Type     | Required | Description |
+|------------|----------|----------|-------------|
+| `update`   | `string` | Yes | The new content of the comment. |
+
+#### Example Request Body
+
+```json
+{
+  "update": "This is the updated comment content."
+}
+```
+
+----------
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "id": "<COMMENT_ID>",
+  "projectId": "<PROJECT_ID>",
+  "userId": "<USER_ID>",
+  "entityId": "<ENTITY_ID>",
+  "parentId": "<PARENT_ID>",
+  "content": "This is the updated comment content.",
+  "mentions": ["<UPDATED_MENTIONS_ARRAY>"],
+  "upvotes": ["<UPDATED_UPVOTES_ARRAY>"],
+  "downvotes": ["<UPDATED_DOWNVOTES_ARRAY>"]
+  "createdAt": "<TIMESTAMP>",
+  "updatedAt": "<TIMESTAMP>",
+  "deletedAt": null
+}
+```
+
+### Error Responses
+
+#### Missing Required Data (400 Bad Request)
+
+```json
+{
+  "error": "Missing required data"
+}
+```
+
+**Reason:** Either `commentId` or `update` is missing in the request.
+
+#### Comment Not Found (404 Not Found)
+
+```json
+{
+  "error": "Comment not found"
+}
+```
+
+**Reason:** The specified `commentId` does not exist or does not belong to the given `projectId`.
+
+#### Unauthorized Update Attempt (403 Forbidden)
+
+```json
+{
+  "error": "You do not have permission to update this comment."
+}
+```
+
+**Reason:** The user making the request is not the owner of the comment.
+
+#### Unauthorized Request (401 Unauthorized)
+
+```json
+{
+  "error": "Missing or invalid authorization token"
+}
+```
+
+**Reason:** The request did not include a valid access token in the `Authorization` header.
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+**Reason:** An unexpected error occurred while processing the request.
+
+----------
+
+## Notes
+
+-   Only the user who created the comment can update it.
+-   The `Authorization` header must be provided and contain a valid access token.
+-   The response contains the updated comment with the latest data.
