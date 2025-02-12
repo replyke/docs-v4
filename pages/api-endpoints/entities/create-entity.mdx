@@ -1,0 +1,142 @@
+# Create Entity
+
+## Endpoint
+
+**URL:** `/:projectId/entities/`
+
+**Method:** `POST`
+
+**Authentication Required:** Optional (Authorization token can be included but is not mandatory)
+
+----------
+
+## Description
+
+This endpoint allows users or the system to create a new entity. If an authenticated user makes the request, they can specify their `userId`, which must match the logged-in user ID. If no `userId` is provided, the entity can still be created.
+
+Replyke can be integrated on top of existing datasets. Developers can pass the `referenceId` corresponding to the ID of the item in their dataset. Alternatively, a static string can be passed if an entity should be created for a static element, such as `"home-page"`. If no `referenceId` is provided, it will default to the automatically generated entity ID.
+
+----------
+
+## Request
+
+### Headers
+
+-   `Authorization: Bearer <accessToken>` (Optional, must contain a valid access token if `userId` is provided)
+
+### URL Parameters
+
+
+| Parameter   | Type     | Required | Description |
+|------------|----------|----------|-------------|
+| `projectId` | `string` | Yes | The project ID associated with the entity. |
+
+### Request Body
+| Parameter   | Type     | Required | Description |
+|------------|----------|----------|-------------|
+| `referenceId` | `string` | No | A unique reference ID for the entity. If not provided, it defaults to the entity's automatically generated ID. |
+| `userId` | `string` | No | The ID of the user creating the entity. If provided, it must match the authenticated user. |
+| `title` | `string` | No | The title of the entity. |
+| `content` | `string` | No | The main content of the entity. |
+| `media` | `array` | No | An array containing media objects associated with the entity. The structure of these objects is free-form and determined by the developer. |
+| `keywords` | `array` | No | Keywords related to the entity. |
+| `mentions` | `array` | No | A list of mentioned users. Each mention should follow this format: `{ "id": "<USER_ID>", "username": "<USERNAME>" }`. |
+| `location` | `object` | No | A GeoJSON object containing the location of the entity. Must follow the format `{ "type": "Point", "coordinates": [longitude, latitude] }`. |
+| `metadata` | `object` | No | Additional metadata associated with the entity. |
+
+#### Example Request Body
+
+```json
+{
+  "referenceId": "entity-12345",
+  "userId": "user-6789",
+  "title": "An example entity",
+  "content": "This is an example entity content.",
+  "media": [{ "type": "image", "url": "https://example.com/image.jpg" }],
+  "keywords": ["example", "entity"],
+  "mentions": [{ "id": "user-1111", "username": "john_doe" }],
+  "location": {
+    "type": "Point",
+    "coordinates": [120.982, 14.604]
+  },
+  "metadata": { "category": "news" }
+}
+```
+
+----------
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "id": "<ENTITY_ID>",
+  "shortId": "<SHORT_ID>",
+  "projectId": "<PROJECT_ID>",
+  "referenceId": "<REFERENCE_ID>",
+  "userId": "<USER_ID>",
+  "title": "An example entity",
+  "content": "This is an example entity content.",
+  "media": [{ "type": "image", "url": "https://example.com/image.jpg" }],
+  "keywords": ["example", "entity"],
+  "mentions": [{ "id": "user-1111", "username": "john_doe" }],
+  "location": {
+    "type": "Point",
+    "coordinates": [120.982, 14.604]
+  },
+  "upvotes": [],
+  "downvotes": [],
+  "sharesCount": 0,
+  "views": 0,
+  "score": 0,
+  "metadata": { "category": "news" },
+  "createdAt": "<TIMESTAMP>",
+  "updatedAt": "<TIMESTAMP>",
+  "deletedAt": null
+}
+```
+
+### Error Responses
+
+#### Unauthorized User (403 Forbidden)
+
+```json
+{
+  "error": "You do not have permission to create this entity."
+}
+```
+
+**Reason:** The `userId` provided does not match the authenticated user.
+
+#### Invalid Project ID (400 Bad Request)
+
+```json
+{
+  "error": "Invalid projectId, project does not exist"
+}
+```
+
+**Reason:** The specified `projectId` does not exist.
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+**Reason:** An unexpected error occurred while processing the request.
+
+----------
+
+## Notes
+
+-   If `userId` is provided, it must match the authenticated user making the request.
+-   The `Authorization` header is optional, but if included, it must contain a valid access token.
+-   The entity can be created without an authenticated user, depending on the project’s requirements.
+-   If `referenceId` is not provided, it will default to the entity's automatically generated ID.
+-   `shortId` is also automatically generated and can be used to create shorter URLs for entities.
+-   The `mentions` array allows tagging users in the entity.
+-   The structure of `media` objects is free-form and can be defined by the developer based on their needs.

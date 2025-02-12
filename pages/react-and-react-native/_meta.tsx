@@ -7,7 +7,6 @@ export default {
   lists: "Lists",
   relationships: "Relationships",
   "app-notifications": "App notifications",
-  reports: "Reports and Moderation",
-  security: "Security",
+  moderation: "Moderation",
   hooks: "Hooks",
 };

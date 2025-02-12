@@ -1,0 +1,118 @@
+
+# Fetch Single Entity
+
+## Endpoint
+
+**URL:** `/:projectId/entities/single`
+
+**Method:** `GET`
+
+**Authentication Required:** No
+
+----------
+
+## Description
+
+This endpoint fetches a single entity based on one of the following identifiers: `referenceId`, `entityId`, or `shortId`. If the entity does not exist and the `createIfNotFound` parameter is set to `true`, a new entity with the specified `referenceId` will be created.
+
+----------
+
+## Request
+
+### Headers
+
+-   `Authorization: Bearer <accessToken>` (Optional)
+
+### URL Parameters
+
+
+| Parameter    | Type     | Required | Description |
+|-------------|----------|----------|-------------|
+| `projectId` | `string` | Yes      | The project ID associated with the request. |
+
+### Query Parameters
+| Parameter         | Type      | Required | Description |
+|------------------|-----------|----------|-------------|
+| `referenceId`    | `string`  | Conditional | Fetches the entity with this reference ID. Required if `entityId` and `shortId` are not provided. |
+| `entityId`       | `string`  | Conditional | Fetches the entity by its internal ID. Required if `referenceId` and `shortId` are not provided. |
+| `shortId`        | `string`  | Conditional | Fetches the entity using its short identifier. Required if `referenceId` and `entityId` are not provided. |
+| `createIfNotFound` | `boolean` | No       | If `true` and an entity with the provided `referenceId` does not exist, a new one will be created. Only applicable when using `referenceId`. Default: `false`. |
+
+#### Example Request URLs
+
+Fetch by reference ID:
+
+```
+GET /:projectId/entities/single?referenceId=home-page
+```
+
+Fetch by entity ID:
+```
+GET /:projectId/entities/single?entityId=12345
+```
+
+Fetch by short ID:
+
+```
+GET /:projectId/entities/single?shortId=abc123
+```
+
+----------
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "id": "<ENTITY_ID>",
+  "projectId": "<PROJECT_ID>",
+  "referenceId": "<REFERENCE_ID>",
+  "userId": "<USER_ID>",
+  "title": "Entity Title",
+  "content": "Entity content...",
+  "keywords": ["example", "topic"],
+  "mentions": [{ "id": "user-1111", "username": "john_doe" }],
+  "location": { "type": "Point", "coordinates": [120.982, 14.604] },
+  "upvotes": [],
+  "downvotes": [],
+  "sharesCount": 0,
+  "views": 0,
+  "score": 0,
+  "metadata": { "category": "news" },
+  "createdAt": "<TIMESTAMP>",
+  "updatedAt": "<TIMESTAMP>",
+  "deletedAt": null
+}
+```
+
+### No Content Response (204 No Content)
+
+Occurs when no entity is found and `createIfNotFound` is `false`.
+
+### Error Responses
+
+#### Invalid Query Parameter (400 Bad Request)
+
+```json
+{
+  "error": "Missing projectId or a valid referenceId/entityId/shortId in request query"
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+----------
+
+## Notes
+
+-   At least one of `referenceId`, `entityId`, or `shortId` must be provided.
+-   `referenceId` is useful when integrating Replyke on top of an existing dataset, allowing developers to link entities with external data.
+-   If `createIfNotFound=true` is used with a `referenceId` and no matching entity is found, a new entity will be created.
+-   The `shortId` is automatically generated when an entity is created and can be used for shorter URLs.
