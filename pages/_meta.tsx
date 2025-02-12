@@ -1,16 +1,7 @@
 export default {
   index: "Introduction",
-  "getting-started": "Getting Started",
-  authentication: "Authentication",
-  entities: "Entities",
-  feeds: "Feeds",
-  comments: "Comments",
-  lists: "Lists",
-  relationships: "Relationships",
-  "app-notifications": "App notifications",
-  reports: "Reports and Moderation",
-  security:"Security",
-  hooks: "Hooks",
+  "react-and-react-native": "React & React Native",
+  "api-endpoints": "API Endpoints",
   contact: {
     title: "Contact ↗",
     type: "page",
