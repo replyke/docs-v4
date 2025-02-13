@@ -1,0 +1,77 @@
+# Fetch Following Count
+
+## Endpoint
+
+**URL:** `/:projectId/users/:userId/following-count`
+
+**Method:** `GET`
+
+**Authentication Required:** No
+
+---
+
+## Description
+
+This endpoint allows clients to retrieve the number of users a specific user is following within a project.
+
+---
+
+## Request
+
+### URL Parameters
+
+| Parameter   | Type     | Required | Description                                 |
+| ----------- | -------- | -------- | ------------------------------------------- |
+| `projectId` | `string` | Yes      | The project ID associated with the request. |
+| `userId`    | `string` | Yes      | The ID of the user whose following count is being fetched. |
+
+### Headers
+
+*None*
+
+### Body Parameters
+
+*None*
+
+#### Example Request
+
+```sh
+GET /12345/users/67890/following-count
+```
+
+---
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "count": 42
+}
+```
+
+### Error Responses
+
+#### Missing or Invalid User ID (400 Bad Request)
+
+```json
+{
+  "error": "Missing or invalid userId in request query"
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+---
+
+## Notes
+
+- This endpoint does not require authentication.
+- The response provides only the count of users the specified user is following, not the list of users.

@@ -1,0 +1,91 @@
+# Fetch User Mention Suggestions
+
+## Endpoint
+
+**URL:** `/:projectId/users/mentions`
+
+**Method:** `GET`
+
+**Authentication Required:** No
+
+---
+
+## Description
+
+This endpoint allows clients to fetch user mention suggestions based on a given input query. It provides a list of usernames that match the input string within a specified project.
+
+---
+
+## Request
+
+### Query Parameters
+
+| Parameter   | Type     | Required | Description                                                |
+| ----------- | -------- | -------- | ---------------------------------------------------------- |
+| `projectId` | `string` | Yes      | The project ID associated with the request.               |
+| `query`     | `string` | Yes      | The input string used to search for matching usernames.   |
+
+### Headers
+
+*None*
+
+### Body Parameters
+
+*None*
+
+#### Example Request
+
+```sh
+GET /12345/users/mentions?query=john
+```
+
+---
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+[
+  {
+    "id": "67890",
+    "username": "johndoe",
+    "name": "John Doe",
+    "avatar": "https://example.com/avatar.jpg"
+  },
+  {
+    "id": "54321",
+    "username": "johnny",
+    "name": "Johnny Appleseed",
+    "avatar": "https://example.com/avatar2.jpg"
+  }
+]
+```
+
+### Error Responses
+
+#### Missing Query Parameter (400 Bad Request)
+
+```json
+{
+  "error": "Missing query in request query"
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+---
+
+## Notes
+
+- This endpoint does not require authentication.
+- The response provides up to 5 matching users.
+- Usernames are prioritized by those starting with the query string, followed by alphabetical ordering.
+- Sensitive user information (such as email, password hashes, and verification status) is excluded from the response.
+

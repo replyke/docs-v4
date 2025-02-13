@@ -1,0 +1,91 @@
+# Check Username Availability
+
+## Endpoint
+
+**URL:** `/:projectId/users/check-username`
+
+**Method:** `GET`
+
+**Authentication Required:** No
+
+---
+
+## Description
+
+This endpoint allows clients to check if a given username is available for use within a specific project.
+
+---
+
+## Request
+
+### Query Parameters
+
+| Parameter   | Type     | Required | Description                                                |
+| ----------- | -------- | -------- | ---------------------------------------------------------- |
+| `projectId` | `string` | Yes      | The project ID associated with the request.               |
+| `username`  | `string` | Yes      | The username to check for availability.                   |
+
+### Headers
+
+*None*
+
+### Body Parameters
+
+*None*
+
+#### Example Request
+
+```sh
+GET /12345/users/check-username?username=johndoe
+```
+
+---
+
+## Response
+
+### Success Response (200 OK)
+
+#### Username Available
+
+```json
+{
+  "available": true,
+  "message": "Username is available."
+}
+```
+
+#### Username Taken
+
+```json
+{
+  "available": false,
+  "message": "Username is already taken."
+}
+```
+
+### Error Responses
+
+#### Missing or Invalid Username (400 Bad Request)
+
+```json
+{
+  "error": "username is required and must be a string."
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "An error occurred while checking username availability."
+}
+```
+
+---
+
+## Notes
+
+- This endpoint does not require authentication.
+- The response indicates whether the username is available or already taken.
+- Usernames are checked within the specified `projectId` scope.
+

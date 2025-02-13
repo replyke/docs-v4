@@ -1,0 +1,119 @@
+# Update User
+
+## Endpoint
+
+**URL:** `/:projectId/users/:userId`
+
+**Method:** `PATCH`
+
+**Authentication Required:** Yes (Access Token in Authorization Header)
+
+---
+
+## Description
+
+This endpoint allows clients to update user details. The update can include username, location, or other user attributes. The request must be authenticated.
+
+---
+
+## Request
+
+### Path Parameters
+
+| Parameter   | Type     | Required | Description                                       |
+| ----------- | -------- | -------- | ------------------------------------------------- |
+| `projectId` | `string` | Yes      | The project ID associated with the request.      |
+| `userId`    | `string` | Yes      | The ID of the user to update.                    |
+
+### Headers
+
+| Header          | Type   | Required | Description                                         |
+| --------------  | ------ | -------- | --------------------------------------------------- |
+| `Authorization` | `string` | Yes      | Bearer token for authentication.                   |
+
+### Body Parameters
+
+| Parameter         | Type                     | Required | Description                                           |
+| ----------------- | ------------------------ | -------- | ----------------------------------------------------- |
+| `name`           | `string`                  | No       | New name for the user.                               |
+| `username`       | `string`                  | No       | New username for the user. Must be sanitized.        |
+| `avatar`         | `string` (URL)            | No       | URL of the user's new avatar.                        |
+| `bio`            | `string`                  | No       | Short biography of the user.                         |
+| `birthdate`      | `string` (ISO Date)       | No       | User's birthdate in ISO format.                      |
+| `location`       | `object`                  | No       | Location data, requires longitude and latitude.      |
+| `metadata`       | `object`                  | No       | Custom metadata for the user.                        |
+
+#### Example Request
+
+```sh
+PATCH /12345/users/67890
+Content-Type: application/json
+Authorization: Bearer <ACCESS_TOKEN>
+
+{
+  "username": "new_username",
+  "location": { "longitude": 34.05, "latitude": -118.25 },
+  "metadata": { "theme": "dark" }
+}
+```
+
+---
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "id": "67890",
+  "username": "new_username",
+  "name": "John Doe",
+  "avatar": "https://example.com/avatar.jpg",
+  "bio": "New bio text",
+  "birthdate": "1990-01-01T00:00:00.000Z",
+  "location": {
+    "type": "Point",
+    "coordinates": [34.05, -118.25]
+  },
+  "metadata": {
+    "theme": "dark"
+  }
+}
+```
+
+### Error Responses
+
+#### Missing or Invalid Data (400 Bad Request)
+
+```json
+{
+  "error": "Missing required data"
+}
+```
+
+#### User Not Found (404 Not Found)
+
+```json
+{
+  "error": "User not found"
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+---
+
+## Notes
+
+- Authentication is required to update user details.
+- Only fields that are present in the request body will be modified.
+- If a new username is provided, it will be sanitized before updating.
+- Location data should be provided as an object containing `longitude` and `latitude`.
+- Webhook `validateUserUpdated` is triggered before updating the user.
+
