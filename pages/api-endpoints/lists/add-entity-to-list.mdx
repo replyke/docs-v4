@@ -1,0 +1,116 @@
+# Add Entity to List
+
+## Endpoint
+
+**URL:** `/:projectId/lists/add-entity`
+
+**Method:** `PATCH`
+
+**Authentication Required:** Yes (Access Token in Authorization Header)
+
+---
+
+## Description
+
+This endpoint allows users to add an entity to a specified list. The list must belong to the authenticated user, and the entity must not already be in the list.
+
+---
+
+## Request
+
+### Path Parameters
+
+| Parameter   | Type     | Required | Description                                 |
+| ----------- | -------- | -------- | ------------------------------------------- |
+| `projectId` | `string` | Yes      | The project ID associated with the request. |
+
+### Headers
+
+| Header          | Type     | Required | Description                      |
+| --------------- | -------- | -------- | -------------------------------- |
+| `Authorization` | `string` | Yes      | Bearer token for authentication. |
+
+### Body Parameters
+
+| Parameter  | Type     | Required | Description                       |
+| ---------- | -------- | -------- | --------------------------------- |
+| `listId`   | `string` | Yes      | The ID of the list to update.     |
+| `entityId` | `string` | Yes      | The ID of the entity to be added. |
+
+#### Example Request
+
+```sh
+PATCH /12345/lists/add-entity
+Content-Type: application/json
+Authorization: Bearer <ACCESS_TOKEN>
+
+{
+  "listId": "67890",
+  "entityId": "entity123"
+}
+```
+
+---
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "id": "67890",
+  "projectId": "12345",
+  "userId": "56789",
+  "parentId": "123",
+  "name": "My List",
+  "entityIds": ["entity123", "entity456"],
+  "entities": [
+    {
+      "id": "entity123",
+      "title": "Sample Entity 123",
+      "content": "This is the content of entity 123."
+    },
+    {
+      "id": "entity456",
+      "title": "Sample Entity 456",
+      "content": "This is the content of entity 456."
+    }
+  ],
+  "createdAt": "2024-02-12T10:00:00Z",
+  "updatedAt": "2024-02-12T10:05:00Z"
+}
+```
+
+### Error Responses
+
+#### Missing or Invalid Data (400 Bad Request)
+
+```json
+{
+  "error": "Missing projectId, entityId or listId in request body"
+}
+```
+
+#### List Not Found (404 Not Found)
+
+```json
+{
+  "error": "List not found"
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+---
+
+## Notes
+
+- The authenticated user must own the list.
+- The entity must not already be in the list.
+- The response includes the updated list details with the newly added entity.

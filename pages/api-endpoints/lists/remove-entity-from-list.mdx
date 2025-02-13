@@ -1,0 +1,116 @@
+# Remove Entity from List
+
+## Endpoint
+
+**URL:** `/:projectId/lists/remove-entity`
+
+**Method:** `PATCH`
+
+**Authentication Required:** Yes (Access Token in Authorization Header)
+
+---
+
+## Description
+
+This endpoint allows users to remove an entity from a specific list. The list must belong to the authenticated user. Authentication is required.
+
+---
+
+## Request
+
+### Path Parameters
+
+| Parameter   | Type     | Required | Description                                 |
+| ----------- | -------- | -------- | ------------------------------------------- |
+| `projectId` | `string` | Yes      | The project ID associated with the request. |
+
+### Headers
+
+| Header          | Type     | Required | Description                      |
+| --------------- | -------- | -------- | -------------------------------- |
+| `Authorization` | `string` | Yes      | Bearer token for authentication. |
+
+### Body Parameters
+
+| Parameter  | Type     | Required | Description                         |
+| ---------- | -------- | -------- | ----------------------------------- |
+| `listId`   | `string` | Yes      | The ID of the list to be updated.   |
+| `entityId` | `string` | Yes      | The ID of the entity to be removed. |
+
+#### Example Request
+
+```sh
+PATCH /12345/lists/remove-entity
+Content-Type: application/json
+Authorization: Bearer <ACCESS_TOKEN>
+
+{
+  "listId": "67890",
+  "entityId": "entity123"
+}
+```
+
+---
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "id": "67890",
+  "projectId": "12345",
+  "userId": "56789",
+  "parentId": "123",
+  "name": "My List",
+  "entityIds": ["entity456", "entity789"],
+  "entities": [
+    {
+      "id": "entity456",
+      "title": "Sample Entity 456",
+      "content": "This is the content of entity 456."
+    },
+    {
+      "id": "entity789",
+      "title": "Sample Entity 789",
+      "content": "This is the content of entity 789."
+    }
+  ],
+  "createdAt": "2024-02-12T10:00:00Z",
+  "updatedAt": "2024-02-12T10:05:00Z"
+}
+```
+
+### Error Responses
+
+#### Missing or Invalid Data (400 Bad Request)
+
+```json
+{
+  "error": "Missing projectId, entityId or listId in request body"
+}
+```
+
+#### List Not Found (404 Not Found)
+
+```json
+{
+  "error": "List not found"
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+---
+
+## Notes
+
+- The list must belong to the authenticated user.
+- The entity will be removed from the list's `entityIds` array.
+- The response includes the updated list details after removing the entity.

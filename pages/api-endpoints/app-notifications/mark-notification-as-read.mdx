@@ -1,0 +1,81 @@
+# Mark Notification as Read
+
+## Endpoint
+
+**URL:** `/mark-as-read`
+
+**Method:** `PATCH`
+
+**Authentication Required:** Yes (Access Token in Authorization Header)
+
+---
+
+## Description
+
+This endpoint allows an authenticated user to mark a specific notification as read. The request requires the `notificationId` in the request body and updates the notification's `isRead` status to `true`.
+
+---
+
+## Request
+
+### Headers
+
+| Header          | Type     | Required | Description                      |
+| --------------- | -------- | -------- | -------------------------------- |
+| `Authorization` | `string` | Yes      | Bearer token for authentication. |
+
+### Body Parameters
+
+| Parameter        | Type     | Required | Description                                      |
+| --------------- | -------- | -------- | ------------------------------------------------ |
+| `notificationId` | `string` | Yes      | The ID of the notification to mark as read. |
+
+#### Example Request
+
+```sh
+PATCH /mark-as-read
+Content-Type: application/json
+Authorization: Bearer <ACCESS_TOKEN>
+
+{
+  "notificationId": "notification123"
+}
+```
+
+---
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "message": "Notification marked as read successfully."
+}
+```
+
+### Error Responses
+
+#### Invalid Request (400 Bad Request)
+
+```json
+{
+  "error": "Missing required notificationId in request body"
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+---
+
+## Notes
+
+- This endpoint requires authentication.
+- The `notificationId` must be a valid notification that belongs to the authenticated user.
+- If the `notificationId` is invalid or does not exist, no changes will be made.

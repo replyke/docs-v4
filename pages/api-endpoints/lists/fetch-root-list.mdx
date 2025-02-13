@@ -1,0 +1,79 @@
+# Fetch Root List
+
+## Endpoint
+
+**URL:** `/:projectId/lists/root`
+
+**Method:** `GET`
+
+**Authentication Required:** Yes (Access Token in Authorization Header)
+
+---
+
+## Description
+
+This endpoint retrieves the root list for the authenticated user within a specific project. If no root list exists, a new one is created and returned.
+
+---
+
+## Request
+
+### Path Parameters
+
+| Parameter   | Type     | Required | Description                                 |
+| ----------- | -------- | -------- | ------------------------------------------- |
+| `projectId` | `string` | Yes      | The project ID associated with the request. |
+
+### Headers
+
+| Header          | Type     | Required | Description                      |
+| --------------- | -------- | -------- | -------------------------------- |
+| `Authorization` | `string` | Yes      | Bearer token for authentication. |
+
+---
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "id": "12345",
+  "name": "root",
+  "userId": "67890",
+  "isRoot": true,
+  "parentId": null,
+  "entityIds": ["entity1", "entity2"],
+  "entities": [
+    {
+      "id": "entity1",
+      "title": "Sample Entity 1",
+      "content": "This is the content of entity 1."
+    },
+    {
+      "id": "entity2",
+      "title": "Sample Entity 2",
+      "content": "This is the content of entity 2."
+    }
+  ]
+}
+```
+
+### Error Responses
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+---
+
+## Notes
+
+- The root list is a special list that serves as the top-level container for other lists.
+- If a root list does not exist, it is automatically created for the authenticated user.
+- The response includes a populated list with its entities.
+- Authentication is required to retrieve the root list.

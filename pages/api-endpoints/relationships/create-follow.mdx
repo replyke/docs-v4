@@ -1,0 +1,105 @@
+# Create Follow Relationship
+
+## Endpoint
+
+**URL:** `/:projectId/follows/`
+
+**Method:** `POST`
+
+**Authentication Required:** Yes (Access Token in Authorization Header)
+
+---
+
+## Description
+
+This endpoint allows an authenticated user to follow another user within a specified project. If the follow relationship already exists, an error is returned. A user cannot follow themselves.
+
+---
+
+## Request
+
+### Path Parameters
+
+| Parameter   | Type     | Required | Description                                  |
+| ----------- | -------- | -------- | -------------------------------------------- |
+| `projectId` | `string` | Yes      | The project ID associated with the request. |
+
+### Headers
+
+| Header          | Type     | Required | Description                      |
+| --------------- | -------- | -------- | -------------------------------- |
+| `Authorization` | `string` | Yes      | Bearer token for authentication. |
+
+### Body Parameters
+
+| Parameter   | Type     | Required | Description                                      |
+| ---------- | -------- | -------- | ------------------------------------------------ |
+| `followedId` | `string` | Yes      | The ID of the user to follow. |
+
+#### Example Request
+
+```sh
+POST /12345/follows/
+Content-Type: application/json
+Authorization: Bearer <ACCESS_TOKEN>
+
+{
+  "followedId": "67890"
+}
+```
+
+---
+
+## Response
+
+### Success Response (201 Created)
+
+```json
+{
+  "message": "Follow relationship created successfully."
+}
+```
+
+### Error Responses
+
+#### Self-Follow Attempt (400 Bad Request)
+
+```json
+{
+  "error": "A user cannot follow themselves."
+}
+```
+
+#### User Not Found (404 Not Found)
+
+```json
+{
+  "error": "One or both users involved in the follow do not exist."
+}
+```
+
+#### Follow Already Exists (409 Conflict)
+
+```json
+{
+  "error": "Follow relationship already exists."
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Internal server error."
+}
+```
+
+---
+
+## Notes
+
+- This endpoint requires authentication.
+- A user cannot follow themselves.
+- If a follow relationship already exists, the request will return a `409 Conflict` error.
+- A notification is triggered for the followed user upon a successful follow.
+

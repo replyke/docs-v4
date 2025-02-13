@@ -1,0 +1,89 @@
+# Delete List
+
+## Endpoint
+
+**URL:** `/`
+
+**Method:** `DELETE`
+
+**Authentication Required:** Yes (Access Token in Authorization Header)
+
+---
+
+## Description
+
+This endpoint allows users to delete a list that they own. The list must not be a root list (i.e., it must have a parent list). Authentication is required.
+
+---
+
+## Request
+
+### Headers
+
+| Header          | Type     | Required | Description                      |
+| --------------- | -------- | -------- | -------------------------------- |
+| `Authorization` | `string` | Yes      | Bearer token for authentication. |
+
+### Body Parameters
+
+| Parameter | Type     | Required | Description                       |
+| --------- | -------- | -------- | --------------------------------- |
+| `listId`  | `string` | Yes      | The ID of the list to be deleted. |
+
+#### Example Request
+
+```sh
+DELETE /
+Content-Type: application/json
+Authorization: Bearer <ACCESS_TOKEN>
+
+{
+  "listId": "67890"
+}
+```
+
+---
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "message": "List and its sublists deleted successfully."
+}
+```
+
+### Error Responses
+
+#### Missing or Invalid Data (400 Bad Request)
+
+```json
+{
+  "error": "Missing required parameters in request body."
+}
+```
+
+#### List Not Found (404 Not Found)
+
+```json
+{
+  "error": "List not found."
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error."
+}
+```
+
+---
+
+## Notes
+
+- The list must belong to the authenticated user.
+- Root lists cannot be deleted.
+- Deleting a list also deletes its sublists.

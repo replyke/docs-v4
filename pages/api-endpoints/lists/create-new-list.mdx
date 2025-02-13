@@ -1,0 +1,105 @@
+# Create New List
+
+## Endpoint
+
+**URL:** `/:projectId/lists/`
+
+**Method:** `POST`
+
+**Authentication Required:** Yes (Access Token in Authorization Header)
+
+---
+
+## Description
+
+This endpoint allows clients to create a new sublist. The list must have a valid parent list ID and a name. Authentication is required.
+
+---
+
+## Request
+
+### Path Parameters
+
+| Parameter   | Type     | Required | Description                                 |
+| ----------- | -------- | -------- | ------------------------------------------- |
+| `projectId` | `string` | Yes      | The project ID associated with the request. |
+
+### Headers
+
+| Header          | Type     | Required | Description                      |
+| --------------- | -------- | -------- | -------------------------------- |
+| `Authorization` | `string` | Yes      | Bearer token for authentication. |
+
+### Body Parameters
+
+| Parameter  | Type     | Required | Description                                 |
+| ---------- | -------- | -------- | ------------------------------------------- |
+| `listName` | `string` | Yes      | The name of the new list.                   |
+| `parentId` | `string` | Yes      | The ID of the parent list for nested lists. |
+
+#### Example Request
+
+```sh
+POST /12345/lists/
+Content-Type: application/json
+Authorization: Bearer <ACCESS_TOKEN>
+
+{
+  "listName": "My New List",
+  "parentId": "67890"
+}
+```
+
+---
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "id": "98765",
+  "projectId": "12345",
+  "userId": "56789",
+  "parentId": "67890",
+  "name": "My New List",
+  "entityIds": [],
+  "entities": [],
+  "createdAt": "2024-02-12T10:00:00Z",
+  "updatedAt": "2024-02-12T10:00:00Z"
+}
+```
+
+### Error Responses
+
+#### Missing or Invalid Data (400 Bad Request)
+
+```json
+{
+  "error": "Missing required parameters in request body"
+}
+```
+
+#### Invalid Parent List ID (400 Bad Request)
+
+```json
+{
+  "error": "Invalid parent list ID for sublist"
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+---
+
+## Notes
+
+- The `parentId` must be a valid existing list ID.
+- The `listName` must be provided and cannot be empty.
+- The created list will be returned with its details after successful creation.

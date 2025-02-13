@@ -1,0 +1,77 @@
+# Check If Entity Is Saved
+
+## Endpoint
+
+**URL:** `/:projectId/lists/check-if-entity-is-saved`
+
+**Method:** `GET`
+
+**Authentication Required:** Yes (Access Token in Authorization Header)
+
+---
+
+## Description
+
+This endpoint checks whether a specific entity has been saved by a user in any of their lists within the given project. It does not check for a specific list but rather determines if the entity is stored in any list at all.
+
+---
+
+## Request
+
+### Query Parameters
+
+| Parameter   | Type     | Required | Description                                        |
+| ----------- | -------- | -------- | -------------------------------------------------- |
+| `projectId` | `string` | Yes      | The project ID associated with the request.       |
+| `entityId`  | `string` | Yes      | The ID of the entity to check if it is saved.     |
+
+### Headers
+
+| Header          | Type     | Required | Description                      |
+| --------------- | -------- | -------- | -------------------------------- |
+| `Authorization` | `string` | Yes      | Bearer token for authentication. |
+
+---
+
+## Response
+
+### Success Response (200 OK)
+
+Returns a boolean value indicating whether the entity is saved by the user in any list.
+
+```json
+true
+```
+
+or
+
+```json
+false
+```
+
+### Error Responses
+
+#### Missing or Invalid Query Parameter (400 Bad Request)
+
+```json
+{
+  "error": "Missing or invalid entityId in query"
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+---
+
+## Notes
+
+- This endpoint is useful for determining UI decisions, such as whether to show an option to save an entity or indicate that it has already been saved.
+- The check is performed across all lists owned by the authenticated user within the given project.
+- If the entity is found in at least one list, `true` is returned; otherwise, `false` is returned.
+

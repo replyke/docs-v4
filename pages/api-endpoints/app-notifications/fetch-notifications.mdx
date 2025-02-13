@@ -1,0 +1,106 @@
+# Fetch App Notifications
+
+## Endpoint
+
+**URL:** `/:projectId/app-notifications/`
+
+**Method:** `GET`
+
+**Authentication Required:** Yes (Access Token in Authorization Header)
+
+---
+
+## Description
+
+This endpoint retrieves the app notifications for the authenticated user within a specified project. The results are paginated and sorted in descending order based on the creation date.
+
+---
+
+## Request
+
+### Path Parameters
+
+| Parameter   | Type     | Required | Description                                 |
+| ----------- | -------- | -------- | ------------------------------------------- |
+| `projectId` | `string` | Yes      | The project ID associated with the request. |
+
+### Headers
+
+| Header          | Type     | Required | Description                      |
+| --------------- | -------- | -------- | -------------------------------- |
+| `Authorization` | `string` | Yes      | Bearer token for authentication. |
+
+### Query Parameters
+
+| Parameter | Type     | Required | Description                                      |
+| --------- | -------- | -------- | ------------------------------------------------ |
+| `page`    | `number` | No       | Page number for pagination (default: `1`).       |
+| `limit`   | `number` | No       | Number of notifications per page (default: `5`). |
+
+#### Example Request
+
+```sh
+GET /12345/app-notifications?page=1&limit=5
+Content-Type: application/json
+Authorization: Bearer <ACCESS_TOKEN>
+```
+
+---
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+[
+  {
+    "id": "notification123",
+    "userId": "56789",
+    "projectId": "12345",
+    "type": "comment",
+    "action": "view-comment",
+    "isRead": false,
+    "createdAt": "2024-02-12T10:00:00Z",
+    "updatedAt": "2024-02-12T10:05:00Z",
+    "metadata": {"<NOTIFICATION_SPECIFIC_METADATA>"}
+  },
+  {
+    "id": "notification456",
+    "userId": "56789",
+    "projectId": "12345",
+    "type": "like",
+    "action": "view-post",
+    "isRead": true,
+    "createdAt": "2024-02-12T09:45:00Z",
+    "updatedAt": "2024-02-12T09:50:00Z",
+    "metadata": {"<NOTIFICATION_SPECIFIC_METADATA>"}
+  }
+]
+```
+
+### Error Responses
+
+#### Invalid Query Parameters (400 Bad Request)
+
+```json
+{
+  "error": "Invalid request: page must be a whole number greater than 0"
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+---
+
+## Notes
+
+- This endpoint only returns notifications for the authenticated user.
+- Notifications are paginated, with a default limit of `5` per page.
+- Results are sorted in descending order based on the `createdAt` timestamp.
+- Metadata provides additional context based on the notification type.

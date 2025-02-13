@@ -1,0 +1,108 @@
+# API Endpoint Documentation: Upload a File
+
+## Endpoint
+
+**URL:** `/:projectId/storage/`
+
+**Method:** `POST`
+
+**Authentication Required:** Yes (Access Token in Authorization Header)
+
+---
+
+## Description
+
+This endpoint allows an authenticated user to upload a file to storage within a specified project. The uploaded file is processed, validated, and stored, returning metadata such as the file ID, relative path, and public URL.
+
+---
+
+## Request
+
+### Path Parameters
+
+| Parameter   | Type     | Required | Description                                  |
+| ----------- | -------- | -------- | -------------------------------------------- |
+| `projectId` | `string` | Yes      | The project ID associated with the request. |
+
+### Headers
+
+| Header          | Type     | Required | Description                      |
+| --------------- | -------- | -------- | -------------------------------- |
+| `Authorization` | `string` | Yes      | Bearer token for authentication. |
+
+### Body Parameters
+
+| Parameter   | Type      | Required | Description                                             |
+| ---------- | --------- | -------- | ------------------------------------------------------- |
+| `file`     | `File`    | Yes      | The file to be uploaded.                                |
+| `pathParts` | `string[]` | Yes      | An array of strings representing the file storage path. |
+
+#### Example Request
+
+```sh
+POST /12345/storage/
+Content-Type: multipart/form-data
+Authorization: Bearer <ACCESS_TOKEN>
+
+(pathParts as JSON in form-data)
+file: <binary_file>
+```
+
+---
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "fileId": "abc123",
+  "relativePath": "uploads/folder/filename.png",
+  "publicPath": "https://your-storage-url.com/uploads/folder/filename.png"
+}
+```
+
+### Error Responses
+
+#### Invalid Request (400 Bad Request)
+
+```json
+{
+  "error": "pathParts must be an array of strings"
+}
+```
+
+#### No File Provided (400 Bad Request)
+
+```json
+{
+  "error": "No file provided"
+}
+```
+
+#### File Size Exceeds Limit (413 Payload Too Large)
+
+```json
+{
+  "error": "File size exceeds the allowed limit of 15MB"
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+---
+
+## Notes
+
+- This endpoint requires authentication.
+- The uploaded file is sanitized to ensure safe storage and retrieval.
+- The file size limit depends on your project's plan.
+- The returned `publicPath` provides a direct link to access the uploaded file.
+- The file name and path are processed using transliteration for consistency.
+

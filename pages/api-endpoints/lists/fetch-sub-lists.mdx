@@ -1,0 +1,92 @@
+# Fetch Sub-Lists
+
+## Endpoint
+
+**URL:** `/:projectId/lists/sub-lists`
+
+**Method:** `GET`
+
+**Authentication Required:** Yes (Access Token in Authorization Header)
+
+---
+
+## Description
+
+This endpoint retrieves the sub-lists for a given parent list within a specific project. The authenticated user must have access to the requested lists.
+
+---
+
+## Request
+
+### Query Parameters
+
+| Parameter   | Type     | Required | Description                                      |
+| ----------- | -------- | -------- | ------------------------------------------------ |
+| `projectId` | `string` | Yes      | The project ID associated with the request.     |
+| `parentId`  | `string` | Yes      | The ID of the parent list whose sub-lists are to be retrieved. |
+
+### Headers
+
+| Header          | Type     | Required | Description                                       |
+| --------------  | -------- | -------- | ------------------------------------------------- |
+| `Authorization` | `string` | Yes      | Bearer token for authentication.                 |
+
+---
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+[
+  {
+    "id": "sublist1",
+    "name": "Sub List 1",
+    "userId": "67890",
+    "parentId": "rootList",
+    "entityIds": ["entity1"],
+    "entities": [
+      {
+        "id": "entity1",
+        "title": "Sample Entity 1",
+        "content": "This is the content of entity 1."
+      }
+    ]
+  },
+  {
+    "id": "sublist2",
+    "name": "Sub List 2",
+    "userId": "67890",
+    "parentId": "rootList",
+    "entityIds": []
+  }
+]
+```
+
+### Error Responses
+
+#### Missing Required Parameters (400 Bad Request)
+
+```json
+{
+  "error": "Missing required parameters in request query"
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+---
+
+## Notes
+
+- This endpoint retrieves all sub-lists belonging to the specified parent list.
+- The response includes sub-lists along with their populated entities.
+- If no sub-lists exist, an empty array is returned.
+- Authentication is required to access sub-lists.
+

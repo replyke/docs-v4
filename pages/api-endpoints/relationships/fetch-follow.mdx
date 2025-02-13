@@ -1,0 +1,102 @@
+# Fetch Follow Relationship
+
+## Endpoint
+
+**URL:** `/:projectId/follows/`
+
+**Method:** `GET`
+
+**Authentication Required:** Yes (Access Token in Authorization Header)
+
+---
+
+## Description
+
+This endpoint allows an authenticated user to check if they are following another user within a specified project. If the follow relationship exists, the response returns `isFollowing: true`, otherwise, it returns `isFollowing: false`.
+
+---
+
+## Request
+
+### Query Parameters
+
+| Parameter     | Type     | Required | Description                                          |
+| ------------- | -------- | -------- | ---------------------------------------------------- |
+| `followerId`  | `string` | Yes      | The ID of the user who is following.                |
+| `followedId`  | `string` | Yes      | The ID of the user being followed.                  |
+
+### Path Parameters
+
+| Parameter   | Type     | Required | Description                                  |
+| ----------- | -------- | -------- | -------------------------------------------- |
+| `projectId` | `string` | Yes      | The project ID associated with the request. |
+
+### Headers
+
+| Header          | Type     | Required | Description                      |
+| --------------- | -------- | -------- | -------------------------------- |
+| `Authorization` | `string` | Yes      | Bearer token for authentication. |
+
+#### Example Request
+
+```sh
+GET /12345/follows/?followerId=67890&followedId=98765
+Content-Type: application/json
+Authorization: Bearer <ACCESS_TOKEN>
+```
+
+---
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "isFollowing": true
+}
+```
+
+or
+
+```json
+{
+  "isFollowing": false
+}
+```
+
+### Error Responses
+
+#### Invalid Request (400 Bad Request)
+
+```json
+{
+  "error": "Missing params in request query"
+}
+```
+
+#### Unauthorized Request (403 Forbidden)
+
+```json
+{
+  "error": "You are not authorized to perform this action."
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Internal server error."
+}
+```
+
+---
+
+## Notes
+
+- This endpoint requires authentication.
+- The `followerId` must match the logged-in user's ID.
+- If the `followerId` or `followedId` is missing or invalid, the request will return a `400 Bad Request` error.
+- If the logged-in user is neither the `followerId` nor the `followedId`, the request will return a `403 Forbidden` error.
+

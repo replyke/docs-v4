@@ -1,0 +1,69 @@
+# Count Unread Notifications
+
+## Endpoint
+
+**URL:** `/:projectId/app-notifications/count`
+
+**Method:** `GET`
+
+**Authentication Required:** Yes (Access Token in Authorization Header)
+
+---
+
+## Description
+
+This endpoint retrieves the count of unread app notifications for the authenticated user within a specified project.
+
+---
+
+## Request
+
+### Path Parameters
+
+| Parameter   | Type     | Required | Description                                  |
+| ----------- | -------- | -------- | -------------------------------------------- |
+| `projectId` | `string` | Yes      | The project ID associated with the request. |
+
+### Headers
+
+| Header          | Type     | Required | Description                      |
+| --------------- | -------- | -------- | -------------------------------- |
+| `Authorization` | `string` | Yes      | Bearer token for authentication. |
+
+#### Example Request
+
+```sh
+GET /12345/app-notifications/count
+Content-Type: application/json
+Authorization: Bearer <ACCESS_TOKEN>
+```
+
+---
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "count": 3
+}
+```
+
+### Error Responses
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+---
+
+## Notes
+
+- This endpoint only counts unread notifications for the authenticated user.
+- Returns a numeric value representing the count of unread notifications.
+

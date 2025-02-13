@@ -1,0 +1,133 @@
+# Update List
+
+## Endpoint
+
+**URL:** `/:projectId/lists/`
+
+**Method:** `PATCH`
+
+**Authentication Required:** Yes (Access Token in Authorization Header)
+
+---
+
+## Description
+
+This endpoint allows users to update an existing list by changing its name. The list must belong to the authenticated user and must not be a root list. Authentication is required.
+
+---
+
+## Request
+
+### Path Parameters
+
+| Parameter   | Type     | Required | Description                                 |
+| ----------- | -------- | -------- | ------------------------------------------- |
+| `projectId` | `string` | Yes      | The project ID associated with the request. |
+
+### Headers
+
+| Header          | Type     | Required | Description                      |
+| --------------- | -------- | -------- | -------------------------------- |
+| `Authorization` | `string` | Yes      | Bearer token for authentication. |
+
+### Body Parameters
+
+| Parameter | Type     | Required | Description                         |
+| --------- | -------- | -------- | ----------------------------------- |
+| `listId`  | `string` | Yes      | The ID of the list to be updated.   |
+| `update`  | `object` | Yes      | An object containing update fields. |
+
+#### Update Object Fields
+
+| Field  | Type     | Required | Description                                 |
+| ------ | -------- | -------- | ------------------------------------------- |
+| `name` | `string` | Yes      | The new name for the list. Cannot be empty. |
+
+#### Example Request
+
+```sh
+PATCH /12345/lists/
+Content-Type: application/json
+Authorization: Bearer <ACCESS_TOKEN>
+
+{
+  "listId": "67890",
+  "update": {
+    "name": "Updated List Name"
+  }
+}
+```
+
+---
+
+## Response
+
+### Success Response (200 OK)
+
+```json
+{
+  "id": "67890",
+  "projectId": "12345",
+  "userId": "56789",
+  "parentId": "123",
+  "name": "Updated List Name",
+  "entityIds": ["entity1", "entity2"],
+  "entities": [
+    {
+      "id": "entity1",
+      "title": "Sample Entity 1",
+      "content": "This is the content of entity 1."
+    },
+    {
+      "id": "entity2",
+      "title": "Sample Entity 2",
+      "content": "This is the content of entity 2."
+    }
+  ],
+  "createdAt": "2024-02-12T10:00:00Z",
+  "updatedAt": "2024-02-12T10:05:00Z"
+}
+```
+
+### Error Responses
+
+#### Missing or Invalid Data (400 Bad Request)
+
+```json
+{
+  "error": "Missing project ID, list ID or update in request body"
+}
+```
+
+#### Empty Name (400 Bad Request)
+
+```json
+{
+  "error": "Can't set the name to blank"
+}
+```
+
+#### List Not Found (404 Not Found)
+
+```json
+{
+  "error": "List not found"
+}
+```
+
+#### Server Error (500 Internal Server Error)
+
+```json
+{
+  "error": "Server error"
+}
+```
+
+---
+
+## Notes
+
+- Only the `name` field can be updated.
+- The list must belong to the authenticated user.
+- Root lists cannot be renamed.
+- The response includes the updated list details.
