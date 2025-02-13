@@ -1,6 +1,8 @@
 export default {
-  index: "Introduction",
+  "getting-started": "Getting Started",
   authentication: "Authentication",
+  users: "Users",
+  entities: "Entities",
   comments: "Comments",
   moderation: "Moderation",
 };

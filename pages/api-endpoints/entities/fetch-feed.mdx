@@ -3,7 +3,7 @@
 
 ## Endpoint
 
-**URL:** `/:projectId/entities/`
+**URL:** `https://api.replyke.com/:projectId/entities/`
 
 **Method:** `GET`
 
@@ -45,10 +45,12 @@ This endpoint allows fetching multiple entities based on various filters and sor
 | `mediaFilters`    | `object` | No       | Filters entities based on whether they contain media. See below for details. |
 | `locationFilters` | `object` | No       | Filters entities based on proximity to a given location. See below for details. |
 | `followedOnly`    | `boolean`| No       | If `true`, returns only entities from followed users (requires authentication). |
+
+
 #### Example Request URL
 
 ```
-GET /:projectId/entities/?sortBy=top&page=1&limit=20&timeFrame=week
+GET https://api.replyke.com/:projectId/entities/?sortBy=top&page=1&limit=20&timeFrame=week
 ```
 
 ----------

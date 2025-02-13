@@ -1,0 +1,102 @@
+# Fetch User
+
+## Endpoint
+
+**URL:** `https://api.replyke.com/:projectId/users/:userId`
+
+**Method:** `GET`
+
+**Authentication Required:** No
+
+---
+
+## Description
+
+This endpoint allows clients to fetch details of a specific user within a project.
+
+---
+
+## Request
+
+### URL Parameters
+| Parameter    | Type     | Required | Description |
+|-------------|----------|----------|-------------|
+| `projectId` | `string` | Yes      | The project ID associated with the request. |
+| `userId`    | `string` | Yes      | The ID of the user being fetched. |
+
+### Headers
+_None_
+
+### Body Parameters
+_None_
+
+#### Example Request
+```sh
+GET /12345/users/67890
+```
+
+---
+
+## Response
+
+### Success Response (200 OK)
+```json
+{
+  "id": "67890",
+  "projectId": "12345",
+  "referenceId": "user-ref-001",
+  "name": "John Doe",
+  "username": "johndoe",
+  "avatar": "https://example.com/avatar.jpg",
+  "bio": "Tech enthusiast and developer.",
+  "birthdate": "1995-05-20T00:00:00.000Z",
+  "reputation": 120,
+  "location": {
+    "type": "Point",
+    "coordinates": [40.7128, -74.006]
+  },
+  "suspension": {
+    "isSuspended": false,
+    "reason": null,
+    "startDate": null,
+    "endDate": null
+  },
+  "metadata": {
+    "preferredLanguage": "en",
+    "theme": "dark"
+  },
+  "createdAt": "2024-01-01T12:00:00.000Z",
+  "updatedAt": "2024-02-01T12:00:00.000Z"
+}
+```
+
+### Error Responses
+#### Missing User ID (400 Bad Request)
+```json
+{
+  "error": "Missing userId in request query"
+}
+```
+
+#### User Not Found (404 Not Found)
+```json
+{
+  "error": "User not found"
+}
+```
+
+#### Server Error (500 Internal Server Error)
+```json
+{
+  "error": "Server error"
+}
+```
+
+---
+
+## Notes
+- This endpoint does not require authentication.
+- Sensitive fields such as password hash, email, account status, and secure metadata are excluded from the response.
+- The `suspension` object provides details about any active suspensions on the user account.
+- `metadata` is free-form and can contain any additional user-specific details stored by the project.
+

@@ -40,7 +40,7 @@ By verifying the signature with the public key, Replyke can trust that the data 
 
 ### Passing the JWT to Replyke
 
--   The signed JWT is sent back to the client and passed as a prop to the `ReplkeProvider` which is wrapping your project.
+-   The signed JWT is sent back to the client and passed as a prop to the `ReplykeProvider` which is wrapping your project.
 -   Replyke verifies the JWT using the public key.
 -   If verification succeeds, Replyke creates a user in its system linked to the external system’s user ID. All actions performed by this user are now securely associated with them.
 
