@@ -12,7 +12,6 @@ export interface KeywordsFilters {
   includes?: string[];
   doesNotInclude?: string[];
 }
-
 ```
 
 -   **`includes`**: Specifies keywords that must be present in an entity’s keywords array for it to be included in the feed.
@@ -48,7 +47,6 @@ updateKeywordsFilters("reset", "both");
 
 // Replacing the includes array with a new array
 updateKeywordsFilters("replace", "includes", ["Angular"]); 
-
 ```
 
 #### **How Keywords Filters Work**
@@ -71,7 +69,6 @@ If you want to set static filters as a starting point for your feed, you can pas
 >
   <MyFeedComponent />
 </FeedProvider>
-
 ```
 
 This setup ensures that the feed is pre-configured to show only posts about "JavaScript" or "React" while excluding posts that mention "Angular."
@@ -106,7 +103,6 @@ return (
     <button onClick={loadMore}>Load More</button>
   </div>
 );
-
 ```
 
 In this example, clicking a button dynamically updates the feed by adding a keyword to the `includes` filter.

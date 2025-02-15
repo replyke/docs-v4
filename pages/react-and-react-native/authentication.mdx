@@ -1,27 +1,8 @@
-## Introduction to Authentication with Replyke
-
-Authentication is a cornerstone of Replyke, enabling all its functionalities to work seamlessly together. By associating actions and data with users, authentication facilitates user interactions, ensures data consistency, and enforces authorization rules within your application.
-
-### What Replyke Offers
-
-Replyke provides a straightforward, built-in authentication system, allowing developers to easily implement email and password authentication. With user-friendly hooks for signing up, signing in, and logging out, developers can quickly get started without the need to build these features from scratch.
-
-If you already have an existing user management system or plan to use a different system in your project, Replyke is designed to integrate seamlessly. Developers can pass a JSON Web Token (JWT) containing user details, signed with a private key provided by Replyke. This ensures that Replyke can trust the user data and associate actions with the appropriate users.
-
-### Authorization and Security
-
-Replyke includes basic authorization to secure user actions. For example:
-
-- Only authenticated users can vote on entities or comments.
-- Comments and replies are restricted to logged-in users.
-
-For more advanced authorization needs, such as restricting access to specific pages or sections of your app, developers have full flexibility to implement custom rules on top of Replyke’s foundational capabilities.
-
 ### Integration Requirements
 
-Replyke authentication is built directly into the ReplykeProvider, making integration seamless. Simply wrap your app in the ReplykeProvider, and authentication will be handled automatically:
+Replyke authentication is built directly into the ReplykeProvider, making integration seamless. By simply wrapping your app in the ReplykeProvider as you have when seting things up, authentication will be handled automatically:
 
-```javascript
+```jsx
 <ReplykeProvider projectId={/* Your project ID */}>
   {/* Rest of your app */}
 </ReplykeProvider>

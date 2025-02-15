@@ -1,0 +1,89 @@
+## Entity Object Documentation
+
+The **Entity** object represents a core data structure within Replyke, designed to support various use cases, including social media posts, marketplace products, static content, and location-based listings.
+
+### Properties
+
+| **Property**     | **Type**                                                   | **Description**                                                                                |
+| ---------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `id`             | `string`                                                   | Unique identifier for the entity.                                                              |
+| `referenceId`    | `string`                                                   | Identifier referencing the original item in an external system or static ID.                   |
+| `shortId`        | `string`                                                   | Auto-generated short identifier for sharing links.                                             |
+| `projectId`      | `string`                                                   | Identifier linking the entity to a specific project.                                           |
+| `user`           | `UserLean \| null`                                         | Basic user information of the entity creator, if applicable.                                   |
+| `title`          | `string \| null`                                           | Title of the entity (if applicable).                                                           |
+| `content`        | `string \| null`                                           | Main content of the entity.                                                                    |
+| `mentions`       | `Mention[]`                                                | List of users mentioned in the content. Each Mention object includes a user’s ID and username. |
+| `media`          | `Record<string, any>[]`                                    | Array of media objects attached to the entity.                                                 |
+| `keywords`       | `string[]`                                                 | Tags or keywords associated with the entity.                                                   |
+| `upvotes`        | `string[]`                                                 | List of user IDs who upvoted the entity.                                                       |
+| `downvotes`      | `string[]`                                                 | List of user IDs who downvoted the entity.                                                     |
+| `repliesCount`   | `number`                                                   | Total number of comments and replies.                                                          |
+| `views`          | `number`                                                   | Total number of views.                                                                         |
+| `score`          | `number`                                                   | Hotness score based on user activity.                                                          |
+| `scoreUpdatedAt` | `Date`                                                     | Timestamp of last score update.                                                                |
+| `location`       | `{ type: "Point", coordinates: [number, number] } \| null` | Optional GeoJSON location ([longitude, latitude]).                                             |
+| `metadata`       | `Record<string, any>`                                      | Custom metadata (max size: 10KB).                                                              |
+| `topComment`     | `TopComment \| null`                                       | The top-ranked comment for this entity, if available.                                          |
+| `createdAt`      | `Date`                                                     | Timestamp when the entity was created.                                                         |
+| `updatedAt`      | `Date`                                                     | Timestamp of the most recent update.                                                           |
+| `deletedAt`      | `Date \| null`                                             | Timestamp if the entity was deleted (null if active).                                          |
+
+### Example Use Cases
+
+#### Social Media Post
+
+```json
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "content": "Check out this amazing sunset!",
+  "media": [
+    { "url": "https://example.com/media/sunset.jpg", "size": "2MB" }
+  ],
+  "keywords": ["sunset", "nature"],
+  "user": { "id": "550e8400-e29b-41d4-a716-446655440001", "name": "John Doe" }
+}
+```
+
+#### Marketplace Product
+
+```json
+{
+  "id": "550e8400-e29b-41d4-a716-446655440002",
+  "title": "Wireless Earbuds",
+  "content": "Experience high-quality sound with our new earbuds.",
+  "media": [],
+  "keywords": ["electronics", "audio"]
+}
+```
+
+#### Static Page (About Us)
+
+```json
+{
+  "id": "550e8400-e29b-41d4-a716-446655440003",
+  "referenceId": "about-page",
+  "title": "About Us",
+  "content": "Welcome to our platform. Here is what we do.",
+  "media": [],
+  "user": null
+}
+```
+
+#### Location-Based Listing (Hotel)
+
+```json
+{
+  "id": "550e8400-e29b-41d4-a716-446655440004",
+  "title": "Cozy Beachside Hotel",
+  "content": "Enjoy your stay at our beautiful beachside hotel.",
+  "location": { "type": "Point", "coordinates": [34.0522, -118.2437] },
+  "metadata": { "rating": 4.5, "price": "199.99" },
+  "user": { "id": "550e8400-e29b-41d4-a716-446655440005", "name": "Sunrise Hotels" }
+}
+```
+
+### Flexibility for Integration
+
+The Entity object is designed to be flexible, allowing developers to integrate Replyke into existing datasets without modifying their original structure. This ensures compatibility with different use cases and project requirements.
+

@@ -13,7 +13,6 @@ export interface ContentFilters {
   includes?: string | string[];
   doesNotInclude?: string | string[];
 }
-
 ```
 
 -   **`hasContent`**: A boolean flag to include entities based on whether they have content (`true`) or not (`false`).
@@ -32,7 +31,6 @@ setContentFilters({ includes: "JavaScript", doesNotInclude: "PHP" });
 
 // Reset content filters
 setContentFilters(null);
-
 ```
 
 #### **How Content Filters Work**
@@ -57,7 +55,6 @@ To set static filters for content at the initialization of the feed, pass them d
 >
   <MyFeedComponent />
 </FeedProvider>
-
 ```
 
 This setup ensures that only entities with content are included, and that content must contain either "JavaScript" or "React" while excluding "PHP."
@@ -93,7 +90,6 @@ return (
     <button onClick={loadMore}>Load More</button>
   </div>
 );
-
 ```
 
 In this example, clicking the button updates the content filters dynamically, allowing users to customize the feed results.

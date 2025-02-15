@@ -10,41 +10,6 @@ The `useUser` hook provides access to the user context and exposes two key prope
 1.  **`user`**: An object containing information about the authenticated user.
 2.  **`updateUser`**: A function to update the user's details.
 
-----------
-
-### The User Object
-
-The `user` object includes the following properties:
-
-```typescript
-export type User = {
-  id: string; // Unique identifier for the user in Replyke
-  referenceId: string | null; // Unique identifier for the user in the external user system
-  email: string | null; // User's email address
-  name: string | null; // User's display name
-  username: string | null; // User's unique username
-  avatar: string | null; // URL to the user's avatar image
-  bio: string | null; // User's bio (limited to 300 characters)
-  birthdate: Date | null; // User's birthdate
-  reputation: number; // Managed by Replyke based on user activity
-  location: {
-    type: "Point";
-    coordinates: [number, number]; // [longitude, latitude]
-  } | null; // Optional GeoJSON location
-  metadata: Record<string, any>; // Custom metadata (max size: 10KB)
-  secureMetadata: Record<string, any>; // Custom metadata (max size: 10KB) - excluded from entities and comments
-  suspension: {
-    isSuspended: boolean; // Indicates if the user is suspended
-    reason: string | null; // Reason for suspension (if any)
-    startDate: Date | null; // Suspension start date
-    endDate: Date | null; // Suspension end date (null for indefinite)
-  };
-  createdAt: Date; // User creation date
-};
-
-```
-
-This comprehensive user object allows developers to access and display essential user information while maintaining flexibility for additional project-specific data.
 
 ----------
 

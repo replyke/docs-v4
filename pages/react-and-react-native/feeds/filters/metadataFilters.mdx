@@ -14,7 +14,6 @@ export interface MetadataFilters {
   exists?: string[];
   doesNotExist?: string[];
 }
-
 ```
 
 -   **`includes`**: Specifies key-value pairs that must exist in the entity's `metadata`. Entities must include all specified key-value pairs.
@@ -34,7 +33,6 @@ setMetadataFilters({ includes: { category: "tech", featured: true } });
 
 // Reset metadata filters
 setMetadataFilters(null);
-
 ```
 
 #### **How Metadata Filters Work**
@@ -66,7 +64,6 @@ To set static metadata filters at feed initialization, pass them directly to the
 >
   <MyFeedComponent />
 </FeedProvider>
-
 ```
 
 This setup ensures that the feed includes:
@@ -106,7 +103,6 @@ return (
     <button onClick={loadMore}>Load More</button>
   </div>
 );
-
 ```
 
 In this example, clicking the "Apply Tech Filters" button updates the feed to include entities categorized as "tech" and with an `author` key in their metadata.

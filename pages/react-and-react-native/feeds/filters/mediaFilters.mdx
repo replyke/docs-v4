@@ -11,7 +11,6 @@ The `mediaFilters` property can be passed into the `FeedProvider` as an object w
 export interface MediaFilters {
   hasMedia?: boolean;
 }
-
 ```
 
 -   **`hasMedia`**: A boolean flag to include or exclude entities based on whether they contain media (`true`) or not (`false`).
@@ -28,7 +27,6 @@ setMediaFilters({ hasMedia: true });
 
 // Reset media filters
 setMediaFilters(null);
-
 ```
 
 #### How Media Filters Work
@@ -49,7 +47,6 @@ To set static filters for media presence at the initialization of the feed, pass
 <FeedProvider mediaFilters={{ hasMedia: true }}>
   <MyFeedComponent />
 </FeedProvider>
-
 ```
 
 This setup ensures that only entities with media are included in the feed.
@@ -84,7 +81,6 @@ return (
     <button onClick={loadMore}>Load More</button>
   </div>
 );
-
 ```
 
 In this example, clicking the buttons dynamically updates the media filters to include or exclude entities based on media presence.

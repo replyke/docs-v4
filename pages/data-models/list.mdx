@@ -1,0 +1,57 @@
+## List Object Documentation
+
+The **List** object represents a structured collection of entities within Replyke, allowing users to organize and manage related items effectively.
+
+### Properties
+
+| **Property**     | **Type**                                      | **Description**                                                   |
+| --------------- | --------------------------------------------- | ----------------------------------------------------------------- |
+| `id`            | `string`                                      | Unique identifier for the list.                                  |
+| `projectId`     | `string \| undefined`                         | Identifier linking the list to a specific project.               |
+| `userId`        | `string`                                      | Identifier of the user who owns the list.                        |
+| `parentId`      | `string \| null`                              | Identifier of the parent list if it's a nested list.             |
+| `name`          | `string`                                      | The name of the list.                                            |
+| `entityIds`     | `string[]`                                    | Array of entity IDs contained in the list.                      |
+| `entities`      | `Partial<Entity>[]`                           | Partial entity objects representing additional entity details.   |
+| `createdAt`     | `Date`                                        | Timestamp when the list was created.                            |
+| `updatedAt`     | `Date`                                        | Timestamp of the most recent update.                            |
+
+### Example Usage
+
+#### Basic List
+```json
+{
+  "id": "list-123456",
+  "projectId": "project-xyz",
+  "userId": "user-789",
+  "name": "Favorite Articles",
+  "entityIds": ["entity-111", "entity-222"],
+  "entities": [
+    { "id": "entity-111", "title": "Introduction to TypeScript" },
+    { "id": "entity-222", "title": "Understanding React Hooks" }
+  ],
+  "createdAt": "2024-02-14T12:34:56Z",
+  "updatedAt": "2024-02-15T14:20:00Z"
+}
+```
+
+#### Nested List
+```json
+{
+  "id": "list-7891011",
+  "projectId": "project-abc",
+  "userId": "user-222",
+  "parentId": "list-123456",
+  "name": "Advanced Topics",
+  "entityIds": ["entity-333"],
+  "entities": [
+    { "id": "entity-333", "title": "Deep Dive into GraphQL" }
+  ],
+  "createdAt": "2024-02-14T13:45:00Z",
+  "updatedAt": "2024-02-16T09:10:30Z"
+}
+```
+
+### Integration Flexibility
+The List object is designed to facilitate hierarchical organization, entity grouping, and efficient retrieval. Developers can leverage it to create collections, favorites, or curated lists of related items.
+

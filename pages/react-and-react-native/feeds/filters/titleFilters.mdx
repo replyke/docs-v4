@@ -13,7 +13,6 @@ export interface TitleFilters {
   includes?: string | string[];
   doesNotInclude?: string | string[];
 }
-
 ```
 
 -   **`hasTitle`**: A boolean flag to include entities based on whether they have a title (`true`) or not (`false`).
@@ -32,7 +31,6 @@ setTitleFilters({ includes: "React", doesNotInclude: "Angular" });
 
 // Reset title filters
 setTitleFilters(null);
-
 ```
 
 #### **How Title Filters Work**
@@ -57,7 +55,6 @@ To set static filters for titles at the initialization of the feed, pass them di
 >
   <MyFeedComponent />
 </FeedProvider>
-
 ```
 
 This setup ensures that only entities with a title are included, and those titles must contain either "React" or "JavaScript" while excluding "Angular."
@@ -92,7 +89,6 @@ return (
     <button onClick={loadMore}>Load More</button>
   </div>
 );
-
 ```
 
 In this example, clicking the button updates the title filters dynamically, allowing users to customize the feed results.

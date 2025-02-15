@@ -1,0 +1,25 @@
+## User Object
+
+The **User** object represents a user within Replyke, containing essential properties for identification, authentication, and metadata storage.
+
+### Properties
+
+| **Property**       | **Type**                                       | **Description**                                                   |
+|-------------------|-------------------------------------------|-----------------------------------------------------------------|
+| `id`              | `string`                                   | Unique identifier for the user in Replyke.                       |
+| `referenceId`     | `string \| null`                          | Unique identifier for the user in an external user system.       |
+| `email`           | `string \| null`                          | User's email address.                                            |
+| `name`            | `string \| null`                          | User's display name.                                             |
+| `username`        | `string \| null`                          | User's unique username.                                          |
+| `avatar`          | `string \| null`                          | URL to the user's avatar image.                                  |
+| `bio`             | `string \| null`                          | User's bio (limited to 300 characters).                          |
+| `birthdate`       | `Date \| null`                            | User's birthdate.                                                |
+| `reputation`      | `number`                                   | Managed by Replyke based on user activity.                      |
+| `location`        | `{ type: "Point", coordinates: [number, number] } \| null` | Optional GeoJSON location with longitude and latitude. |
+| `metadata`        | `Record<string, any>`                      | Custom metadata (max size: 10KB).                                |
+| `secureMetadata`  | `Record<string, any>`                      | Secure custom metadata (max size: 10KB), excluded from entities and comments. |
+| `suspension`      | `{ isSuspended: boolean, reason: string \| null, startDate: Date \| null, endDate: Date \| null }` | Suspension status, reason, and duration (null for indefinite). |
+| `createdAt`       | `Date`                                     | User creation date.                                              |
+
+This table provides a structured view of the User object, ensuring consistency across different client integrations. The `metadata` fields allow for extensibility, while `location` and `suspension` provide additional contextual data when applicable.
+
