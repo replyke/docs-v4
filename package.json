@@ -5,20 +5,21 @@
   "description": "Documentation for Replyke v4",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "export": "npx next build && npx next export"
+    "build": "next build"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Tsabary/replyke-v4-docs.git"
+    "url": "git+https://github.com/Replyke/docs-v4.git"
   },
   "author": "Yanay Tsabary",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Tsabary/replyke-v4-docs/issues"
+    "url": "https://github.com/Replyke/docs-v4/issues"
   },
-  "homepage": "https://github.com/Tsabary/replyke-v4-docs#readme",
+  "homepage": "https://github.com/Replyke/docs-v4#readme",
   "dependencies": {
     "next": "^15.0.0",
     "nextra": "^3.0.0",
